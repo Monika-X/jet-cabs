@@ -1025,3 +1025,23 @@ window.vehiclesData = [
     ]
   }
 ];
+
+// --- NEW FIX FOR VERIFICATION ---
+// Sync availability from dummy local storage (User Dashboard frontend flow)
+(function() {
+  try {
+    const rentedCars = JSON.parse(localStorage.getItem('rentedCars') || '[]');
+    window.vehiclesData.forEach(car => {
+      // car.name is something like "AMG GT 63 S"
+      if (rentedCars.includes(car.name)) {
+        car.availability = "Unavailable (Rented)";
+        // Update badge to "Unavailable" instead of "Available"
+        car.badges = car.badges.map(b => b === "Available" ? "Unavailable" : b);
+        if (!car.badges.includes("Unavailable")) {
+          car.badges.unshift("Unavailable");
+        }
+      }
+    });
+  } catch (e) {}
+})();
+// --------------------------------

@@ -1056,7 +1056,8 @@ const AdminDashboard = (() => {
         'icon-tool': 'wrench', 'icon-globe': 'globe', 'icon-database': 'database',
         'icon-hard-drive': 'hard-drive', 'icon-cpu': 'cpu', 'icon-server': 'server',
         'icon-wifi': 'wifi', 'icon-x-circle': 'x-circle', 'icon-minus': 'minus',
-        'icon-maximize': 'maximize-2', 'icon-minimize': 'minimize-2'
+        'icon-maximize': 'maximize-2', 'icon-minimize': 'minimize-2',
+        'icon-warning': 'alert-triangle'
       };
       const lucideName = lucideMap[name] || name.replace('icon-', '');
       return `<i data-lucide="${lucideName}" class="${cls}"></i>`;
@@ -1522,6 +1523,23 @@ const AdminDashboard = (() => {
       const dd = document.getElementById('db-profile-dropdown');
       if (!btn || !dd) return;
       btn.addEventListener('click', (e) => { e.stopPropagation(); const open = dd.classList.contains('open'); this.closeAll(); if (!open) { dd.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); } });
+      
+      const logoutBtn = dd.querySelector('[data-action="logout"]');
+      if (logoutBtn) logoutBtn.addEventListener('click', (e) => { 
+        e.preventDefault(); 
+        this.closeAll(); 
+        
+        fetch('http://localhost:5000/api/auth/logout', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        })
+        .finally(() => {
+          localStorage.removeItem('token');
+          localStorage.removeItem('userRole');
+          AdminDashboard.toast.show({ title: 'Logged Out', message: 'You have been successfully logged out.', type: 'success' }); 
+          setTimeout(() => { window.location.href = 'login.html'; }, 1500); 
+        });
+      });
     },
     initNotificationPanel() {
       const btn = document.getElementById('db-notification-btn');
@@ -3270,18 +3288,13 @@ const AdminDashboard = (() => {
           </div>
 
           <select class="db-filter-bar__select" id="bookings-status-filter">
-            <option value="all" ${state.bookingsStatusFilter === 'all' ? 'selected' : ''}>All Statuses</option>
-            <option value="active" ${state.bookingsStatusFilter === 'active' ? 'selected' : ''}>Active / Ongoing</option>
-            <option value="confirmed" ${state.bookingsStatusFilter === 'confirmed' ? 'selected' : ''}>Confirmed</option>
-            <option value="pending" ${state.bookingsStatusFilter === 'pending' ? 'selected' : ''}>Pending Approval</option>
+            <option value="all" ${state.bookingsStatusFilter === 'all' ? 'selected' : ''}>All</option>
+            <option value="pending" ${state.bookingsStatusFilter === 'pending' ? 'selected' : ''}>Pending</option>
+            <option value="confirmed" ${state.bookingsStatusFilter === 'confirmed' ? 'selected' : ''}>Upcoming</option>
+            <option value="active" ${state.bookingsStatusFilter === 'active' ? 'selected' : ''}>Active</option>
+            <option value="extended" ${state.bookingsStatusFilter === 'extended' ? 'selected' : ''}>Extended</option>
             <option value="completed" ${state.bookingsStatusFilter === 'completed' ? 'selected' : ''}>Completed</option>
             <option value="cancelled" ${state.bookingsStatusFilter === 'cancelled' ? 'selected' : ''}>Cancelled</option>
-          </select>
-
-          <select class="db-filter-bar__select" id="bookings-type-filter">
-            <option value="all" ${state.bookingsTypeFilter === 'all' ? 'selected' : ''}>All Rental Types</option>
-            <option value="Daily" ${state.bookingsTypeFilter === 'Daily' ? 'selected' : ''}>Daily Hire</option>
-            <option value="Hourly" ${state.bookingsTypeFilter === 'Hourly' ? 'selected' : ''}>Hourly Hire</option>
           </select>
 
           <!-- Quick Filters Buttons -->
@@ -3315,13 +3328,11 @@ const AdminDashboard = (() => {
   function _bindBookingsFilters() {
     const search = document.getElementById('bookings-search');
     const status = document.getElementById('bookings-status-filter');
-    const type = document.getElementById('bookings-type-filter');
 
     const update = () => {
       const state = AdminState.uiState;
       state.bookingsSearch = search ? search.value : '';
       state.bookingsStatusFilter = status ? status.value : 'all';
-      state.bookingsTypeFilter = type ? type.value : 'all';
       state.bookingsCurrentPage = 1;
       saveUiState();
       _renderBookingsList();
@@ -3329,7 +3340,6 @@ const AdminDashboard = (() => {
 
     if (search) search.addEventListener('input', Utils.debounce(update, 250));
     if (status) status.addEventListener('change', update);
-    if (type) type.addEventListener('change', update);
   }
 
   function _renderBookingsList() {
@@ -3340,15 +3350,13 @@ const AdminDashboard = (() => {
     const state = AdminState.uiState;
     let data = [...AdminState.bookingData];
 
-    // Filter Search
+    // Filter Search (Booking ID, Customer Name, Car Name)
     if (state.bookingsSearch) {
       const q = state.bookingsSearch.toLowerCase();
-      data = data.filter(b => `${b.id} ${b.user} ${b.vehicle} ${b.email} ${b.phone}`.toLowerCase().includes(q));
+      data = data.filter(b => `${b.id} ${b.user} ${b.vehicle}`.toLowerCase().includes(q));
     }
     // Filter Status
     if (state.bookingsStatusFilter !== 'all') data = data.filter(b => b.status === state.bookingsStatusFilter);
-    // Filter Type
-    if (state.bookingsTypeFilter !== 'all') data = data.filter(b => b.type === state.bookingsTypeFilter);
 
     // Filter Quick Buttons
     if (state.bookingsQuickFilter === 'pending') {
@@ -3383,33 +3391,48 @@ const AdminDashboard = (() => {
           <thead>
             <tr>
               <th>Booking ID</th>
-              <th>Customer</th>
-              <th>Vehicle Profile</th>
-              <th>Rental Type</th>
-              <th>Lease Dates</th>
-              <th>Status</th>
-              <th>KYC check</th>
-              <th>Billing (Total)</th>
+              <th>Customer Name</th>
+              <th>Car</th>
+              <th>Rental Start</th>
+              <th>Rental End</th>
+              <th>Booking Status</th>
+              <th>Pickup Photo Status</th>
+              <th>Return Photo Status</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            ${paginatedData.map(b => `
+            ${paginatedData.map(b => {
+              let pickupStatus = 'Pending';
+              let returnStatus = 'Pending';
+
+              if (b.status === 'active' || b.status === 'extended') {
+                pickupStatus = 'Uploaded';
+                returnStatus = 'Pending';
+              } else if (b.status === 'completed') {
+                pickupStatus = 'Uploaded';
+                returnStatus = 'Uploaded';
+              } else if (b.status === 'pending' || b.status === 'confirmed' || b.status === 'cancelled') {
+                pickupStatus = 'Pending';
+                returnStatus = 'Pending';
+              }
+
+              const pickupBadgeClass = pickupStatus === 'Uploaded' ? 'success' : 'pending';
+              const returnBadgeClass = returnStatus === 'Uploaded' ? 'success' : 'pending';
+
+              return `
               <tr>
                 <td><code style="font-family:var(--font-mono); font-size:var(--fs-xs);">${b.id}</code></td>
                 <td>
                   <div style="font-weight:var(--fw-semibold); color:var(--color-dark-text);">${Utils.escapeHtml(b.user)}</div>
-                  <div style="font-size:10px; color:var(--color-light-text);">${Utils.escapeHtml(b.email)} · ${b.phone}</div>
+                  <div style="font-size:10px; color:var(--color-light-text);">${Utils.escapeHtml(b.email)}</div>
                 </td>
                 <td style="font-size:var(--fs-xs);">${Utils.escapeHtml(b.vehicle)}</td>
-                <td>${b.type}</td>
-                <td style="font-size:var(--fs-xs);">${Utils.formatDate(b.pickup)} – ${Utils.formatDate(b.returnDate)}</td>
-                <td><span class="db-badge db-badge--${statusBadgeMap[b.status] || 'inactive'}">${Utils.statusLabel(b.status)}</span></td>
-                <td><span class="db-badge db-badge--${b.kycStatus==='verified'?'available':'pending'}">${b.kycStatus}</span></td>
-                <td>
-                  <strong style="color:var(--color-dark-text);">${Utils.formatCurrency(b.total)}</strong>
-                  <div style="font-size:9px; color:var(--color-light-text);">Payment: <span style="font-weight:var(--fw-bold);">${b.paymentStatus}</span></div>
-                </td>
+                <td style="font-size:var(--fs-xs);">${Utils.formatDate(b.pickup)}</td>
+                <td style="font-size:var(--fs-xs);">${Utils.formatDate(b.returnDate)}</td>
+                <td><span class="db-badge db-badge--${statusBadgeMap[b.status] || 'inactive'}">${Utils.statusLabel(b.status === 'confirmed' ? 'upcoming' : b.status)}</span></td>
+                <td><span class="db-badge db-badge--${pickupBadgeClass}">${pickupStatus}</span></td>
+                <td><span class="db-badge db-badge--${returnBadgeClass}">${returnStatus}</span></td>
                 <td>
                   <div style="display:flex; gap:var(--space-2); flex-wrap:wrap; max-width:220px;">
                     <button class="btn btn--outline btn--sm" style="padding:4px 8px; font-size:10px;" onclick="AdminDashboard.showBookingDetails('${b.id}')">View</button>
@@ -3417,13 +3440,10 @@ const AdminDashboard = (() => {
                       <button class="btn btn--primary btn--sm" style="padding:4px 8px; font-size:10px;" onclick="AdminDashboard.approveBookingModal('${b.id}')">Approve</button>
                       <button class="btn btn--ghost btn--sm" style="padding:4px 8px; font-size:10px; color:var(--color-danger);" onclick="AdminDashboard.rejectBookingModal('${b.id}')">Reject</button>
                     ` : ''}
-                    ${b.status === 'confirmed' || b.status === 'pending' ? `
-                      <button class="btn btn--ghost btn--sm" style="padding:4px 8px; font-size:10px;" onclick="AdminDashboard.assignVehicleModal('${b.id}')">Assign Car</button>
-                    ` : ''}
                   </div>
                 </td>
               </tr>
-            `).join('')}
+            `}).join('')}
           </tbody>
         </table>
       </div>
@@ -3628,66 +3648,127 @@ const AdminDashboard = (() => {
     const b = AdminState.bookingData.find(x => x.id === id);
     if (!b) return;
 
-    const statusBadgeMap = { pending:'pending', confirmed:'booked', active:'approved', completed:'completed', cancelled:'cancelled' };
+    // Populate Modal Fields
+    document.getElementById('bd-modal-id').textContent = b.id;
+    document.getElementById('bd-modal-customer-name').textContent = b.user;
+    document.getElementById('bd-modal-customer-phone').textContent = b.phone || '+1 (555) 000-0000';
+    document.getElementById('bd-modal-customer-email').textContent = b.email;
 
-    const content = `
-      <div class="db-modal__header">
-        <h3 class="db-modal__title">Booking Summary Profiles</h3>
-        <button class="db-modal__close" data-action="close-modal" aria-label="Close">${Utils.icon('icon-close')}</button>
-      </div>
-      <div class="db-modal__body db-rental-detail">
-        
-        <!-- Info Grids -->
-        <h4 class="db-rental-detail__section-title" style="margin-top:0;">Customer Credentials</h4>
-        <div class="db-rental-detail__grid" style="grid-template-columns: repeat(2, 1fr);">
-          <div class="db-rental-detail__item"><span class="db-rental-detail__label">Customer Name</span><span class="db-rental-detail__value">${Utils.escapeHtml(b.user)}</span></div>
-          <div class="db-rental-detail__item"><span class="db-rental-detail__label">Email Address</span><span class="db-rental-detail__value">${Utils.escapeHtml(b.email)}</span></div>
-          <div class="db-rental-detail__item"><span class="db-rental-detail__label">Phone Contact</span><span class="db-rental-detail__value">${b.phone}</span></div>
-          <div class="db-rental-detail__item"><span class="db-rental-detail__label">KYC Document status</span><span class="db-rental-detail__value" style="color:var(--color-secondary); font-weight:var(--fw-bold);">${b.kycStatus.toUpperCase()}</span></div>
-        </div>
+    // Dummy vehicle image logic based on brand name or fallback
+    let carImage = 'assets/images/default-car.jpg'; 
+    if (b.vehicle.toLowerCase().includes('mercedes')) carImage = 'assets/images/cars/mercedes-s-class.png';
+    else if (b.vehicle.toLowerCase().includes('bmw')) carImage = 'assets/images/cars/bmw-7-series.png';
+    else if (b.vehicle.toLowerCase().includes('porsche')) carImage = 'assets/images/cars/porsche-911.png';
+    
+    // Check if the vehiclesData exists to find exact car
+    if (window.vehiclesData) {
+      const v = window.vehiclesData.find(v => (v.brand + ' ' + v.name) === b.vehicle || v.name === b.vehicle);
+      if (v) carImage = v.heroImage || carImage;
+    }
 
-        <h4 class="db-rental-detail__section-title">Assigned Vehicle Specs</h4>
-        <div class="db-rental-detail__grid" style="grid-template-columns: 2fr 1fr;">
-          <div class="db-rental-detail__item"><span class="db-rental-detail__label">Vehicle Model</span><span class="db-rental-detail__value">${Utils.escapeHtml(b.vehicle)}</span></div>
-          <div class="db-rental-detail__item"><span class="db-rental-detail__label">Vehicle reference ID</span><code style="font-family:var(--font-mono); font-size:var(--fs-xs);">${b.vehicleId || 'Not Assigned'}</code></div>
-        </div>
+    document.getElementById('bd-modal-car-img').innerHTML = `<img src="${carImage}" alt="${b.vehicle}" style="width:100%; height:auto; border-radius:var(--radius-sm);" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjOUNBM0FGIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHlsZT0iYmFja2dyb3VuZDojRjNGNEY2O3dpZHRoOjEwMCU7aGVpZ2h0OjEwMCU7cGFkZGluZzoyMHB4OyI+PHBhdGggZD0iTTE5IDE3aDJjLjYgMCAxLS40IDEtMXYtM2MwLS45LS43LTEuNy0xLjUtMS45QzE4LjcgMTAuNiAxNiAxMCAxNiAxMHMtMS4zLTEuNC0yLjItMi4zYy0uNS0uNC0xLjEtLjctMS44LS43SDVjLS42IDAtMS4xLjQtMS40LjlsLTEuNCAyLjlBMy43IDMuNyAwIDAgMCAxIDEzdjNjMCAuNi40IDEgMSAxaDIiLz48Y2lyY2xlIGN4PSI3IiBjeT0iMTciIHI9IjIiLz48cGF0aCBkPSJNOSAxN2g2Ii8+PGNpcmNsZSBjeD0iMTciIGN5PSIxNyIgcj0iMiIvPjwvc3ZnPg==';">`;
+    document.getElementById('bd-modal-car-name').textContent = b.vehicle;
+    document.getElementById('bd-modal-car-price').textContent = Utils.formatCurrency(b.total) + ` (${b.type})`;
 
-        <h4 class="db-rental-detail__section-title">Lease details</h4>
-        <div class="db-rental-detail__grid">
-          <div class="db-rental-detail__item"><span class="db-rental-detail__label">Pickup Date & Time</span><span class="db-rental-detail__value">${Utils.formatDate(b.pickup)} · ${b.pickupTime || '10:00 AM'}</span></div>
-          <div class="db-rental-detail__item"><span class="db-rental-detail__label">Return Date & Time</span><span class="db-rental-detail__value">${Utils.formatDate(b.returnDate)} · ${b.returnTime || '10:00 AM'}</span></div>
-          <div class="db-rental-detail__item"><span class="db-rental-detail__label">Rental Plan</span><span class="db-rental-detail__value">${b.type} Rental</span></div>
-          <div class="db-rental-detail__item"><span class="db-rental-detail__label">Delivery Location</span><span class="db-rental-detail__value">${b.pickupLocation || 'Downtown Hub'}</span></div>
-        </div>
+    document.getElementById('bd-modal-booking-date').textContent = Utils.formatDate(b.date || '2026-07-10');
+    document.getElementById('bd-modal-pickup-time').textContent = Utils.formatDate(b.pickup) + ' ' + (b.pickupTime || '10:00 AM');
+    document.getElementById('bd-modal-return-time').textContent = Utils.formatDate(b.returnDate) + ' ' + (b.returnTime || '10:00 AM');
+    
+    // Remaining time dummy logic
+    let remaining = 'Completed';
+    if (b.status === 'active' || b.status === 'extended') remaining = '2 Days, 4 Hours';
+    else if (b.status === 'confirmed' || b.status === 'pending') remaining = 'Starts in 3 Days';
+    else if (b.status === 'cancelled') remaining = 'Cancelled';
+    document.getElementById('bd-modal-remaining-time').textContent = remaining;
 
-        <h4 class="db-rental-detail__section-title">Timeline Lifecycle</h4>
-        <div class="db-timeline" style="margin-bottom:var(--space-5);">
-          ${b.timeline.map(t => {
-            const dot = t.active ? 'db-timeline__dot--success' : '';
-            return `
-              <div class="db-timeline__item">
-                <div class="db-timeline__dot ${dot}"></div>
-                <div class="db-timeline__time">${t.time}</div>
-                <div class="db-timeline__title" style="font-size:var(--fs-xs);">${t.label}</div>
-              </div>
-            `;
-          }).join('')}
-        </div>
+    // Status Badge
+    const statusMap = { pending:'pending', confirmed:'upcoming', active:'active', extended:'extended', completed:'completed', cancelled:'cancelled' };
+    const mappedStatus = statusMap[b.status] || 'inactive';
+    document.getElementById('bd-modal-status-badge').innerHTML = `<span class="db-badge db-badge--${mappedStatus === 'upcoming' || mappedStatus === 'active' || mappedStatus === 'completed' ? 'success' : mappedStatus === 'extended' ? 'info' : 'pending'}">${Utils.statusLabel(mappedStatus)}</span>`;
 
-        <h4 class="db-rental-detail__section-title">Invoice & Billing Forecast</h4>
-        <div class="db-rental-detail__payment">
-          <div class="db-rental-detail__payment-row"><span>Gross rental charges</span><span>${Utils.formatCurrency(b.total)}</span></div>
-          <div class="db-rental-detail__payment-row"><span>Security Deposit holds</span><span>${Utils.formatCurrency(b.deposit)}</span></div>
-          <div class="db-rental-detail__payment-row db-rental-detail__payment-row--total"><span>Total Ledger Charge</span><span>${Utils.formatCurrency(b.total + b.deposit)}</span></div>
-        </div>
-      </div>
-      <div class="db-modal__footer">
-        <button class="btn btn--outline btn--sm" data-action="close-modal">Close Details</button>
-        <button class="btn btn--primary btn--sm" onclick="AdminDashboard.toast.show({title:'Invoice Printed',message:'Invoices BK-${b.id} sent to default queue printer.',type:'success'})">${Utils.icon('icon-file-text','icon--sm')} Print Invoice Receipt</button>
-      </div>
+    // Photo Statuses
+    let pickupStatus = 'Pending';
+    let returnStatus = 'Pending';
+    if (b.status === 'active' || b.status === 'extended') {
+      pickupStatus = 'Uploaded';
+      returnStatus = 'Pending';
+    } else if (b.status === 'completed') {
+      pickupStatus = 'Uploaded';
+      returnStatus = 'Uploaded';
+    } else if (b.status === 'pending' || b.status === 'confirmed' || b.status === 'cancelled') {
+      pickupStatus = 'Pending';
+      returnStatus = 'Pending';
+    }
+
+    const pIcon = pickupStatus === 'Uploaded' ? 'icon-check-circle' : 'icon-camera';
+    const rIcon = returnStatus === 'Uploaded' ? 'icon-check-circle' : 'icon-camera';
+    const pColor = pickupStatus === 'Uploaded' ? 'var(--color-success)' : 'var(--color-light-text)';
+    const rColor = returnStatus === 'Uploaded' ? 'var(--color-success)' : 'var(--color-light-text)';
+
+    document.getElementById('bd-modal-pickup-photo-status').parentElement.innerHTML = `
+      <span class="icon" style="color: ${pColor}; margin-bottom: var(--space-2);"><svg><use href="assets/icons/sprite.svg#${pIcon}"/></svg></span>
+      <span id="bd-modal-pickup-photo-status" style="font-size: var(--fs-xs); color: ${pColor}; font-weight: var(--fw-semibold);">Pickup Photo<br>${pickupStatus}</span>
+    `;
+    
+    document.getElementById('bd-modal-return-photo-status').parentElement.innerHTML = `
+      <span class="icon" style="color: ${rColor}; margin-bottom: var(--space-2);"><svg><use href="assets/icons/sprite.svg#${rIcon}"/></svg></span>
+      <span id="bd-modal-return-photo-status" style="font-size: var(--fs-xs); color: ${rColor}; font-weight: var(--fw-semibold);">Return Photo<br>${returnStatus}</span>
     `;
 
-    ModalController.openDynamic(content, '650px');
+    // Timeline Generation
+    const timelineData = [
+      { label: 'Booked', active: true, time: '2026-07-10 09:30 AM' },
+      { label: 'Pickup Uploaded', active: (b.status === 'active' || b.status === 'extended' || b.status === 'completed'), time: (b.status === 'active' || b.status === 'extended' || b.status === 'completed') ? '2026-07-12 10:05 AM' : '--' },
+      { label: 'Rental Active', active: (b.status === 'active' || b.status === 'extended' || b.status === 'completed'), time: (b.status === 'active' || b.status === 'extended' || b.status === 'completed') ? '2026-07-12 10:10 AM' : '--' },
+      { label: 'Rental Extended', active: (b.status === 'extended' || (b.status === 'completed' && Math.random() > 0.5)), time: (b.status === 'extended') ? '2026-07-13 08:00 AM' : '--' },
+      { label: 'Return Uploaded', active: (b.status === 'completed'), time: (b.status === 'completed') ? '2026-07-14 10:00 AM' : '--' },
+      { label: 'Rental Completed', active: (b.status === 'completed'), time: (b.status === 'completed') ? '2026-07-14 10:15 AM' : '--' }
+    ];
+
+    if (b.status === 'cancelled') {
+      timelineData.splice(1, 5);
+      timelineData.push({ label: 'Cancelled', active: true, time: '2026-07-11 11:00 AM' });
+    }
+
+    document.getElementById('bd-modal-timeline').innerHTML = timelineData.map((t, idx) => {
+      const dot = t.active ? 'db-timeline__dot--success' : '';
+      const grayLine = !t.active ? 'opacity: 0.4;' : '';
+      return `
+        <div class="db-timeline__item" style="${grayLine}">
+          <div class="db-timeline__dot ${dot}"></div>
+          <div class="db-timeline__time">${t.time}</div>
+          <div class="db-timeline__title" style="font-size:var(--fs-xs);">${t.label}</div>
+        </div>
+      `;
+    }).join('');
+
+    // Extension History
+    const extList = document.getElementById('bd-modal-extension-list');
+    const extContainer = document.getElementById('bd-modal-extension-history');
+    if (b.status === 'extended') {
+      extList.innerHTML = `
+        <li style="margin-bottom: var(--space-2);">Extended by 1 Day. <span style="color:var(--color-success); font-weight:var(--fw-bold); float:right;">Approved</span></li>
+        <li style="margin-bottom: 0; color: var(--color-light-text);">Additional Charge: $150.00</li>
+      `;
+      extContainer.style.display = 'block';
+    } else {
+      extContainer.style.display = 'none';
+      extList.innerHTML = '';
+    }
+
+    // Open Modal
+    document.getElementById('db-booking-details-modal').classList.add('open');
+    document.querySelector('.db-modal-backdrop').classList.add('open');
+  }
+
+  function closeBookingDetails() {
+    const modal = document.getElementById('db-booking-details-modal');
+    if (modal) modal.classList.remove('open');
+    const backdrop = document.querySelector('.db-modal-backdrop');
+    // Ensure we don't close backdrop if another modal is still open
+    if (backdrop && !document.querySelector('.db-modal.open')) {
+       backdrop.classList.remove('open');
+    }
   }
 
 
@@ -5823,6 +5904,7 @@ const AdminDashboard = (() => {
     setBookingsPage,
     setBookingsQuickFilter,
     showBookingDetails,
+    closeBookingDetails,
     approveBookingModal,
     rejectBookingModal,
     submitBookingRejection,

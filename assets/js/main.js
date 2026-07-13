@@ -290,6 +290,86 @@ const App = (() => {
     });
   }
 
+  /* ---- Inventory Simulation ---- */
+  function initInventorySimulation() {
+    // 1. Initialize default state if empty
+    let inv = JSON.parse(localStorage.getItem('carInventory') || 'null');
+    if (!inv && typeof window.vehiclesData !== 'undefined') {
+      inv = {};
+      window.vehiclesData.forEach(car => {
+        inv[car.name] = { total: 5, available: 5 };
+      });
+      localStorage.setItem('carInventory', JSON.stringify(inv));
+    }
+    
+    // Default fallback if vehiclesData is not defined on this page
+    if (!inv) inv = {};
+
+    function getInv(name) {
+      if (!inv[name]) {
+        inv[name] = { total: 5, available: 5 };
+        localStorage.setItem('carInventory', JSON.stringify(inv));
+      }
+      return inv[name];
+    }
+
+    // 2. Render inventory info on cards with .badge--available
+    const badges = document.querySelectorAll('.badge--available, .booking-card__availability');
+    badges.forEach(badge => {
+      // Find the closest card container (could be v-card, car-card, booking-card, or just body if details page)
+      const card = badge.closest('.v-card, .car-card, .booking-card, .vehicle-details-card, .selected-vehicle-card') || document.body;
+      let name = null;
+
+      // Try to find car name within the same container
+      const nameEl = card.querySelector('.v-card__name, .car-card__name, .booking-card__title, .car-details-header__title, .selected-vehicle-card__title');
+      if (nameEl) {
+        name = nameEl.textContent.trim();
+      } else if (typeof window.vehiclesData !== 'undefined') {
+        // Fallback for some pages like car-details.html where name might be different
+        const urlParams = new URLSearchParams(window.location.search);
+        const carId = urlParams.get('id');
+        if (carId) {
+          const car = window.vehiclesData.find(c => String(c.id) === String(carId));
+          if (car) name = car.name;
+        }
+      }
+
+      if (name) {
+        const data = getInv(name);
+        
+        // Remove existing if any (for re-renders)
+        let existing = badge.parentNode.querySelector('.inv-sim-display');
+        if (existing) existing.remove();
+
+        const invDiv = document.createElement('div');
+        invDiv.className = 'inv-sim-display';
+        invDiv.style.cssText = 'font-size: 11px; margin-top: 6px; color: var(--color-light-text); line-height: 1.4; display: block; text-align: left; font-weight: 500; letter-spacing: -0.2px;';
+        invDiv.innerHTML = `<div>Total Cars: ${data.total}</div><div>Available Cars: ${data.available}</div>`;
+
+        // Insert after badge if badge is inside a flex container or badges container
+        if (badge.parentNode.classList.contains('v-card__badges') || badge.parentNode.classList.contains('car-card__badges')) {
+           // We'll insert it into the card body instead to avoid absolute positioning overlaps
+           const body = card.querySelector('.v-card__body, .car-card__body');
+           if (body) {
+             const specs = body.querySelector('.v-card__specs, .car-card__specs');
+             if (specs) {
+               // Add it before specs
+               body.insertBefore(invDiv, specs);
+               invDiv.style.marginBottom = '8px';
+             } else {
+               body.appendChild(invDiv);
+             }
+           } else {
+             badge.parentNode.appendChild(invDiv);
+           }
+        } else {
+           // For car-details and booking pages
+           badge.parentNode.insertBefore(invDiv, badge.nextSibling);
+        }
+      }
+    });
+  }
+
   /* ---- Initialize ---- */
   function init() {
     initStickyNavbar();
@@ -300,6 +380,7 @@ const App = (() => {
     initProfileDropdown();
     initRemovedPagesHandler();
     initPageTransition();
+    initInventorySimulation(); // Init inventory display
   }
 
   // Run on DOMContentLoaded

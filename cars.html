@@ -1670,6 +1670,20 @@
       }
     });
 
+    // --- NEW FIX FOR VERIFICATION ---
+    // Hide cars that are currently marked as "Unavailable (Rented)" in dummy localStorage
+    try {
+      const rentedCars = JSON.parse(localStorage.getItem('rentedCars') || '[]');
+      document.querySelectorAll('.v-card').forEach(card => {
+        const name = card.querySelector('.v-card__name')?.textContent.trim();
+        if (name && rentedCars.includes(name)) {
+          card.style.display = 'none';
+          card.remove(); // Remove to prevent affecting pagination counts
+        }
+      });
+    } catch (e) {}
+    // --------------------------------
+
     applyFilterAndSort();
 
   })();

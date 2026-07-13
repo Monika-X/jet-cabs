@@ -416,18 +416,49 @@
         }
 
         if (isValid) {
-          if (typeof UI !== 'undefined' && UI.showToast) {
-            UI.showToast({
-              title: 'Success',
-              message: 'Account created successfully! Redirecting to home page...',
-              type: 'success',
-              duration: 2000
-            });
-          }
+          const registerData = {
+            fullName: `${firstNameInput.value.trim()} ${lastNameInput.value.trim()}`,
+            email: emailInput.value.trim(),
+            phone: phoneInput.value.trim(),
+            password: passwordInput.value,
+            confirmPassword: confirmInput.value
+          };
 
-          setTimeout(() => {
-            window.location.href = 'index.html';
-          }, 1500);
+          fetch('http://localhost:5000/api/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(registerData)
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              localStorage.setItem('token', data.token);
+              localStorage.setItem('userRole', data.data.role);
+              if (typeof UI !== 'undefined' && UI.showToast) {
+                UI.showToast({
+                  title: 'Success',
+                  message: 'Account created successfully! Redirecting...',
+                  type: 'success',
+                  duration: 2000
+                });
+              }
+              setTimeout(() => {
+                window.location.href = 'user-dashboard.html';
+              }, 1500);
+            } else {
+              throw new Error(data.message || 'Registration failed');
+            }
+          })
+          .catch(err => {
+            if (typeof UI !== 'undefined' && UI.showToast) {
+              UI.showToast({
+                title: 'Error',
+                message: err.message,
+                type: 'error',
+                duration: 4000
+              });
+            }
+          });
         }
       });
 

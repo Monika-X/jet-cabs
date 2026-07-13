@@ -254,6 +254,84 @@
     </div>
   </div>
 
+  <!-- Booking Details Modal -->
+  <div class="db-modal" id="db-booking-details-modal" role="dialog" aria-modal="true" aria-labelledby="db-booking-details-modal-title" style="max-width: 900px; width: 95%;">
+    <div class="db-modal__header" style="border-bottom: 1px solid var(--color-border); padding-bottom: var(--space-4);">
+      <div>
+        <h3 class="db-modal__title" id="db-booking-details-modal-title" style="font-family: var(--font-heading); color: var(--color-primary); font-weight: var(--fw-bold); margin-bottom: 4px;">Booking Details</h3>
+        <div style="font-size: var(--fs-xs); color: var(--color-light-text);">ID: <span id="bd-modal-id" style="font-family: var(--font-mono); font-weight: var(--fw-bold); color: var(--color-dark-text);"></span> &bull; Status: <span id="bd-modal-status-badge"></span></div>
+      </div>
+      <button class="db-modal__close" aria-label="Close dialog" onclick="AdminDashboard.closeBookingDetails()">
+        <span class="icon"><svg aria-hidden="true"><use href="assets/icons/sprite.svg#icon-close"/></svg></span>
+      </button>
+    </div>
+    <div class="db-modal__body" style="padding: 0; max-height: 75vh; overflow-y: auto;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0;">
+        
+        <!-- Left Column -->
+        <div style="padding: var(--space-5); border-right: 1px solid var(--color-border); background: var(--color-surface);">
+          
+          <h4 style="font-size: var(--fs-small); color: var(--color-secondary); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-3);">Customer Information</h4>
+          <div style="background: var(--color-bg); padding: var(--space-3); border-radius: var(--radius-md); margin-bottom: var(--space-5);">
+            <div style="margin-bottom: var(--space-2);"><strong style="color: var(--color-dark-text); font-size: var(--fs-small);">Name:</strong> <span id="bd-modal-customer-name" style="font-size: var(--fs-small);"></span></div>
+            <div style="margin-bottom: var(--space-2);"><strong style="color: var(--color-dark-text); font-size: var(--fs-small);">Phone:</strong> <span id="bd-modal-customer-phone" style="font-size: var(--fs-small);"></span></div>
+            <div><strong style="color: var(--color-dark-text); font-size: var(--fs-small);">Email:</strong> <span id="bd-modal-customer-email" style="font-size: var(--fs-small);"></span></div>
+          </div>
+
+          <h4 style="font-size: var(--fs-small); color: var(--color-secondary); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-3);">Car Information</h4>
+          <div style="background: var(--color-bg); padding: var(--space-3); border-radius: var(--radius-md); margin-bottom: var(--space-5); display: flex; align-items: center; gap: var(--space-4);">
+            <div id="bd-modal-car-img" style="width: 100px; flex-shrink: 0;"></div>
+            <div>
+              <div id="bd-modal-car-name" style="font-weight: var(--fw-bold); color: var(--color-dark-text); font-family: var(--font-heading); margin-bottom: 2px;"></div>
+              <div id="bd-modal-car-price" style="font-size: var(--fs-small); color: var(--color-primary); font-weight: var(--fw-bold);"></div>
+            </div>
+          </div>
+
+          <h4 style="font-size: var(--fs-small); color: var(--color-secondary); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-3);">Rental Information</h4>
+          <div style="background: var(--color-bg); padding: var(--space-3); border-radius: var(--radius-md);">
+            <div style="margin-bottom: var(--space-2);"><strong style="color: var(--color-dark-text); font-size: var(--fs-small);">Booking Date:</strong> <span id="bd-modal-booking-date" style="font-size: var(--fs-small);"></span></div>
+            <div style="margin-bottom: var(--space-2);"><strong style="color: var(--color-dark-text); font-size: var(--fs-small);">Pickup Time:</strong> <span id="bd-modal-pickup-time" style="font-size: var(--fs-small);"></span></div>
+            <div style="margin-bottom: var(--space-2);"><strong style="color: var(--color-dark-text); font-size: var(--fs-small);">Return Time:</strong> <span id="bd-modal-return-time" style="font-size: var(--fs-small);"></span></div>
+            <div><strong style="color: var(--color-dark-text); font-size: var(--fs-small);">Remaining Time:</strong> <span id="bd-modal-remaining-time" style="font-size: var(--fs-small); font-family: var(--font-mono); color: var(--color-accent); font-weight: var(--fw-bold);"></span></div>
+          </div>
+
+        </div>
+
+        <!-- Right Column -->
+        <div style="padding: var(--space-5); background: var(--color-bg);">
+          
+          <h4 style="font-size: var(--fs-small); color: var(--color-secondary); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-3);">Vehicle Verification Photos</h4>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-bottom: var(--space-5);">
+            <div style="border: 1px dashed var(--color-border); border-radius: var(--radius-md); overflow: hidden; background: var(--color-surface); text-align: center; height: 120px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+              <span class="icon" style="color: var(--color-light-text); margin-bottom: var(--space-2);"><svg><use href="assets/icons/sprite.svg#icon-camera"/></svg></span>
+              <span id="bd-modal-pickup-photo-status" style="font-size: var(--fs-xs); color: var(--color-light-text); font-weight: var(--fw-semibold);">Pickup Photo<br>Pending</span>
+            </div>
+            <div style="border: 1px dashed var(--color-border); border-radius: var(--radius-md); overflow: hidden; background: var(--color-surface); text-align: center; height: 120px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+              <span class="icon" style="color: var(--color-light-text); margin-bottom: var(--space-2);"><svg><use href="assets/icons/sprite.svg#icon-camera"/></svg></span>
+              <span id="bd-modal-return-photo-status" style="font-size: var(--fs-xs); color: var(--color-light-text); font-weight: var(--fw-semibold);">Return Photo<br>Pending</span>
+            </div>
+          </div>
+
+          <h4 style="font-size: var(--fs-small); color: var(--color-secondary); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-3);">Rental Timeline</h4>
+          <div style="background: var(--color-surface); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+            <div class="db-timeline" id="bd-modal-timeline">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <div id="bd-modal-extension-history" style="margin-top: var(--space-4); display: none;">
+            <h4 style="font-size: var(--fs-small); color: var(--color-secondary); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-3);">Extension History</h4>
+            <div style="background: var(--color-surface); padding: var(--space-3); border-radius: var(--radius-md); border: 1px solid var(--color-border); font-size: var(--fs-xs); color: var(--color-dark-text);">
+              <ul style="margin: 0; padding-left: var(--space-4);" id="bd-modal-extension-list"></ul>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <!-- ============================================================
        SCRIPTS
        ============================================================ -->

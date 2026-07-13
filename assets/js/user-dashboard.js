@@ -329,14 +329,12 @@ const UserDashboard = (() => {
     ],
 
     notificationData: [
-      { id: 'N-01', type: 'success', category: 'Rental', title: 'Booking Approved', text: 'Your Mercedes-Benz AMG GT 63 S rental is now active. Enjoy the ride!', time: '2 hrs ago', read: false, priority: 'high' },
-      { id: 'N-02', type: 'info', category: 'Booking', title: 'Booking Approved', text: 'Your Tesla Model S Plaid pre-booking for Aug 1–5 has been approved.', time: '5 hrs ago', read: false, priority: 'normal' },
-      { id: 'N-03', type: 'warning', category: 'Reminder', title: 'Rental Reminder', text: 'Your AMG GT 63 S is due for return on Jul 12 at 10:00 AM.', time: '1 day ago', read: false, priority: 'high' },
-      { id: 'N-04', type: 'info', category: 'Extension', title: 'Alternative Suggested', text: 'We\'ve suggested alternative vehicles for your BMW X7 pre-booking.', time: '2 days ago', read: true, priority: 'normal' },
-      { id: 'N-05', type: 'danger', category: 'Approval', title: 'Booking Rejected', text: 'Your Porsche 911 Turbo S pre-booking was rejected due to maintenance.', time: '3 days ago', read: true, priority: 'high' },
-      { id: 'N-06', type: 'success', category: 'Vehicle', title: 'Vehicle Ready', text: 'Your Porsche 911 Turbo S verification is complete and ready.', time: '5 days ago', read: true, priority: 'normal' },
-      { id: 'N-07', type: 'warning', category: 'Vehicle', title: 'Verification Pending', text: 'Please complete your photo condition uploads for your active rental.', time: '6 days ago', read: true, priority: 'high' },
-      { id: 'N-08', type: 'info', category: 'System', title: 'System Update', text: 'JET CABS terms of service have been updated for Phase 3.', time: '1 week ago', read: true, priority: 'normal' },
+      { id: 'N-01', type: 'warning', category: 'Reminder', title: 'Rental Expires Soon', text: 'Rental expires in 1 hour.', time: '1 hr ago', read: false, priority: 'high' },
+      { id: 'N-02', type: 'warning', category: 'Reminder', title: 'Rental Expires Soon', text: 'Rental expires in 30 minutes.', time: '30 mins ago', read: false, priority: 'high' },
+      { id: 'N-03', type: 'danger', category: 'Reminder', title: 'Rental Expires Soon', text: 'Rental expires in 15 minutes.', time: '15 mins ago', read: false, priority: 'high' },
+      { id: 'N-04', type: 'success', category: 'Extension', title: 'Extension Approved', text: 'Rental extended successfully.', time: '2 hrs ago', read: true, priority: 'normal' },
+      { id: 'N-05', type: 'info', category: 'Reminder', title: 'Return Reminder', text: 'Return vehicle reminder.', time: '3 hrs ago', read: true, priority: 'normal' },
+      { id: 'N-06', type: 'success', category: 'Booking', title: 'Booking Confirmed', text: 'Booking confirmed.', time: '1 day ago', read: true, priority: 'normal' },
     ],
 
     extensionsData: [
@@ -539,7 +537,8 @@ const UserDashboard = (() => {
         'icon-layers': 'layers', 'icon-copy': 'copy', 'icon-hash': 'hash',
         'icon-filter': 'filter', 'icon-printer': 'printer', 'icon-zap': 'zap',
         'icon-tool': 'wrench', 'icon-globe': 'globe', 'icon-x-circle': 'x-circle',
-        'icon-minus': 'minus', 'icon-maximize': 'maximize-2', 'icon-minimize': 'minimize-2'
+        'icon-minus': 'minus', 'icon-maximize': 'maximize-2', 'icon-minimize': 'minimize-2',
+        'icon-warning': 'alert-triangle'
       };
       const lucideName = lucideMap[name] || name.replace('icon-', '');
       return `<i data-lucide="${lucideName}" class="${cls}"></i>`;
@@ -798,7 +797,21 @@ const UserDashboard = (() => {
       btn.addEventListener('click', (e) => { e.stopPropagation(); const open = dd.classList.contains('open'); this.closeAll(); if (!open) { dd.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); } });
       dd.addEventListener('keydown', (e) => { const links = dd.querySelectorAll('.db-header__dropdown-link'); const idx = Array.from(links).indexOf(document.activeElement); if (e.key === 'ArrowDown') { e.preventDefault(); links[(idx + 1) % links.length].focus(); } else if (e.key === 'ArrowUp') { e.preventDefault(); links[(idx - 1 + links.length) % links.length].focus(); } });
       const logoutBtn = dd.querySelector('[data-action="logout"]');
-      if (logoutBtn) logoutBtn.addEventListener('click', (e) => { e.preventDefault(); this.closeAll(); ToastController.show({ title: 'Logged Out', message: 'You have been successfully logged out.', type: 'success' }); setTimeout(() => { window.location.href = 'login.html'; }, 1500); });
+      if (logoutBtn) logoutBtn.addEventListener('click', (e) => { 
+        e.preventDefault(); 
+        this.closeAll(); 
+        
+        fetch('http://localhost:5000/api/auth/logout', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        })
+        .finally(() => {
+          localStorage.removeItem('token');
+          localStorage.removeItem('userRole');
+          ToastController.show({ title: 'Logged Out', message: 'You have been successfully logged out.', type: 'success' }); 
+          setTimeout(() => { window.location.href = 'login.html'; }, 1500); 
+        });
+      });
     },
     initNotificationPanel() {
       const btn = document.getElementById('db-notification-btn');
@@ -1154,8 +1167,8 @@ const UserDashboard = (() => {
         </div>
         <div class="db-current-rental__actions">
           <button class="btn btn--primary btn--sm" onclick="UserDashboard.showRentalDetails('${r.id}')">${Utils.icon('icon-eye','icon--sm')} View Details</button>
-          <button class="btn btn--outline btn--sm" onclick="UserDashboard.openExtensionModal('${r.id}')">${Utils.icon('icon-rotate-ccw','icon--sm')} Request Extension</button>
-          <button class="btn btn--ghost btn--sm" onclick="UserDashboard.navigateTo('support')">${Utils.icon('icon-send','icon--sm')} Contact Support</button>
+          <button class="btn btn--outline btn--sm" onclick="UserDashboard.openExtensionModal('${r.id}')">${Utils.icon('icon-rotate-ccw','icon--sm')} Extend</button>
+          <button class="btn btn--outline btn--sm" onclick="UserDashboard.openReturnModal('${r.id}')">${Utils.icon('icon-camera','icon--sm')} Return Car</button>
         </div>
       </div>
     </div>`;
@@ -1296,8 +1309,9 @@ const UserDashboard = (() => {
         </div>
         <div class="db-rental-card__actions">
           <button class="btn btn--primary btn--sm" onclick="UserDashboard.showRentalDetails('${r.id}')">${Utils.icon('icon-eye','icon--sm')} Details</button>
-          ${r.status === 'active' ? `<button class="btn btn--outline btn--sm" onclick="UserDashboard.openExtensionModal('${r.id}')">${Utils.icon('icon-rotate-ccw','icon--sm')} Extend</button>` : ''}
-          ${r.status === 'active' ? `<button class="btn btn--ghost btn--sm" onclick="UserDashboard.toast.show({title:'Issue Reported',message:'Support ticket created automatically. We will contact you.',type:'warning'})">${Utils.icon('icon-alert-triangle','icon--sm')} Report Issue</button>` : ''}
+          ${r.status === 'upcoming' ? `<button class="btn btn--outline btn--sm" onclick="UserDashboard.openPickupModal('${r.id}')">${Utils.icon('icon-camera','icon--sm')} Pickup Photo</button>` : ''}
+          ${r.status === 'active' ? `<button class="btn btn--outline btn--sm" onclick="UserDashboard.openExtensionModal('${r.id}')">${Utils.icon('icon-rotate-ccw','icon--sm')} Extend</button>
+          <button class="btn btn--outline btn--sm" onclick="UserDashboard.openReturnModal('${r.id}')">${Utils.icon('icon-camera','icon--sm')} Return Car</button>` : ''}
         </div>
       </div>
     </div>`;
@@ -3090,7 +3104,51 @@ const UserDashboard = (() => {
   /* ============================================================
      21. INITIALIZATION
      ============================================================ */
-  function init() {
+  async function init() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      window.location.href = 'login.html';
+      return;
+    }
+
+    try {
+      const res = await fetch('http://localhost:5000/api/auth/profile', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await res.json();
+      
+      if (!data.success) {
+        throw new Error(data.message);
+      }
+
+      const nameParts = data.data.fullName.split(' ');
+      DashboardState.userData.firstName = nameParts[0];
+      DashboardState.userData.lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
+      DashboardState.userData.email = data.data.email;
+      DashboardState.userData.initials = (nameParts[0][0] + (nameParts.length > 1 ? nameParts[1][0] : '')).toUpperCase();
+      if(data.data.phone) DashboardState.userData.phone = data.data.phone;
+      
+      // Update the global UI with dynamic data
+      const u = DashboardState.userData;
+      document.querySelectorAll('.db-sidebar__profile-name').forEach(el => el.textContent = u.firstName + ' ' + u.lastName);
+      document.querySelectorAll('.db-header__profile-name').forEach(el => el.textContent = u.firstName + ' ' + (u.lastName ? u.lastName.charAt(0) + '.' : ''));
+      document.querySelectorAll('.db-header__dropdown-name').forEach(el => el.textContent = u.firstName + ' ' + u.lastName);
+      document.querySelectorAll('.db-sidebar__profile-avatar, .db-header__profile-avatar').forEach(el => el.textContent = u.initials);
+      
+      const gr = document.getElementById('db-header-greeting');
+      if (gr && typeof Utils !== 'undefined' && Utils.getTimeGreeting) {
+        gr.textContent = `${Utils.getTimeGreeting()}, ${u.firstName}`;
+      } else if (gr) {
+        gr.textContent = `Welcome back, ${u.firstName}`;
+      }
+      
+    } catch (err) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('userRole');
+      window.location.href = 'login.html';
+      return;
+    }
+
     restoreUiState();
     SidebarController.init();
     HeaderController.init();
@@ -3104,10 +3162,132 @@ const UserDashboard = (() => {
     DashboardRenderer.navigate(startModule);
   }
 
+  /* ============================================================
+     NEW UI WORKFLOW MODALS (Pickup & Return)
+     ============================================================ */
+  function openPickupModal(rentalId) {
+    const r = DashboardState.rentalsData.find(x => x.id === rentalId);
+    if (!r) return;
+    
+    document.getElementById('db-photo-upload-car-details').innerHTML = `<h4 style="font-weight: 600;">${r.brand} ${r.model}</h4><p style="font-size: 14px; color: var(--color-light-text);">Pickup Photo Upload</p>`;
+    document.getElementById('db-photo-upload-warning').textContent = "Rental will start only after uploading the pickup photo.";
+    
+    const submitBtn = document.getElementById('db-photo-upload-submit-btn');
+    submitBtn.onclick = () => submitPickupPhoto(rentalId);
+    submitBtn.disabled = true;
+    
+    _resetPhotoUploadArea();
+    ModalController.open('db-photo-upload-modal');
+  }
+
+  function submitPickupPhoto(rentalId) {
+    const r = DashboardState.rentalsData.find(x => x.id === rentalId);
+    if (r) {
+      r.status = 'active'; // Update status to active
+      ToastController.show({title: 'Photo Uploaded', message: 'Pickup photo uploaded successfully. Rental timer started.', type: 'success'});
+      
+      let rented = JSON.parse(localStorage.getItem('rentedCars') || '[]');
+      if (!rented.includes(r.model)) rented.push(r.model);
+      localStorage.setItem('rentedCars', JSON.stringify(rented));
+
+      // SIMULATE INVENTORY UPDATE (DECREASE)
+      let inv = JSON.parse(localStorage.getItem('carInventory') || 'null');
+      if (!inv) inv = {};
+      if (inv[r.model] === undefined) inv[r.model] = { total: 5, available: 5 };
+      if (inv[r.model].available > 0) inv[r.model].available--;
+      localStorage.setItem('carInventory', JSON.stringify(inv));
+
+      // Also add it to extensions data so Extend Rental works properly for it
+      if (!DashboardState.extensionsData.find(e => e.rentalId === rentalId)) {
+        DashboardState.extensionsData.push({
+          id: 'EXT-' + Date.now(),
+          rentalId: r.id,
+          brand: r.brand,
+          model: r.model,
+          image: r.image,
+          currentReturnDate: r.returnDate,
+          remainingDays: r.totalDays,
+          dailyRate: r.dailyRate,
+          status: 'eligible',
+        });
+      }
+      DashboardRenderer.navigate(DashboardState.uiState.currentModule);
+    }
+    ModalController.close();
+  }
+
+  function openReturnModal(rentalId) {
+    const r = DashboardState.rentalsData.find(x => x.id === rentalId);
+    if (!r) return;
+
+    document.getElementById('db-photo-upload-car-details').innerHTML = `<h4 style="font-weight: 600;">${r.brand} ${r.model}</h4><p style="font-size: 14px; color: var(--color-light-text);">Return Photo Upload</p>`;
+    document.getElementById('db-photo-upload-warning').textContent = "Rental will end after uploading the return photo.";
+    
+    const submitBtn = document.getElementById('db-photo-upload-submit-btn');
+    submitBtn.onclick = () => submitReturnPhoto(rentalId);
+    submitBtn.disabled = true;
+    
+    _resetPhotoUploadArea();
+    ModalController.open('db-photo-upload-modal');
+  }
+
+  function submitReturnPhoto(rentalId) {
+    const r = DashboardState.rentalsData.find(x => x.id === rentalId);
+    if (r) {
+      r.status = 'returned'; // Completed
+      ToastController.show({title: 'Photo Uploaded', message: 'Return photo uploaded successfully. Rental completed.', type: 'success'});
+      
+      let rented = JSON.parse(localStorage.getItem('rentedCars') || '[]');
+      rented = rented.filter(m => m !== r.model);
+      localStorage.setItem('rentedCars', JSON.stringify(rented));
+      
+      // SIMULATE INVENTORY UPDATE (INCREASE)
+      let inv = JSON.parse(localStorage.getItem('carInventory') || 'null');
+      if (!inv) inv = {};
+      if (inv[r.model] === undefined) inv[r.model] = { total: 5, available: 4 }; // Assuming it was rented
+      if (inv[r.model].available < inv[r.model].total) inv[r.model].available++;
+      localStorage.setItem('carInventory', JSON.stringify(inv));
+      
+      DashboardRenderer.navigate(DashboardState.uiState.currentModule);
+    }
+    ModalController.close();
+  }
+
+  function _resetPhotoUploadArea() {
+    const preview = document.getElementById('db-photo-upload-preview');
+    const placeholder = document.getElementById('db-photo-upload-placeholder');
+    const removeBtnCtn = document.getElementById('db-photo-upload-remove-container');
+    const fileInput = document.getElementById('db-photo-upload-input');
+    const submitBtn = document.getElementById('db-photo-upload-submit-btn');
+    
+    preview.style.display = 'none';
+    preview.src = '';
+    placeholder.style.display = 'block';
+    removeBtnCtn.style.display = 'none';
+    fileInput.value = '';
+    submitBtn.disabled = true;
+
+    fileInput.onchange = function(e) {
+      if (e.target.files && e.target.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          preview.src = evt.target.result;
+          preview.style.display = 'block';
+          placeholder.style.display = 'none';
+          removeBtnCtn.style.display = 'block';
+          submitBtn.disabled = false;
+        };
+        reader.readAsDataURL(e.target.files[0]);
+      }
+    };
+
+    document.getElementById('db-photo-upload-remove-btn').onclick = function() {
+      _resetPhotoUploadArea();
+    };
+  }
+
   if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); }
   else { init(); }
-
-
   /* ============================================================
      22. PUBLIC API
      ============================================================ */
@@ -3141,6 +3321,10 @@ const UserDashboard = (() => {
     openFeedbackModal,
     highlightStars,
     submitFeedback,
+    openPickupModal,
+    submitPickupPhoto,
+    openReturnModal,
+    submitReturnPhoto
   };
 
 })();

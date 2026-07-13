@@ -251,6 +251,78 @@
   <!-- ============================================================
        SCRIPTS
        ============================================================ -->
+  <!-- Photo Upload Modals (Pickup and Return) -->
+  <div class="db-modal" id="db-photo-upload-modal" role="dialog" aria-modal="true" aria-labelledby="db-photo-upload-modal-title">
+    <div class="db-modal__header">
+      <h3 class="db-modal__title" id="db-photo-upload-modal-title">Upload Photo</h3>
+      <button class="db-modal__close" aria-label="Close dialog" onclick="UserDashboard.modal.close()">
+        <span class="icon"><svg><use href="assets/icons/sprite.svg#icon-close"/></svg></span>
+      </button>
+    </div>
+    <div class="db-modal__body">
+      <div id="db-photo-upload-car-details" style="margin-bottom: var(--space-4); text-align: center;">
+        <!-- Injected via JS -->
+      </div>
+      <div class="db-photo-upload-area" id="db-photo-upload-area" style="border: 2px dashed var(--color-border-main); border-radius: var(--radius-md); padding: var(--space-6); text-align: center; cursor: pointer; position: relative;">
+        <input type="file" id="db-photo-upload-input" accept="image/*" style="opacity: 0; position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer;">
+        <div id="db-photo-upload-placeholder">
+          <span class="icon" style="font-size: 2rem; color: var(--color-primary);"><svg><use href="assets/icons/sprite.svg#icon-camera"/></svg></span>
+          <p style="margin-top: var(--space-2); color: var(--color-light-text);">Click or drag photo here to upload</p>
+        </div>
+        <img id="db-photo-upload-preview" src="" alt="Preview" style="display: none; max-width: 100%; max-height: 200px; border-radius: var(--radius-sm); margin: 0 auto;">
+      </div>
+      <div id="db-photo-upload-remove-container" style="display: none; text-align: center; margin-top: var(--space-2);">
+        <button class="btn btn--ghost btn--sm" id="db-photo-upload-remove-btn" style="color: var(--color-danger);">Remove Image</button>
+      </div>
+      <p id="db-photo-upload-warning" style="margin-top: var(--space-4); font-size: var(--fs-sm); color: var(--color-warning); text-align: center; font-weight: 500;">
+        <!-- Warning text injected via JS -->
+      </p>
+    </div>
+    <div class="db-modal__footer">
+      <button class="btn btn--ghost btn--sm" onclick="UserDashboard.modal.close()">Cancel</button>
+      <button class="btn btn--primary btn--sm" id="db-photo-upload-submit-btn" disabled>Submit Photo</button>
+    </div>
+  </div>
+
+  <!-- Extend Rental Modal -->
+  <div class="db-modal" id="db-extend-rental-modal" role="dialog" aria-modal="true" aria-labelledby="db-extend-rental-modal-title">
+    <div class="db-modal__header">
+      <h3 class="db-modal__title" id="db-extend-rental-modal-title">Extend Rental</h3>
+      <button class="db-modal__close" aria-label="Close dialog" onclick="UserDashboard.modal.close()">
+        <span class="icon"><svg><use href="assets/icons/sprite.svg#icon-close"/></svg></span>
+      </button>
+    </div>
+    <div class="db-modal__body">
+      <div id="db-extend-rental-details" style="margin-bottom: var(--space-4);">
+        <!-- Injected via JS -->
+      </div>
+      <div class="form-group">
+        <label for="db-extend-hours">Additional Time</label>
+        <select id="db-extend-hours" class="form-input">
+          <option value="1">1 Hour</option>
+          <option value="2">2 Hours</option>
+          <option value="4">4 Hours</option>
+          <option value="12">12 Hours</option>
+          <option value="24">1 Day</option>
+          <option value="48">2 Days</option>
+        </select>
+      </div>
+      <div class="db-rental-detail__payment" style="margin-top: var(--space-4);">
+        <div class="db-rental-detail__payment-row db-rental-detail__payment-row--total">
+          <span>Estimated Additional Cost</span>
+          <span id="db-extend-estimated-cost">$0</span>
+        </div>
+      </div>
+    </div>
+    <div class="db-modal__footer">
+      <button class="btn btn--ghost btn--sm" onclick="UserDashboard.modal.close()">Cancel</button>
+      <button class="btn btn--primary btn--sm" id="db-extend-confirm-btn">Confirm Extension</button>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SCRIPTS
+       ============================================================ -->
   <!-- JET CABS Core (for toast system) -->
   <script src="assets/js/ui.js"></script>
   <!-- Lucide Icons CDN -->

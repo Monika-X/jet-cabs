@@ -200,19 +200,52 @@
         }
 
         if (isValid) {
-          // Trigger successful login feedback and redirect to home page
-          if (typeof UI !== 'undefined' && UI.showToast) {
-            UI.showToast({
-              title: 'Success',
-              message: 'Signing in successfully. Dashboard coming soon!',
-              type: 'success',
-              duration: 2000
-            });
-          }
-          
-          setTimeout(() => {
-            window.location.href = 'index.html';
-          }, 1500);
+          const loginData = {
+            email: emailVal,
+            password: passwordVal
+          };
+
+          fetch('http://localhost:5000/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(loginData)
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              localStorage.setItem('token', data.token);
+              localStorage.setItem('userRole', data.data.role);
+              
+              if (typeof UI !== 'undefined' && UI.showToast) {
+                UI.showToast({
+                  title: 'Success',
+                  message: `Welcome back, ${data.data.fullName.split(' ')[0]}! Redirecting...`,
+                  type: 'success',
+                  duration: 2000
+                });
+              }
+              
+              setTimeout(() => {
+                if (data.data.role === 'admin') {
+                  window.location.href = 'admin-dashboard.html';
+                } else {
+                  window.location.href = 'user-dashboard.html';
+                }
+              }, 1500);
+            } else {
+              throw new Error(data.message || 'Login failed');
+            }
+          })
+          .catch(err => {
+            if (typeof UI !== 'undefined' && UI.showToast) {
+              UI.showToast({
+                title: 'Error',
+                message: err.message,
+                type: 'error',
+                duration: 4000
+              });
+            }
+          });
         }
       });
 
