@@ -4547,7 +4547,8 @@
       const closeDetailsModal = document.getElementById('close-details-modal');
 
       document.body.addEventListener('click', (e) => {
-        if (e.target.id === 'btn-view-booking-details') {
+        const btn = e.target.closest('#btn-view-booking-details');
+        if (btn) {
           e.preventDefault();
           if (!detailsModal) return;
           
