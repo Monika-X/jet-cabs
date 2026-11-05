@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="JET CABS — Admin Dashboard. Manage fleet, bookings, users, revenue, and system operations.">
+  <title>Admin Dashboard — JET CABS</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/sprite.svg#icon-car">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- JET CABS Core Styles -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/utilities.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <!-- Dashboard Styles -->
+  <link rel="stylesheet" href="assets/css/user-dashboard.css">
+  <link rel="stylesheet" href="assets/css/admin-dashboard.css">
+</head>
+<body class="db-layout">
+
+  <!-- Skip Link -->
+  <a href="#dashboard-content" class="skip-link">Skip to dashboard content</a>
+
+  <!-- ============================================================
+       SIDEBAR
+       ============================================================ -->
+  <aside class="db-sidebar db-sidebar--admin" id="db-sidebar" role="navigation" aria-label="Admin navigation">
+
+    <!-- Sidebar Header -->
+    <div class="db-sidebar__header">
+      <a href="index.html" class="db-sidebar__logo" aria-label="JET CABS Home">
+        <span class="db-sidebar__logo-text"><span>JET</span> CABS</span>
+      </a>
+      <button class="db-sidebar__collapse-btn" id="db-sidebar-collapse" aria-label="Collapse sidebar" title="Collapse sidebar">
+        <span class="icon"><svg aria-hidden="true"><use href="assets/icons/sprite.svg#icon-chevron-left"/></svg></span>
+      </button>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <div class="db-sidebar__nav-wrapper">
+
+      <!-- Main -->
+      <div class="db-sidebar__nav-label">Main</div>
+      <nav class="db-sidebar__nav" aria-label="Admin main navigation">
+        <button class="db-sidebar__link active" data-module="overview" aria-current="page">
+          <span class="icon"><svg aria-hidden="true"><use href="assets/icons/sprite.svg#icon-grid"/></svg></span>
+          <span class="db-sidebar__link-text">Dashboard</span>
+        </button>
+        <button class="db-sidebar__link" data-module="fleet">
+          <span class="icon"><svg aria-hidden="true"><use href="assets/icons/sprite.svg#icon-car"/></svg></span>
+          <span class="db-sidebar__link-text">Fleet Management</span>
+        </button>
+        <button class="db-sidebar__link" data-module="bookings">
+          <span class="icon"><svg aria-hidden="true"><use href="assets/icons/sprite.svg#icon-clipboard"/></svg></span>
+          <span class="db-sidebar__link-text">Bookings</span>
+        </button>
+        <button class="db-sidebar__link" data-module="prebookings">
+          <span class="icon"><svg aria-hidden="true"><use href="assets/icons/sprite.svg#icon-clipboard"/></svg></span>
+          <span class="db-sidebar__link-text">Pre-bookings</span>
+        </button>
+        <button class="db-sidebar__link" data-module="users">
+          <span class="icon"><svg aria-hidden="true"><use href="assets/icons/sprite.svg#icon-users"/></svg></span>
+          <span class="db-sidebar__link-text">Customers</span>
+        </button>
+      </nav>
+
+      <!-- Operations -->
+      <div class="db-sidebar__nav-label">Operations</div>
+      <nav class="db-sidebar__nav" aria-label="Admin operations navigation">
+        <button class="db-sidebar__link" data-module="extensions">
+          <span class="icon"><svg aria-hidden="true"><use href="assets/icons/sprite.svg#icon-rotate-ccw"/></svg></span>
+          <span class="db-sidebar__link-text">Rental Extensions</span>
+        </button>
+        <button class="db-sidebar__link" data-module="notifications">
+          <span class="icon"><svg aria-hidden="true"><use href="assets/icons/sprite.svg#icon-bell"/></svg></span>
+          <span class="db-sidebar__link-text">Notifications</span>
+        </button>
+        <button class="db-sidebar__link" data-module="reports">
+          <span class="icon"><svg aria-hidden="true"><use href="assets/icons/sprite.svg#icon-file-text"/></svg></span>
+          <span class="db-sidebar__link-text">Reports</span>
+        </button>
+        <button class="db-sidebar__link" data-module="settings">
+          <span class="icon"><svg aria-hidden="true"><use href="assets/icons/sprite.svg#icon-settings"/></svg></span>
+          <span class="db-sidebar__link-text">Settings</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Sidebar Footer / Admin Profile -->
+    <div class="db-sidebar__footer">
+      <div class="db-sidebar__profile" tabindex="0" role="link" aria-label="Go to admin profile">
+        <div class="db-sidebar__profile-avatar" aria-hidden="true">JH</div>
+        <div class="db-sidebar__profile-info">
+          <div class="db-sidebar__profile-name">James Henderson <span class="db-sidebar__role-badge">Admin</span></div>
+          <div class="db-sidebar__profile-role">Super Admin</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Sidebar Overlay (mobile) -->
+  <div class="db-sidebar__overlay" id="db-sidebar-overlay" aria-hidden="true"></div>
+
+  <!-- ============================================================
+       MAIN WRAPPER
+       ============================================================ -->
+  <div class="db-main-wrapper">
+
+    <!-- ============================================================
+         HEADER
+         ============================================================ -->
+    <header class="db-header" role="banner">
+
+      <!-- Mobile Menu Toggle -->
+      <button class="db-header__menu-btn" id="db-header-menu" aria-label="Open menu">
+        <span class="icon"><svg aria-hidden="true"><use href="assets/icons/sprite.svg#icon-menu"/></svg></span>
+      </button>
+
+      <!-- Page Title -->
+      <div class="db-header__title-area">
+        <span class="db-header__greeting" id="db-header-greeting">Good morning, James</span>
+        <h1 class="db-header__title" id="db-header-title">Dashboard</h1>
+      </div>
+
+      <!-- Search -->
+      <div class="db-header__search" role="search">
+        <span class="icon db-header__search-icon"><svg aria-hidden="true"><use href="assets/icons/sprite.svg#icon-search"/></svg></span>
+        <input
+          type="search"
+          class="db-header__search-input"
+          id="db-header-search"
+          placeholder="Search fleet, bookings, users..."
+          aria-label="Search admin dashboard"
+          autocomplete="off"
+        >
+        <div class="db-header__search-results" id="db-header-search-results" role="listbox" aria-label="Search results"></div>
+      </div>
+
+      <!-- Actions -->
+      <div class="db-header__actions">
+
+        <!-- System Status -->
+        <div class="db-status-indicator db-status-indicator--online hide-mobile" title="System Online">
+          <span class="db-status-indicator__dot"></span>
+          <span>Online</span>
+        </div>
+
+        <!-- Notification Bell -->
+        <div style="position: relative;">
+          <button class="db-header__notification-btn" id="db-notification-btn" aria-label="Notifications" aria-haspopup="true">
+            <span class="icon"><svg aria-hidden="true"><use href="assets/icons/sprite.svg#icon-bell"/></svg></span>
+            <span class="db-header__notification-badge" id="db-notification-badge">3</span>
+          </button>
+
+          <!-- Notification Panel -->
+          <div class="db-notification-panel" id="db-notification-panel" role="dialog" aria-label="Admin notifications">
+            <div class="db-notification-panel__header">
+              <h2 class="db-notification-panel__title">Notifications</h2>
+              <button class="btn btn--ghost btn--sm" data-action="mark-all-read">Mark all read</button>
+            </div>
+            <div class="db-notification-panel__body">
+              <!-- Populated by JS -->
+            </div>
+            <div class="db-notification-panel__footer">
+              <a href="#" onclick="AdminDashboard.navigateTo('system'); return false;">View All Notifications</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Admin Profile -->
+        <div class="db-header__profile-wrapper" id="db-profile-wrapper">
+          <button class="db-header__profile-btn" id="db-profile-btn" aria-label="Admin account menu" aria-expanded="false" aria-haspopup="true">
+            <div class="db-header__profile-avatar" aria-hidden="true">JH</div>
+            <div class="db-header__profile-info hide-tablet">
+              <span class="db-header__profile-name">James H.</span>
+              <span class="db-header__profile-role">Super Admin</span>
+            </div>
+            <span class="icon db-header__profile-chevron hide-tablet"><svg aria-hidden="true"><use href="assets/icons/sprite.svg#icon-chevron-down"/></svg></span>
+          </button>
+
+          <!-- Profile Dropdown -->
+          <div class="db-header__dropdown" id="db-profile-dropdown" role="menu" aria-label="Admin account menu">
+            <div class="db-header__dropdown-header">
+              <div class="db-header__dropdown-avatar" aria-hidden="true">JH</div>
+              <div>
+                <div class="db-header__dropdown-name">James Henderson</div>
+                <div class="db-header__dropdown-email">james.henderson@jetcabs.com</div>
+              </div>
+            </div>
+            <div class="db-header__dropdown-body">
+              <button class="db-header__dropdown-link" role="menuitem" onclick="AdminDashboard.navigateTo('settings')">
+                <span class="icon"><svg aria-hidden="true"><use href="assets/icons/sprite.svg#icon-user"/></svg></span>
+                My Profile
+              </button>
+              <button class="db-header__dropdown-link" role="menuitem" onclick="AdminDashboard.navigateTo('settings')">
+                <span class="icon"><svg aria-hidden="true"><use href="assets/icons/sprite.svg#icon-settings"/></svg></span>
+                Settings
+              </button>
+              <button class="db-header__dropdown-link" role="menuitem" onclick="AdminDashboard.navigateTo('system')">
+                <span class="icon"><svg aria-hidden="true"><use href="assets/icons/sprite.svg#icon-bell"/></svg></span>
+                Notifications
+              </button>
+              <button class="db-header__dropdown-link" role="menuitem">
+                <span class="icon"><svg aria-hidden="true"><use href="assets/icons/sprite.svg#icon-info"/></svg></span>
+                Help Center
+              </button>
+              <div class="db-header__dropdown-divider"></div>
+              <button class="db-header__dropdown-link db-header__dropdown-link--danger" role="menuitem" data-action="logout">
+                <span class="icon"><svg aria-hidden="true"><use href="assets/icons/sprite.svg#icon-log-out"/></svg></span>
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ============================================================
+         MAIN CONTENT
+         ============================================================ -->
+    <main class="db-main" id="main-content">
+      <div id="dashboard-content" aria-live="polite">
+        <!-- Admin dashboard modules rendered by JS -->
+      </div>
+    </main>
+  </div>
+
+  <!-- ============================================================
+       SHARED MODALS
+       ============================================================ -->
+
+  <!-- Modal Backdrop -->
+  <div class="db-modal-backdrop" id="db-modal-backdrop" aria-hidden="true"></div>
+
+  <!-- Confirm Modal -->
+  <div class="db-modal" id="db-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="db-confirm-modal-title">
+    <div class="db-modal__header">
+      <h3 class="db-modal__title" id="db-confirm-modal-title">Confirm Action</h3>
+      <button class="db-modal__close" aria-label="Close dialog" onclick="AdminDashboard.modal.close()">
+        <span class="icon"><svg aria-hidden="true"><use href="assets/icons/sprite.svg#icon-close"/></svg></span>
+      </button>
+    </div>
+    <div class="db-modal__body">
+      <div class="db-modal__icon db-modal__icon--warning">
+        <span class="icon"><svg aria-hidden="true"><use href="assets/icons/sprite.svg#icon-alert-triangle"/></svg></span>
+      </div>
+      <p class="db-modal__message">Are you sure you want to proceed?</p>
+    </div>
+    <div class="db-modal__footer">
+      <button class="btn btn--ghost btn--sm" data-action="cancel">Cancel</button>
+      <button class="btn btn--primary btn--sm" data-action="confirm">Confirm</button>
+    </div>
+  </div>
+
+  <!-- Booking Details Modal -->
+  <div class="db-modal" id="db-booking-details-modal" role="dialog" aria-modal="true" aria-labelledby="db-booking-details-modal-title" style="max-width: 900px; width: 95%;">
+    <div class="db-modal__header" style="border-bottom: 1px solid var(--color-border); padding-bottom: var(--space-4);">
+      <div>
+        <h3 class="db-modal__title" id="db-booking-details-modal-title" style="font-family: var(--font-heading); color: var(--color-primary); font-weight: var(--fw-bold); margin-bottom: 4px;">Booking Details</h3>
+        <div style="font-size: var(--fs-xs); color: var(--color-light-text);">ID: <span id="bd-modal-id" style="font-family: var(--font-mono); font-weight: var(--fw-bold); color: var(--color-dark-text);"></span> &bull; Status: <span id="bd-modal-status-badge"></span></div>
+      </div>
+      <button class="db-modal__close" aria-label="Close dialog" onclick="AdminDashboard.closeBookingDetails()">
+        <span class="icon"><svg aria-hidden="true"><use href="assets/icons/sprite.svg#icon-close"/></svg></span>
+      </button>
+    </div>
+    <div class="db-modal__body" style="padding: 0; max-height: 75vh; overflow-y: auto;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0;">
+        
+        <!-- Left Column -->
+        <div style="padding: var(--space-5); border-right: 1px solid var(--color-border); background: var(--color-surface);">
+          
+          <h4 style="font-size: var(--fs-small); color: var(--color-secondary); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-3);">Customer Information</h4>
+          <div style="background: var(--color-bg); padding: var(--space-3); border-radius: var(--radius-md); margin-bottom: var(--space-5);">
+            <div style="margin-bottom: var(--space-2);"><strong style="color: var(--color-dark-text); font-size: var(--fs-small);">Name:</strong> <span id="bd-modal-customer-name" style="font-size: var(--fs-small);"></span></div>
+            <div style="margin-bottom: var(--space-2);"><strong style="color: var(--color-dark-text); font-size: var(--fs-small);">Phone:</strong> <span id="bd-modal-customer-phone" style="font-size: var(--fs-small);"></span></div>
+            <div><strong style="color: var(--color-dark-text); font-size: var(--fs-small);">Email:</strong> <span id="bd-modal-customer-email" style="font-size: var(--fs-small);"></span></div>
+          </div>
+
+          <h4 style="font-size: var(--fs-small); color: var(--color-secondary); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-3);">Car Information</h4>
+          <div style="background: var(--color-bg); padding: var(--space-3); border-radius: var(--radius-md); margin-bottom: var(--space-5); display: flex; align-items: center; gap: var(--space-4);">
+            <div id="bd-modal-car-img" style="width: 100px; flex-shrink: 0;"></div>
+            <div>
+              <div id="bd-modal-car-name" style="font-weight: var(--fw-bold); color: var(--color-dark-text); font-family: var(--font-heading); margin-bottom: 2px;"></div>
+              <div id="bd-modal-car-price" style="font-size: var(--fs-small); color: var(--color-primary); font-weight: var(--fw-bold);"></div>
+            </div>
+          </div>
+
+          <h4 style="font-size: var(--fs-small); color: var(--color-secondary); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-3);">Rental Information</h4>
+          <div style="background: var(--color-bg); padding: var(--space-3); border-radius: var(--radius-md);">
+            <div style="margin-bottom: var(--space-2);"><strong style="color: var(--color-dark-text); font-size: var(--fs-small);">Booking Date:</strong> <span id="bd-modal-booking-date" style="font-size: var(--fs-small);"></span></div>
+            <div style="margin-bottom: var(--space-2);"><strong style="color: var(--color-dark-text); font-size: var(--fs-small);">Pickup Time:</strong> <span id="bd-modal-pickup-time" style="font-size: var(--fs-small);"></span></div>
+            <div style="margin-bottom: var(--space-2);"><strong style="color: var(--color-dark-text); font-size: var(--fs-small);">Return Time:</strong> <span id="bd-modal-return-time" style="font-size: var(--fs-small);"></span></div>
+            <div><strong style="color: var(--color-dark-text); font-size: var(--fs-small);">Remaining Time:</strong> <span id="bd-modal-remaining-time" style="font-size: var(--fs-small); font-family: var(--font-mono); color: var(--color-accent); font-weight: var(--fw-bold);"></span></div>
+          </div>
+
+        </div>
+
+        <!-- Right Column -->
+        <div style="padding: var(--space-5); background: var(--color-bg);">
+          
+          <h4 style="font-size: var(--fs-small); color: var(--color-secondary); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-3);">Vehicle Verification Photos</h4>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-bottom: var(--space-5);">
+            <div style="border: 1px dashed var(--color-border); border-radius: var(--radius-md); overflow: hidden; background: var(--color-surface); text-align: center; height: 120px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+              <span class="icon" style="color: var(--color-light-text); margin-bottom: var(--space-2);"><svg><use href="assets/icons/sprite.svg#icon-camera"/></svg></span>
+              <span id="bd-modal-pickup-photo-status" style="font-size: var(--fs-xs); color: var(--color-light-text); font-weight: var(--fw-semibold);">Pickup Photo<br>Pending</span>
+            </div>
+            <div style="border: 1px dashed var(--color-border); border-radius: var(--radius-md); overflow: hidden; background: var(--color-surface); text-align: center; height: 120px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+              <span class="icon" style="color: var(--color-light-text); margin-bottom: var(--space-2);"><svg><use href="assets/icons/sprite.svg#icon-camera"/></svg></span>
+              <span id="bd-modal-return-photo-status" style="font-size: var(--fs-xs); color: var(--color-light-text); font-weight: var(--fw-semibold);">Return Photo<br>Pending</span>
+            </div>
+          </div>
+
+          <h4 style="font-size: var(--fs-small); color: var(--color-secondary); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-3);">Rental Timeline</h4>
+          <div style="background: var(--color-surface); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+            <div class="db-timeline" id="bd-modal-timeline">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <div id="bd-modal-extension-history" style="margin-top: var(--space-4); display: none;">
+            <h4 style="font-size: var(--fs-small); color: var(--color-secondary); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-3);">Extension History</h4>
+            <div style="background: var(--color-surface); padding: var(--space-3); border-radius: var(--radius-md); border: 1px solid var(--color-border); font-size: var(--fs-xs); color: var(--color-dark-text);">
+              <ul style="margin: 0; padding-left: var(--space-4);" id="bd-modal-extension-list"></ul>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SCRIPTS
+       ============================================================ -->
+  <!-- JET CABS Core (for toast system) -->
+  <script src="assets/js/ui.js"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <!-- Admin Dashboard -->
+  <script src="assets/js/admin-dashboard.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,466 @@
+/* ============================================================
+   JET CABS — LOGIN PAGE SPECIFIC STYLES
+   All rules scoped strictly under .login-page to prevent pollution.
+   ============================================================ */
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: var(--color-bg);
+  position: relative;
+  overflow-y: auto;
+  box-sizing: border-box;
+  font-family: var(--font-body);
+}
+
+/* 1. Subtle Accent Background Tints - reduced diameter & moved to edges */
+.login-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 95% 5%, rgba(198, 169, 98, 0.05) 0%, transparent 28%),
+              radial-gradient(circle at 5% 95%, rgba(198, 169, 98, 0.05) 0%, transparent 28%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 2. Vertically Centered Wrapper Shell */
+.login-page .auth-shell {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
+}
+
+/* 3. Horizontal Brand Area */
+.login-page .login-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: var(--fw-bold);
+  color: var(--color-dark-text);
+  text-decoration: none;
+  transition: transform var(--transition-base);
+  margin-top: 0;
+  margin-bottom: 18px;
+}
+
+.login-page .login-logo:hover {
+  transform: translateY(-1px);
+}
+
+.login-page .login-logo-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-logo-img {
+  position: absolute;
+  width: 135px;
+  height: 90px;
+  max-width: none;
+  left: -50px;
+  top: -25px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.login-page .login-logo span {
+  color: var(--color-primary);
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+/* 4. Centered Welcome Area */
+.login-page .login-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 430px;
+  margin-bottom: 28px;
+}
+
+.login-page .login-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 2.5rem);
+  font-weight: var(--fw-regular);
+  color: var(--color-dark-text);
+  line-height: var(--lh-tight);
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.login-page .login-title .highlight {
+  background: linear-gradient(135deg, var(--color-secondary), var(--color-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.login-page .login-subtitle {
+  font-size: var(--fs-small);
+  color: var(--color-light-text);
+  line-height: var(--lh-normal);
+  margin: 0;
+  max-width: 380px;
+}
+
+/* 5. Compact Authentication Card */
+.login-page .login-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  padding: 32px 32px 30px;
+  width: min(calc(100vw - 32px), 430px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+  box-sizing: border-box;
+}
+
+/* 6. Form Fields & Elements */
+.login-page .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.login-page .form-group label {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--color-light-text);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+  padding: 0;
+  display: block;
+  text-align: left;
+  position: static;
+  transform: none;
+}
+
+.login-page .form-group label .required {
+  color: var(--color-danger);
+}
+
+.login-page .input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.login-page .form-input {
+  width: 100%;
+  height: 52px;
+  box-sizing: border-box;
+  padding: 0 16px 0 48px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  background: var(--color-bg);
+  color: var(--color-dark-text);
+  transition: all var(--transition-base);
+}
+
+.login-page .form-input[type="password"],
+.login-page .form-input[type="text"] {
+  padding-right: 48px;
+}
+
+.login-page .form-input:focus {
+  outline: none;
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 3px var(--color-accent-100);
+  background: var(--color-card);
+}
+
+.login-page .input-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-light-text);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.login-page .input-icon svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+/* Password Toggle Icon */
+.login-page .password-toggle {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-light-text);
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  transition: color var(--transition-base);
+  z-index: 2;
+  padding: 0;
+}
+
+.login-page .password-toggle:hover {
+  color: var(--color-secondary);
+}
+
+.login-page .password-toggle svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+/* Form Validation Styling */
+.login-page .form-input.error {
+  border-color: var(--color-danger) !important;
+  background: rgba(220, 38, 38, 0.01);
+}
+
+.login-page .form-error {
+  color: var(--color-danger);
+  font-size: var(--fs-xs);
+  margin-top: 4px;
+  display: none;
+}
+
+.login-page .form-error.visible {
+  display: block;
+}
+
+/* 7. Remember Me + Forgot Password Row */
+.login-page .login-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 18px;
+  margin-bottom: 0;
+  font-size: var(--fs-small);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.login-page .remember-me {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  color: var(--color-light-text);
+  user-select: none;
+}
+
+.login-page .remember-me input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  position: relative;
+  transition: all var(--transition-base);
+  background: var(--color-bg);
+}
+
+.login-page .remember-me input[type="checkbox"]:checked {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.login-page .remember-me input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.login-page .remember-me input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 2px;
+}
+
+.login-page .forgot-link {
+  color: var(--color-secondary);
+  text-decoration: none;
+  font-weight: var(--fw-medium);
+  transition: color var(--transition-base);
+}
+
+.login-page .forgot-link:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+/* 8. Full-Width Sign In Button */
+.login-page .submit-btn {
+  width: 100%;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-weight: var(--fw-semibold);
+  margin-top: 22px;
+  margin-bottom: 0;
+  box-sizing: border-box;
+}
+
+/* 9. Minimal Social Divider */
+.login-page .social-divider {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 14px;
+  margin: 24px 0 20px;
+  box-sizing: border-box;
+}
+
+.login-page .social-divider .divider-line {
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.login-page .social-divider .divider-text {
+  flex-shrink: 0;
+  white-space: nowrap;
+  color: var(--color-light-text);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* 10. OAuth Social Buttons */
+.login-page .social-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.login-page .social-btn {
+  width: 100%;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  color: var(--color-dark-text);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.login-page .social-btn:hover {
+  border-color: var(--color-primary);
+  background: var(--color-accent-50);
+  transform: translateY(-1px);
+}
+
+.login-page .social-btn:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 2px;
+}
+
+.login-page .social-btn svg {
+  flex-shrink: 0;
+}
+
+/* 11. Create Account Footer */
+.login-page .login-footer {
+  text-align: center;
+  font-size: var(--fs-small);
+  color: var(--color-light-text);
+  margin-top: 24px;
+  margin-bottom: 0;
+}
+
+.login-page .login-footer a {
+  color: var(--color-primary);
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+  transition: color var(--transition-base);
+}
+
+.login-page .login-footer a:hover {
+  color: var(--color-secondary);
+  text-decoration: underline;
+}
+
+/* ============================================================
+   12. RESPONSIVE MEDIA QUERIES
+   ============================================================ */
+@media (max-width: 480px) {
+  .login-page .auth-shell {
+    padding: 24px 12px;
+  }
+  .login-page .login-card {
+    width: calc(100% - 24px);
+    padding: 24px 20px;
+  }
+  .login-page .login-title {
+    font-size: 1.875rem;
+  }
+  .login-page .login-options {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+}
+
+@media (max-height: 650px) {
+  .login-page .auth-shell {
+    justify-content: flex-start;
+    padding: var(--space-8) 16px;
+  }
+}

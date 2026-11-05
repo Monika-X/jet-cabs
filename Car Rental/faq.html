@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Search the JET CABS Help Center. Find answers regarding vehicle verification, rental extensions, security deposit returns, and booking modification rules.">
+  <title>Help Center & FAQ — JET CABS</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/sprite.svg#icon-car">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/utilities.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/pages/faq.css">
+</head>
+<body>
+
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="navbar__logo">
+        <span class="navbar__logo-text"><span>JET</span> CABS</span>
+      </a>
+      <div class="navbar__links">
+        <a href="index.html" class="navbar__link">Home</a>
+        <a href="about.html" class="navbar__link">About</a>
+        <a href="cars.html" class="navbar__link">Cars</a>
+        <a href="services.html" class="navbar__link">Services</a>
+        <a href="contact.html" class="navbar__link">Contact</a>
+      </div>
+      <div class="navbar__actions">
+        <div class="navbar__profile-menu-wrapper">
+          <button class="navbar__profile-btn" aria-label="Open account menu" aria-expanded="false" aria-haspopup="true">
+            <span class="icon"><svg><use href="assets/icons/sprite.svg#icon-user"/></svg></span>
+          </button>
+          <div class="profile-dropdown">
+            <a href="login.html" class="profile-dropdown__link">
+              <span class="icon"><svg><use href="assets/icons/sprite.svg#icon-user"/></svg></span>
+              Login / Signup
+            </a>
+            <a href="user-dashboard.html" class="profile-dropdown__link dashboard-placeholder">
+              <span class="icon"><svg><use href="assets/icons/sprite.svg#icon-users"/></svg></span>
+              User Dashboard
+            </a>
+            <a href="admin-dashboard.html" class="profile-dropdown__link dashboard-placeholder">
+              <span class="icon"><svg><use href="assets/icons/sprite.svg#icon-shield-check"/></svg></span>
+              Admin Dashboard
+            </a>
+          </div>
+        </div>
+      </div>
+      <button class="navbar__toggle" aria-label="Toggle mobile menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="navbar__mobile-overlay"></div>
+  <div class="navbar__mobile">
+    <a href="index.html" class="navbar__link">Home</a>
+    <a href="about.html" class="navbar__link">About</a>
+    <a href="cars.html" class="navbar__link">Cars</a>
+    <a href="services.html" class="navbar__link">Services</a>
+    <a href="contact.html" class="navbar__link">Contact</a>
+    
+  </div>
+
+  <!-- HERO -->
+  <section class="faq-hero">
+    <div class="faq-hero__overlay"></div>
+    <div class="container">
+      <div class="faq-hero__content scroll-reveal">
+        <div class="faq-hero__badge">Knowledge Base</div>
+        <h1 class="faq-hero__title">Help & <span class="highlight">FAQs</span></h1>
+        <p class="faq-hero__desc">Search our repository for instant guides on pre-rental inspections, duration extensions, account setups, and policy checklists.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEARCH PANEL SECTION -->
+  <section class="faq-search-section">
+    <div class="container">
+      <div class="faq-search__card scroll-reveal" style="--delay:.2s">
+        <div class="faq-search-input-box">
+          <div class="faq-search-input-wrapper">
+            <span class="faq-search-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-search"/></svg></span></span>
+            <input type="text" id="faq-search-input" placeholder="Search popular questions, articles, or policies..." aria-label="Search FAQ database">
+          </div>
+          <button type="button" class="btn btn--primary btn--md faq-search-btn">Search</button>
+        </div>
+        <div class="popular-searches">
+          Popular Searches: 
+          <a href="#booking">Booking Process</a>, 
+          <a href="#verification">Verification Process</a>, 
+          <a href="#extension">Extension Approvals</a>, 
+          <a href="#policies">Late Returns Policy</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BREADCRUMB -->
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb__list">
+        <li class="breadcrumb__item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb__separator">›</li>
+        <li class="breadcrumb__item active">Help Center</li>
+      </ol>
+    </div>
+  </nav>
+
+  <main id="main-content">
+
+    <!-- HELP CATEGORIES -->
+    <section class="section faq-categories-section">
+      <div class="container">
+        <div class="section-header scroll-reveal">
+          <div class="section-header__badge">Knowledge Base</div>
+          <h2 class="section-header__title">Browse by Category</h2>
+          <p class="section-header__subtitle">Select a topic below to quickly scroll to the answers you need.</p>
+        </div>
+        <div class="faq-cats-grid scroll-reveal">
+          <a href="#booking" class="faq-cat-card">
+            <div class="faq-cat-card__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-clipboard"/></svg></span></div>
+            <div class="faq-cat-card__title">Booking</div>
+            <div class="faq-cat-card__desc">Making and changing reservations</div>
+          </a>
+          <a href="#vehicles" class="faq-cat-card">
+            <div class="faq-cat-card__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-car"/></svg></span></div>
+            <div class="faq-cat-card__title">Vehicles</div>
+            <div class="faq-cat-card__desc">Fleet collections & maintenance</div>
+          </a>
+          <a href="#verification" class="faq-cat-card">
+            <div class="faq-cat-card__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-camera"/></svg></span></div>
+            <div class="faq-cat-card__title">Verification</div>
+            <div class="faq-cat-card__desc">Pre-rental diagnostics uploads</div>
+          </a>
+          <a href="#extension" class="faq-cat-card">
+            <div class="faq-cat-card__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-clock"/></svg></span></div>
+            <div class="faq-cat-card__title">Rental Extension</div>
+            <div class="faq-cat-card__desc">Extending trip durations</div>
+          </a>
+          <a href="#account" class="faq-cat-card">
+            <div class="faq-cat-card__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-user"/></svg></span></div>
+            <div class="faq-cat-card__title">Account</div>
+            <div class="faq-cat-card__desc">Credentials, logins, profiles</div>
+          </a>
+          <a href="#notifications" class="faq-cat-card">
+            <div class="faq-cat-card__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-bell"/></svg></span></div>
+            <div class="faq-cat-card__title">Notifications</div>
+            <div class="faq-cat-card__desc">Reminders & updates settings</div>
+          </a>
+          <a href="#payments" class="faq-cat-card">
+            <div class="faq-cat-card__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-credit-card"/></svg></span></div>
+            <div class="faq-cat-card__title">Payments</div>
+            <div class="faq-cat-card__desc">Taxes, billing, security deposits</div>
+          </a>
+          <a href="#policies" class="faq-cat-card">
+            <div class="faq-cat-card__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-shield-check"/></svg></span></div>
+            <div class="faq-cat-card__title">Policies</div>
+            <div class="faq-cat-card__desc">Cancellation, damages, late returns</div>
+          </a>
+          <a href="#articles" class="faq-cat-card">
+            <div class="faq-cat-card__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-file-text"/></svg></span></div>
+            <div class="faq-cat-card__title">Guides</div>
+            <div class="faq-cat-card__desc">Detailed support articles</div>
+          </a>
+          <a href="#support" class="faq-cat-card">
+            <div class="faq-cat-card__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-mail"/></svg></span></div>
+            <div class="faq-cat-card__title">Support</div>
+            <div class="faq-cat-card__desc">Advisor channels, help desks</div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TWO COLUMN CONTENT GRID -->
+    <section class="section faq-main-section">
+      <div class="container">
+        <div class="faq-layout">
+
+          <!-- LEFT COLUMN (FAQs Accordions & Guides) -->
+          <div class="faq-column scroll-reveal">
+            
+            <!-- 1. Booking FAQ -->
+            <div class="faq-sec" id="booking">
+              <h2 class="faq-sec__title"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-clipboard"/></svg></span> Booking Questions</h2>
+              <div class="faq-list">
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    How do I book a vehicle?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">Browse the Fleet, choose your vehicle, select daily or hourly options on the Booking Page, specify times, complete initial profiles details, and submit request. An admin will review it immediately.</p>
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    How long does booking approval take?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">Our team reviews requests 24/7. Approvals are typically processed within 10 to 15 minutes, with instant email and dashboard notifications alerts sent to your account.</p>
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    Can I cancel my booking?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">Yes. Cancellations are free up to 24 hours before your pickup appointment. Later cancellations might be liable to late cancellation fees.</p>
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    Can I modify my booking?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">You can modify dates, pick-up showroom location, or vehicle category up to 12 hours before scheduled handover times, subject to garage availabilities.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Vehicle FAQ -->
+            <div class="faq-sec" id="vehicles">
+              <h2 class="faq-sec__title"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-car"/></svg></span> Fleet & Vehicles Questions</h2>
+              <div class="faq-list">
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    What vehicle categories are available?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">We offer Luxury Sedans (BMW, Mercedes-Benz), Sports Supercars (Ferrari, Lamborghini, Porsche 911), Premium SUVs (Range Rover, Urus), and Electric Powertrains (Tesla, Taycan).</p>
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    How do I choose the right vehicle?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">Evaluate passengers capacity, luggage sizes, fuel economy preferences, and speed capabilities. You can consult detailed checklists on our fleet detail pages.</p>
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    Are vehicles regularly maintained?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">Absolutely. Every sports and luxury model goes through extensive diagnostics, sanitization, fluid checks, and wheel alignment audits between bookings.</p>
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    How is vehicle availability updated?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">All availabilities are updated live in our database. Reserved vehicles are instantly grayed out on calendar dates to eliminate double bookings conflicts.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Vehicle Verification FAQ -->
+            <div class="faq-sec" id="verification">
+              <h2 class="faq-sec__title"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-camera"/></svg></span> Pre-Rental Vehicle Verification FAQ</h2>
+              <div class="faq-list">
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    Why must I verify the vehicle?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">Verification captures physical status before handover. Pre-rental inspection reports protect you, ensuring no liability charges apply for pre-existing scratches.</p>
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    When can I upload vehicle photos?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">The camera upload button unlocks on your dashboard active rentals screen once pickup starts, or after physical keys are checked out by showroom dispatchers.</p>
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    How many photos are required?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">We request 4 exterior corner images, 1 interior dashboard console image, and 1 fuel/charge gauge reading image to generate verified reports.</p>
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    What happens after verification?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">Uploaded pictures are saved in the client contract files. Verification is marked completed, and key handover is approved immediately.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. Rental Extension FAQ -->
+            <div class="faq-sec" id="extension">
+              <h2 class="faq-sec__title"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-clock"/></svg></span> Rental Duration Extensions</h2>
+              <div class="faq-list">
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    How do I request a rental extension?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">Go to Dashboard > Extend Duration. Specify extra days, review billing breakdowns (daily rate remains same), and submit requests to admin panels.</p>
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    When should I request an extension?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">Submit requests at least 12 hours before original return deadlines. Late requests risk conflicts with subsequent reservations, leading to decline outcomes.</p>
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    What happens after submitting an extension request?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">Our team verifies next booking reserves. If clear, the extension is approved, new timelines are set, and deposit authorizations remain unchanged.</p>
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    How will I know if it is approved?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">Approval notifications alerts are dispatched via email and show up instantly under notifications in your dashboard. Active rental returns dates auto-adjust.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 5. Account FAQ -->
+            <div class="faq-sec" id="account">
+              <h2 class="faq-sec__title"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-user"/></svg></span> Profile & Account Help</h2>
+              <div class="faq-list">
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    How do I create an account?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">Click Register, enter credentials, verify email addresses, upload your NY driver license file, and wait 15 minutes for security status validation.</p>
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    How do I reset my password?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">Click 'Forgot Password' on the login screen, enter your registered email address, click the recovery link sent to your inbox (expires in 15 mins), and specify new strong passwords.</p>
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    How do I update my profile?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">Log into Profile, select Personal Details or Address, update information, upload new documents if license expires, and click save options.</p>
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    How do I manage notifications?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">Under Profile Settings, use the toggle switches to choose whether to receive email notices, browser push alerts, or promotional seasonal discount updates.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6. Notifications FAQ -->
+            <div class="faq-sec" id="notifications">
+              <h2 class="faq-sec__title"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-bell"/></svg></span> Notifications & Alerts FAQ</h2>
+              <div class="faq-list">
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    Why am I receiving reminders?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">Reminders protect drivers from late return penalties. Alerts are automatically triggered 24 hours and 6 hours before contract expirations.</p>
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    How do booking notifications work?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">Status changes (Review → Approved/Rejected) automatically trigger instant alerts in your inbox and send copy PDFs to your email.</p>
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    How do rental reminders work?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">Scheduled pickups and returns details are pushed to notifications to guide you on showroom addresses and grace periods.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 7. Payments FAQ -->
+            <div class="faq-sec" id="payments">
+              <h2 class="faq-sec__title"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-credit-card"/></svg></span> Billing & Security Deposits</h2>
+              <div class="faq-list">
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    What payment methods do you accept?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">We accept all major credit cards including Visa, Mastercard, American Express, and Discover. We also accept direct bank transfers for long-term rentals. Cash and prepaid cards are not accepted.</p>
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    Is a security deposit required?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">Yes, a security deposit is required for all vehicles. The amount ranges from $1,000 to $2,500 depending on the vehicle class. This is processed as a temporary authorization hold on your credit card.</p>
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    When is the security deposit released?
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">The security deposit authorization hold is released immediately upon safe return of the vehicle with no new damage. It typically takes 3 to 5 business days to clear, depending on your card issuer.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 8. Policies FAQ -->
+            <div class="faq-sec" id="policies">
+              <h2 class="faq-sec__title"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-shield-check"/></svg></span> General Policies & Guidelines</h2>
+              <div class="faq-list">
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    Rental Policy
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">Drivers must be 21+ years (25+ for high performance sports supercars), hold a physical original driving license valid in NY, and submit security deposits.</p>
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    Cancellation Policy
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">Free cancellation up to 24h prior to pickup. Cancellations within 24h are charged a flat rate penalty of 1 day's rental fee, with rest refunded.</p>
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    Late Return Policy
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">We offer a 59-minute grace period. Later returns trigger hourly penalty rates automatically unless extensions were previously approved.</p>
+                  </div>
+                </div>
+                <div class="faq-item">
+                  <button class="faq-item__question" aria-expanded="false">
+                    Vehicle Damage Policy
+                    <span class="faq-item__toggle">+</span>
+                  </button>
+                  <div class="faq-item__answer">
+                    <p class="faq-item__answer-text">Comprehensive coverage is included. Drivers are liable for insurance deductibles ($500) if damage reports occur during active rental periods.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Support Guides / Articles -->
+            <div class="faq-sec" id="articles">
+              <h2 class="faq-sec__title"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-file-text"/></svg></span> Support Guides & Manuals</h2>
+              <div class="art-grid">
+                <a href="#" class="art-card">
+                  <div class="art-card__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-clipboard"/></svg></span></div>
+                  <div class="art-card__body">
+                    <h3 class="art-card__title">Booking Guide</h3>
+                    <p class="art-card__desc">Complete details on making reservations.</p>
+                  </div>
+                </a>
+                <a href="#" class="art-card">
+                  <div class="art-card__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-lock"/></svg></span></div>
+                  <div class="art-card__body">
+                    <h3 class="art-card__title">Vehicle Pickup Guide</h3>
+                    <p class="art-card__desc">Showroom protocols and checklists.</p>
+                  </div>
+                </a>
+                <a href="#" class="art-card">
+                  <div class="art-card__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></div>
+                  <div class="art-card__body">
+                    <h3 class="art-card__title">Vehicle Return Guide</h3>
+                    <p class="art-card__desc">Fuel requirements and deposits checks.</p>
+                  </div>
+                </a>
+                <a href="#" class="art-card">
+                  <div class="art-card__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-clock"/></svg></span></div>
+                  <div class="art-card__body">
+                    <h3 class="art-card__title">Rental Extension Guide</h3>
+                    <p class="art-card__desc">Rules for changing duration scales.</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <!-- Video Tutorials -->
+            <div class="faq-sec" id="videos">
+              <h2 class="faq-sec__title"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-play"/></svg></span> Video Tutorials</h2>
+              <div class="art-grid">
+                <div class="video-card">
+                  <div class="video-card__thumb">
+                    <img src="assets/images/faq-booking-tutorial.webp" alt="How to Book a Luxury Rental Car Online" class="video-card__img">
+                    <div class="video-card__play-btn">
+                      <span class="icon icon--sm">
+                        <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor">
+                          <polygon points="5 3 19 12 5 21 5 3"/>
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="video-card__body">
+                    <h3 class="video-card__title">Booking Tutorial</h3>
+                    <p class="video-card__desc">How to book a supercar in under 2 minutes.</p>
+                  </div>
+                </div>
+                <div class="video-card">
+                  <div class="video-card__thumb">
+                    <img src="assets/images/faq-vehicle-verification.webp" alt="How to Complete Pre-Rental Vehicle Verification" class="video-card__img">
+                    <div class="video-card__play-btn">
+                      <span class="icon icon--sm">
+                        <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor">
+                          <polygon points="5 3 19 12 5 21 5 3"/>
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="video-card__body">
+                    <h3 class="video-card__title">Vehicle Verification Guide</h3>
+                    <p class="video-card__desc">How to take and upload condition reporting photos.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RIGHT COLUMN (Most Viewed & Helplines) -->
+          <div class="rh-column scroll-reveal">
+
+            <!-- Popular Questions list widget -->
+            <div class="pop-card">
+              <h3 class="pop-card__title"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-zap"/></svg></span> Popular Questions</h3>
+              <div class="pop-list">
+                <a href="#verification" class="pop-item">Why must I verify the vehicle before pickup?</a>
+                <a href="#extension" class="pop-item">How do I request a rental extension?</a>
+                <a href="#policies" class="pop-item">What is the late return grace period?</a>
+                <a href="#booking" class="pop-item">Can I cancel my booking for free?</a>
+                <a href="#account" class="pop-item">How do I reset my account password?</a>
+              </div>
+            </div>
+
+            <!-- Quick Actions Grid -->
+            <div class="pop-card">
+              <h3 class="pop-card__title"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span> Quick Actions</h3>
+              <div class="rh-quick-grid">
+                <a href="cars.html" class="rh-quick-btn">
+                  <div class="rh-quick-btn__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-car"/></svg></span></div>
+                  Browse fleet
+                </a>
+                <a href="contact.html" class="rh-quick-btn">
+                  <div class="rh-quick-btn__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-mail"/></svg></span></div>
+                  Help Center
+                </a>
+                <a href="rental-history.html" class="rh-quick-btn">
+                  <div class="rh-quick-btn__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-clipboard"/></svg></span></div>
+                  History
+                </a>
+                <a href="dashboard.html" class="rh-quick-btn">
+                  <div class="rh-quick-btn__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></div>
+                  Dashboard
+                </a>
+              </div>
+            </div>
+
+            <!-- Still Need Help Contact cards -->
+            <div class="pop-card" id="support">
+              <h3 class="pop-card__title"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-mail"/></svg></span> Support Helpline</h3>
+              <div class="rh-support-list">
+                <div class="rh-support-item">
+                  <span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-phone"/></svg></span></span>
+                  <div><strong>Call:</strong> +1 (555) 123-4567</div>
+                </div>
+                <div class="rh-support-item">
+                  <span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-mail"/></svg></span></span>
+                  <div><strong>Email:</strong> support@jetcabs.com</div>
+                </div>
+                <div class="rh-support-item">
+                  <span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-bell"/></svg></span></span>
+                  <div><strong>Emergency Desk:</strong> Option 9 (24/7)</div>
+                </div>
+                <div class="rh-support-item">
+                  <span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-message-square"/></svg></span></span>
+                  <div><strong>WhatsApp Support:</strong> Available online</div>
+                </div>
+                <div class="rh-support-item">
+                  <span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-clock"/></svg></span></span>
+                  <div><strong>Hours:</strong> Mon - Sat, 8:00 AM - 8:00 PM</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Customer Satisfaction metrics -->
+            <div class="pop-card">
+              <h3 class="pop-card__title"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-clipboard"/></svg></span> Satisfaction Metrics</h3>
+              <div class="satisfaction-grid">
+                <div class="satisfaction-card">
+                  <div class="satisfaction-card__val">99.4%</div>
+                  <div>Support Rating</div>
+                </div>
+                <div class="satisfaction-card">
+                  <div class="satisfaction-card__val">&lt; 15m</div>
+                  <div>Resolution Time</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Need More Help Card -->
+            <div class="pop-card">
+              <div class="pop-card__eyebrow-wrap">
+                <span class="icon icon--sm pop-card__eyebrow-icon"><svg><use href="assets/icons/sprite.svg#icon-info"/></svg></span>
+                <span class="pop-card__eyebrow">Support Escalation</span>
+              </div>
+              <h3 class="pop-card__title no-icon">Need More Help?</h3>
+              <p class="pop-card__desc">Connect with our support team for personalized assistance with bookings, vehicles, payments, or account issues.</p>
+              <div class="pop-card__actions">
+                <a href="contact.html" class="btn btn--primary btn--sm">Contact Support</a>
+                <a href="contact.html" class="pop-card__text-link">Visit Help Center</a>
+              </div>
+            </div>
+
+            <!-- Help Center Resources Card -->
+            <div class="pop-card">
+              <h3 class="pop-card__title"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-file-text"/></svg></span> Help Center Resources</h3>
+              <div class="resource-list">
+                <a href="#policies" class="resource-row">
+                  <span class="icon icon--sm resource-row__icon"><svg><use href="assets/icons/sprite.svg#icon-shield-check"/></svg></span>
+                  <span class="resource-row__title">Rental Policies</span>
+                  <span class="icon icon--xs resource-row__arrow"><svg><use href="assets/icons/sprite.svg#icon-chevron-right"/></svg></span>
+                </a>
+                <a href="#articles" class="resource-row">
+                  <span class="icon icon--sm resource-row__icon"><svg><use href="assets/icons/sprite.svg#icon-car"/></svg></span>
+                  <span class="resource-row__title">Vehicle Pickup Guide</span>
+                  <span class="icon icon--xs resource-row__arrow"><svg><use href="assets/icons/sprite.svg#icon-chevron-right"/></svg></span>
+                </a>
+                <a href="#payments" class="resource-row">
+                  <span class="icon icon--sm resource-row__icon"><svg><use href="assets/icons/sprite.svg#icon-credit-card"/></svg></span>
+                  <span class="resource-row__title">Payment & Deposit Help</span>
+                  <span class="icon icon--xs resource-row__arrow"><svg><use href="assets/icons/sprite.svg#icon-chevron-right"/></svg></span>
+                </a>
+                <a href="#account" class="resource-row">
+                  <span class="icon icon--sm resource-row__icon"><svg><use href="assets/icons/sprite.svg#icon-lock"/></svg></span>
+                  <span class="resource-row__title">Account & Security Guide</span>
+                  <span class="icon icon--xs resource-row__arrow"><svg><use href="assets/icons/sprite.svg#icon-chevron-right"/></svg></span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Still Searching Card -->
+            <div class="pop-card">
+              <h3 class="pop-card__title"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-search"/></svg></span> Still Searching?</h3>
+              <p class="pop-card__desc">Try another keyword or quickly return to the FAQ search.</p>
+              <div class="pop-card__actions">
+                <button type="button" class="btn btn--ghost btn--sm sidebar-search-trigger">Search FAQs</button>
+              </div>
+            </div>
+
+            <!-- Rental Checklist Card -->
+            <div class="pop-card">
+              <div class="pop-card__eyebrow-wrap">
+                <span class="icon icon--sm pop-card__eyebrow-icon"><svg><use href="assets/icons/sprite.svg#icon-check-circle"/></svg></span>
+                <span class="pop-card__eyebrow">Rental Checklist</span>
+              </div>
+              <h3 class="pop-card__title no-icon">Before You Drive</h3>
+              <p class="pop-card__desc">Complete these essentials before collecting your vehicle.</p>
+              <div class="checklist-list">
+                <div class="checklist-item">
+                  <span class="checklist-item__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span></span>
+                  <span>Confirm booking details</span>
+                </div>
+                <div class="checklist-item">
+                  <span class="checklist-item__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span></span>
+                  <span>Carry a valid driving license</span>
+                </div>
+                <div class="checklist-item">
+                  <span class="checklist-item__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span></span>
+                  <span>Review pickup instructions</span>
+                </div>
+                <div class="checklist-item">
+                  <span class="checklist-item__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span></span>
+                  <span>Complete vehicle verification</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Common Rental Deadlines Card -->
+            <div class="pop-card">
+              <div class="pop-card__eyebrow-wrap">
+                <span class="icon icon--sm pop-card__eyebrow-icon"><svg><use href="assets/icons/sprite.svg#icon-clock"/></svg></span>
+                <span class="pop-card__eyebrow">Rental Deadlines</span>
+              </div>
+              <h3 class="pop-card__title no-icon">Important Timelines</h3>
+              <div class="info-list">
+                <div class="info-row">
+                  <span class="info-row__label">Booking Confirmation</span>
+                  <span class="info-row__value">Instant after approval</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-row__label">Vehicle Verification</span>
+                  <span class="info-row__value">Before pickup</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-row__label">Extension Request</span>
+                  <span class="info-row__value">Before current rental ends</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-row__label">Security Deposit Release</span>
+                  <span class="info-row__value">After final inspection</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Rental Status Guide Card -->
+            <div class="pop-card">
+              <div class="pop-card__eyebrow-wrap">
+                <span class="icon icon--sm pop-card__eyebrow-icon"><svg><use href="assets/icons/sprite.svg#icon-info"/></svg></span>
+                <span class="pop-card__eyebrow">Status Meanings</span>
+              </div>
+              <h3 class="pop-card__title no-icon">Booking Status Guide</h3>
+              <div class="status-list">
+                <div class="status-row">
+                  <div class="status-indicator status-indicator--pending"></div>
+                  <div class="status-row__content">
+                    <span class="status-row__name">Pending</span>
+                    <span class="status-row__desc">Waiting for approval</span>
+                  </div>
+                </div>
+                <div class="status-row">
+                  <div class="status-indicator status-indicator--confirmed"></div>
+                  <div class="status-row__content">
+                    <span class="status-row__name">Confirmed</span>
+                    <span class="status-row__desc">Vehicle reserved</span>
+                  </div>
+                </div>
+                <div class="status-row">
+                  <div class="status-indicator status-indicator--active"></div>
+                  <div class="status-row__content">
+                    <span class="status-row__name">Active</span>
+                    <span class="status-row__desc">Rental currently in progress</span>
+                  </div>
+                </div>
+                <div class="status-row">
+                  <div class="status-indicator status-indicator--completed"></div>
+                  <div class="status-row__content">
+                    <span class="status-row__name">Completed</span>
+                    <span class="status-row__desc">Vehicle returned successfully</span>
+                  </div>
+                </div>
+                <div class="status-row">
+                  <div class="status-indicator status-indicator--cancelled"></div>
+                  <div class="status-row__content">
+                    <span class="status-row__name">Cancelled</span>
+                    <span class="status-row__desc">Reservation has been cancelled</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Safety & Emergency Help Card -->
+            <div class="pop-card">
+              <div class="pop-card__eyebrow-wrap">
+                <span class="icon icon--sm pop-card__eyebrow-icon"><svg><use href="assets/icons/sprite.svg#icon-alert-triangle"/></svg></span>
+                <span class="pop-card__eyebrow">24/7 Assistance</span>
+              </div>
+              <h3 class="pop-card__title no-icon">Roadside & Safety</h3>
+              <p class="pop-card__desc">Quick guidance for breakdowns, accidents, and urgent rental issues.</p>
+              <div class="resource-list">
+                <a href="#support" class="resource-row">
+                  <span class="icon icon--sm resource-row__icon"><svg><use href="assets/icons/sprite.svg#icon-alert-triangle"/></svg></span>
+                  <span class="resource-row__title">Vehicle Breakdown</span>
+                  <span class="icon icon--xs resource-row__arrow"><svg><use href="assets/icons/sprite.svg#icon-chevron-right"/></svg></span>
+                </a>
+                <a href="#support" class="resource-row">
+                  <span class="icon icon--sm resource-row__icon"><svg><use href="assets/icons/sprite.svg#icon-info"/></svg></span>
+                  <span class="resource-row__title">Accident Assistance</span>
+                  <span class="icon icon--xs resource-row__arrow"><svg><use href="assets/icons/sprite.svg#icon-chevron-right"/></svg></span>
+                </a>
+                <a href="#support" class="resource-row">
+                  <span class="icon icon--sm resource-row__icon"><svg><use href="assets/icons/sprite.svg#icon-phone"/></svg></span>
+                  <span class="resource-row__title">Emergency Roadside Support</span>
+                  <span class="icon icon--xs resource-row__arrow"><svg><use href="assets/icons/sprite.svg#icon-chevron-right"/></svg></span>
+                </a>
+              </div>
+              <div class="pop-card__actions pop-card__actions--full" style="margin-top: var(--space-4);">
+                <a href="contact.html" class="btn btn--primary btn--sm">Get Assistance</a>
+              </div>
+            </div>
+
+            <!-- Rental Documents Card -->
+            <div class="pop-card">
+              <div class="pop-card__eyebrow-wrap">
+                <span class="icon icon--sm pop-card__eyebrow-icon"><svg><use href="assets/icons/sprite.svg#icon-file-text"/></svg></span>
+                <span class="pop-card__eyebrow">Quick Reference</span>
+              </div>
+              <h3 class="pop-card__title no-icon">Rental Documents</h3>
+              <div class="resource-list">
+                <a href="terms-and-conditions.html" class="resource-row">
+                  <span class="icon icon--sm resource-row__icon"><svg><use href="assets/icons/sprite.svg#icon-file-text"/></svg></span>
+                  <span class="resource-row__title">Rental Agreement</span>
+                  <span class="icon icon--xs resource-row__arrow"><svg><use href="assets/icons/sprite.svg#icon-chevron-right"/></svg></span>
+                </a>
+                <a href="#verification" class="resource-row">
+                  <span class="icon icon--sm resource-row__icon"><svg><use href="assets/icons/sprite.svg#icon-camera"/></svg></span>
+                  <span class="resource-row__title">Vehicle Inspection Checklist</span>
+                  <span class="icon icon--xs resource-row__arrow"><svg><use href="assets/icons/sprite.svg#icon-chevron-right"/></svg></span>
+                </a>
+                <a href="#payments" class="resource-row">
+                  <span class="icon icon--sm resource-row__icon"><svg><use href="assets/icons/sprite.svg#icon-credit-card"/></svg></span>
+                  <span class="resource-row__title">Payment & Deposit Guide</span>
+                  <span class="icon icon--xs resource-row__arrow"><svg><use href="assets/icons/sprite.svg#icon-chevron-right"/></svg></span>
+                </a>
+                <a href="#policies" class="resource-row">
+                  <span class="icon icon--sm resource-row__icon"><svg><use href="assets/icons/sprite.svg#icon-shield-check"/></svg></span>
+                  <span class="resource-row__title">Cancellation Policy</span>
+                  <span class="icon icon--xs resource-row__arrow"><svg><use href="assets/icons/sprite.svg#icon-chevron-right"/></svg></span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Service Availability Card -->
+            <div class="pop-card">
+              <div class="pop-card__eyebrow-wrap">
+                <span class="icon icon--sm pop-card__eyebrow-icon"><svg><use href="assets/icons/sprite.svg#icon-clock"/></svg></span>
+                <span class="pop-card__eyebrow">Support Hours</span>
+              </div>
+              <h3 class="pop-card__title no-icon">Service Availability</h3>
+              <div class="info-list">
+                <div class="info-row">
+                  <span class="info-row__label">Customer Support</span>
+                  <span class="info-row__value">Mon – Sat, 8:00 AM – 8:00 PM</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-row__label">Emergency Assistance</span>
+                  <span class="info-row__value">Available 24/7</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-row__label">Online Help Center</span>
+                  <span class="info-row__value">Available anytime</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-row__label">Booking Assistance</span>
+                  <span class="info-row__value">During support hours</span>
+                </div>
+              </div>
+              <div class="pop-card__actions pop-card__actions--full" style="margin-top: var(--space-4);">
+                <a href="contact.html" class="btn btn--primary btn--sm">Contact Support</a>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CALL TO ACTION -->
+    <section class="home-cta" id="cta">
+      <div class="home-cta__pattern"></div>
+      <div class="container">
+        <h2 class="home-cta__title scroll-reveal">Need Immediate Assistance?</h2>
+        <p class="home-cta__text scroll-reveal">Speak to our expert advisors immediately. Our 24/7 breakdown helpline stands ready at Option 9.</p>
+        <div class="home-cta__actions scroll-reveal">
+          <a href="cars.html" class="btn btn--accent btn--lg">Browse Cars</a>
+          <a href="contact.html" class="btn btn--ghost btn--lg">Customer Support</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+    <!-- FOOTER -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <!-- COLUMN 1 -->
+        <div class="footer__brand">
+          <a href="index.html" class="footer__logo">
+            <div class="footer__logo-text"><span>JET</span> CABS</div>
+          </a>
+          <p class="footer__description">Your premier destination for luxury car rentals. We deliver top-tier vehicles with white-glove service for an unforgettable driving experience.</p>
+                    <div class="footer__socials">
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="Visit JET CABS on Facebook">
+              <svg class="footer__social-icon--facebook" viewBox="0 0 320 512" aria-hidden="true" focusable="false"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/></svg>
+            </a>
+            <a href="https://www.pinterest.com/" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="Visit JET CABS on Pinterest">
+              <svg class="footer__social-icon--pinterest" viewBox="-1.5 -1.5 27 27" aria-hidden="true" focusable="false"><path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/></svg>
+            </a>
+            <a href="https://x.com/" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="Visit JET CABS on X">
+              <svg class="footer__social-icon--x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="Visit JET CABS on LinkedIn">
+              <svg class="footer__social-icon--linkedin" viewBox="-1.5 -1.5 27 27" aria-hidden="true" focusable="false"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="Visit JET CABS on YouTube">
+              <svg class="footer__social-icon--youtube" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.518 3.545 12 3.545 12 3.545s-7.518 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.87.508 9.388.508 9.388.508s7.518 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- COLUMN 2 -->
+        <div>
+          <h4 class="footer__heading">Company</h4>
+          <ul class="footer__list">
+            <li><a href="index.html" class="footer__link">Home</a></li>
+            <li><a href="about.html" class="footer__link">About</a></li>
+            <li><a href="cars.html" class="footer__link">Cars</a></li>
+            <li><a href="services.html" class="footer__link">Services</a></li>
+            <li><a href="contact.html" class="footer__link">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- COLUMN 3 -->
+        <div>
+          <h4 class="footer__heading">Contact</h4>
+          <div class="footer__contact-item">
+            <div class="footer__contact-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-map-pin"/></svg></span></div>
+            <div><div class="footer__contact-label">Address</div><div class="footer__contact-value">123 Luxury Drive, Suite 100<br>New York, NY 10001</div></div>
+          </div>
+          <div class="footer__contact-item">
+            <div class="footer__contact-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-phone"/></svg></span></div>
+            <div><div class="footer__contact-label">Phone</div><div class="footer__contact-value">+1 (555) 123-4567</div></div>
+          </div>
+          <div class="footer__contact-item">
+            <div class="footer__contact-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-mail"/></svg></span></div>
+            <div><div class="footer__contact-label">Email</div><div class="footer__contact-value">hello@jetcabs.com</div></div>
+          </div>
+          <div class="footer__contact-item">
+            <div class="footer__contact-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-clock"/></svg></span></div>
+            <div><div class="footer__contact-label">Business Hours</div><div class="footer__contact-value">Mon–Sat: 8AM – 8PM</div></div>
+          </div>
+        </div>
+
+        <!-- COLUMN 4 -->
+        <div class="footer__newsletter-column">
+          <h4 class="footer__heading">Stay in the Fast Lane</h4>
+          <p class="footer__description">Subscribe for exclusive deals, new arrivals, and luxury driving tips.</p>
+          <form class="footer__newsletter-form" id="newsletter-form">
+            <input type="email" class="footer__newsletter-input" placeholder="Enter your email address" aria-label="Newsletter email" required>
+            <button type="submit" class="btn btn--primary btn--sm">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <div class="footer__bottom-brand"><p>&copy; 2026 JET CABS. Crafted with <span class="footer__heart"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-heart"/></svg></span></span> for luxury driving.</p></div>
+        <div class="footer__bottom-links">
+          <a href="privacy-policy.html" class="footer__bottom-link">Privacy Policy</a>
+          <a href="terms-and-conditions.html" class="footer__bottom-link">Terms & Conditions</a>
+          <a href="faq.html" class="footer__bottom-link">FAQ</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+  <div class="toast-container" id="toast-container"></div>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/validation.js"></script>
+  <script src="assets/js/animation.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    // Interactive Accordion toggle checks
+    const faqQuestions = document.querySelectorAll('.faq-item__question');
+    faqQuestions.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const item = this.closest('.faq-item');
+        const answer = item.querySelector('.faq-item__answer');
+        const expanded = this.getAttribute('aria-expanded') === 'true';
+        
+        // Collapse all others within the same section
+        const parentSec = this.closest('.faq-sec');
+        if (parentSec) {
+          const sisterItems = parentSec.querySelectorAll('.faq-item');
+          sisterItems.forEach(sister => {
+            if (sister !== item) {
+              sister.classList.remove('open');
+              const sisterBtn = sister.querySelector('.faq-item__question');
+              if (sisterBtn) sisterBtn.setAttribute('aria-expanded', 'false');
+              const sisterAns = sister.querySelector('.faq-item__answer');
+              if (sisterAns) sisterAns.style.maxHeight = null;
+            }
+          });
+        }
+
+        // Toggle selected
+        if (!expanded) {
+          item.classList.add('open');
+          this.setAttribute('aria-expanded', 'true');
+          if (answer) answer.style.maxHeight = answer.scrollHeight + 'px';
+        } else {
+          item.classList.remove('open');
+          this.setAttribute('aria-expanded', 'false');
+          if (answer) answer.style.maxHeight = null;
+        }
+      });
+    });
+
+    // Client-side Live Search filtering
+    const searchInput = document.getElementById('faq-search-input');
+    const searchBtn = document.querySelector('.faq-search-btn');
+    const faqSections = document.querySelectorAll('.faq-sec');
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    function performSearch() {
+      const query = searchInput.value.toLowerCase().trim();
+
+      // Filter accordion items
+      faqItems.forEach(item => {
+        const questionText = item.querySelector('.faq-item__question').textContent.toLowerCase();
+        const answerText = item.querySelector('.faq-item__answer-text').textContent.toLowerCase();
+        
+        if (questionText.includes(query) || answerText.includes(query)) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      // Filter support guide cards
+      const artCards = document.querySelectorAll('.art-card');
+      artCards.forEach(card => {
+        const titleText = card.querySelector('.art-card__title').textContent.toLowerCase();
+        const descText = card.querySelector('.art-card__desc').textContent.toLowerCase();
+        if (titleText.includes(query) || descText.includes(query)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      // Filter video cards
+      const videoCards = document.querySelectorAll('.video-card');
+      videoCards.forEach(card => {
+        const titleText = card.querySelector('.video-card__title').textContent.toLowerCase();
+        const descText = card.querySelector('.video-card__desc').textContent.toLowerCase();
+        if (titleText.includes(query) || descText.includes(query)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      // Show/hide sections based on whether they contain visible children
+      faqSections.forEach(section => {
+        if (section.id === 'articles') {
+          const visibleArtCards = section.querySelectorAll('.art-card[style="display: flex;"]');
+          section.style.display = visibleArtCards.length > 0 ? 'block' : 'none';
+        } else if (section.id === 'videos') {
+          const visibleVideoCards = section.querySelectorAll('.video-card[style="display: block;"]');
+          section.style.display = visibleVideoCards.length > 0 ? 'block' : 'none';
+        } else {
+          const visibleItems = section.querySelectorAll('.faq-item[style="display: block;"]');
+          section.style.display = visibleItems.length > 0 ? 'block' : 'none';
+        }
+      });
+    }
+
+    if (searchInput) {
+      searchInput.addEventListener('input', performSearch);
+    }
+    if (searchBtn) {
+      searchBtn.addEventListener('click', performSearch);
+    }
+
+    // Sidebar search trigger
+    const sidebarSearchTrigger = document.querySelector('.sidebar-search-trigger');
+    if (sidebarSearchTrigger && searchInput) {
+      sidebarSearchTrigger.addEventListener('click', function() {
+        searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => {
+          searchInput.focus();
+        }, 600); // Wait for smooth scroll to finish
+      });
+    }
+
+  })();
+  </script>
+</body>
+</html>

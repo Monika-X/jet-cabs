@@ -1,0 +1,14 @@
+{
+  "name": "car-rental",
+  "version": "1.0.0",
+  "description": "JET CABS — Car Rental (frontend + backend). Root wrapper so `npm start` works from here.",
+  "private": true,
+  "scripts": {
+    "start": "npm --prefix \"Car Rental/backend\" start",
+    "dev": "npm --prefix \"Car Rental/backend\" run dev",
+    "seed": "node \"Car Rental/backend/seedCars.js\"",
+    "seed:admin": "node \"Car Rental/backend/seeds/createAdmin.js\"",
+    "diag:images": "node \"Car Rental/image-diag.js\"",
+    "test:smoke": "node \"Car Rental/smoke-test.js\""
+  }
+}

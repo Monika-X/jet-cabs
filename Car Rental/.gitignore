@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Builds & cache
+dist/
+build/
+.cache/
+uploads/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Scratch/test scripts that may embed hardcoded credentials
+backend/test-auth.js
+backend/test-booking.js
+backend/test-e2e.js
+backend/test-mongoose.js
+backend/test-script.js
+backend/test-validation.js
+backend/return-all-cars.js

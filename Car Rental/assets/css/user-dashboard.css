@@ -1,0 +1,5607 @@
+/* ============================================================
+   JET CABS — DASHBOARD FOUNDATION
+   Shared Layout + Component Library
+   Reuses all JET CABS design tokens from style.css
+   ============================================================ */
+
+/* ============================================================
+   1. DASHBOARD CUSTOM PROPERTIES
+   ============================================================ */
+:root {
+  /* Sidebar */
+  --db-sidebar-width: 272px;
+  --db-sidebar-collapsed: 72px;
+  --db-sidebar-bg: #0f1512;
+  --db-sidebar-border: rgba(255,255,255,0.06);
+  --db-sidebar-text: rgba(255,255,255,0.50);
+  --db-sidebar-text-hover: rgba(255,255,255,0.92);
+  --db-sidebar-active-bg: rgba(198,169,98,0.12);
+  --db-sidebar-active-text: var(--color-secondary);
+
+  /* Header */
+  --db-header-height: 64px;
+  --db-header-bg: rgba(255,255,255,0.88);
+  --db-header-border: var(--color-border);
+
+  /* Main */
+  --db-main-bg: var(--color-bg);
+  --db-main-padding: var(--space-6);
+
+  /* Dashboard z-index layer (above normal, below modals) */
+  --db-z-sidebar: 900;
+  --db-z-header: 800;
+  --db-z-overlay: 850;
+  --db-z-dropdown: 950;
+
+  /* Unified dashboard spacing */
+  --db-section-gap: var(--space-6);
+  --db-card-radius: var(--radius-xl);
+  --db-card-shadow: var(--shadow-sm);
+  --db-card-shadow-hover: var(--shadow-card-hover);
+  --db-card-border: 1px solid var(--color-border-light);
+  --db-input-height: 40px;
+  --db-btn-height-sm: 36px;
+  --db-btn-height-md: 42px;
+}
+
+
+/* ============================================================
+   2. DASHBOARD LAYOUT SHELL
+   ============================================================ */
+.db-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--db-main-bg);
+  overflow: hidden;
+}
+
+.db-layout body {
+  overflow: hidden;
+}
+
+
+/* ============================================================
+   3. SIDEBAR
+   ============================================================ */
+.db-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--db-sidebar-width);
+  height: 100vh;
+  background: var(--db-sidebar-bg);
+  border-right: 1px solid var(--db-sidebar-border);
+  z-index: var(--db-z-sidebar);
+  display: flex;
+  flex-direction: column;
+  transition: width var(--transition-smooth), transform var(--transition-smooth);
+  overflow: hidden;
+  will-change: width;
+}
+
+/* — Sidebar Header / Logo — */
+.db-sidebar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5) var(--space-5);
+  min-height: var(--db-header-height);
+  border-bottom: 1px solid var(--db-sidebar-border);
+  flex-shrink: 0;
+}
+
+.db-sidebar__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.db-sidebar__logo-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 2px 10px rgba(27,59,95,0.3);
+}
+
+.db-sidebar__logo-img {
+  position: absolute;
+  width: 135px;
+  height: 90px;
+  max-width: none;
+  left: -50px;
+  top: -25px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.db-sidebar__logo-text {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: var(--fw-extrabold);
+  color: #FFFFFF;
+  white-space: nowrap;
+  opacity: 1;
+  transition: opacity var(--transition-base);
+}
+
+.db-sidebar__logo-text span {
+  color: var(--color-primary-light);
+}
+
+/* — Collapse Button — */
+.db-sidebar__collapse-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--db-sidebar-border);
+  background: rgba(255,255,255,0.04);
+  color: var(--db-sidebar-text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-base);
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.db-sidebar__collapse-btn:hover {
+  background: rgba(255,255,255,0.08);
+  color: var(--db-sidebar-text-hover);
+}
+
+.db-sidebar__collapse-btn .icon {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--transition-smooth);
+}
+
+/* — Sidebar Navigation — */
+.db-sidebar__nav-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--space-4) var(--space-3);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+
+.db-sidebar__nav-wrapper::-webkit-scrollbar {
+  width: 4px;
+}
+
+.db-sidebar__nav-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.db-sidebar__nav-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.1);
+  border-radius: var(--radius-full);
+}
+
+.db-sidebar__nav-label {
+  font-size: 0.6875rem;
+  font-weight: var(--fw-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.3);
+  padding: var(--space-4) var(--space-3) var(--space-2);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.db-sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.db-sidebar__link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  color: var(--db-sidebar-text);
+  text-decoration: none;
+  transition: all var(--transition-base);
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+
+.db-sidebar__link:hover {
+  color: var(--db-sidebar-text-hover);
+  background: rgba(255,255,255,0.05);
+}
+
+.db-sidebar__link.active {
+  color: var(--db-sidebar-active-text);
+  background: var(--db-sidebar-active-bg);
+  font-weight: var(--fw-semibold);
+}
+
+.db-sidebar__link.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 20px;
+  background: var(--color-secondary);
+  border-radius: 0 var(--radius-full) var(--radius-full) 0;
+}
+
+.db-sidebar__link .icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.db-sidebar__link-text {
+  opacity: 1;
+  transition: opacity var(--transition-base);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.db-sidebar__link-badge {
+  margin-left: auto;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  background: var(--color-secondary);
+  color: #fff;
+  font-size: 0.6875rem;
+  font-weight: var(--fw-bold);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  opacity: 1;
+  transition: opacity var(--transition-base);
+}
+
+/* — Sidebar Footer / Profile — */
+.db-sidebar__footer {
+  padding: var(--space-4) var(--space-3);
+  border-top: 1px solid var(--db-sidebar-border);
+  flex-shrink: 0;
+}
+
+.db-sidebar__profile {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-decoration: none;
+  overflow: hidden;
+}
+
+.db-sidebar__profile:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.db-sidebar__profile-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  border: 2px solid rgba(198,169,98,0.3);
+  flex-shrink: 0;
+  background: rgba(198,169,98,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-secondary);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-bold);
+}
+
+.db-sidebar__profile-info {
+  flex: 1;
+  min-width: 0;
+  opacity: 1;
+  transition: opacity var(--transition-base);
+}
+
+.db-sidebar__profile-name {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  color: rgba(255,255,255,0.9);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.db-sidebar__profile-role {
+  font-size: var(--fs-xs);
+  color: rgba(255,255,255,0.4);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* — Sidebar Collapsed State — */
+.db-sidebar.collapsed {
+  width: var(--db-sidebar-collapsed);
+}
+
+.db-sidebar.collapsed .db-sidebar__logo-text,
+.db-sidebar.collapsed .db-sidebar__link-text,
+.db-sidebar.collapsed .db-sidebar__profile-info,
+.db-sidebar.collapsed .db-sidebar__nav-label {
+  opacity: 0;
+  width: 0;
+  max-width: 0;
+  overflow: hidden;
+  pointer-events: none;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+  transition: opacity var(--transition-base), max-width var(--transition-smooth);
+}
+
+/* Badge becomes a small dot indicator when collapsed */
+.db-sidebar.collapsed .db-sidebar__link-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  min-width: 8px;
+  padding: 0;
+  font-size: 0;
+  line-height: 0;
+  border-radius: var(--radius-full);
+  margin: 0;
+  pointer-events: none;
+}
+
+.db-sidebar.collapsed .db-sidebar__header {
+  justify-content: center;
+  padding: var(--space-4) 0;
+}
+
+.db-sidebar.collapsed .db-sidebar__logo {
+  display: none;
+}
+
+.db-sidebar.collapsed .db-sidebar__collapse-btn {
+  margin: 0 auto;
+}
+
+.db-sidebar.collapsed .db-sidebar__collapse-btn .icon {
+  transform: rotate(180deg);
+}
+
+.db-sidebar.collapsed .db-sidebar__link {
+  justify-content: center;
+  padding: var(--space-3) 0;
+  width: 44px;
+  height: 44px;
+  margin: 0 auto;
+  border-radius: var(--radius-md);
+  position: relative;
+}
+
+.db-sidebar.collapsed .db-sidebar__link .icon {
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.db-sidebar.collapsed .db-sidebar__link.active::before {
+  left: -14px;
+  width: 3px;
+  height: 24px;
+}
+
+.db-sidebar.collapsed .db-sidebar__profile {
+  justify-content: center;
+  padding: var(--space-2) 0;
+}
+
+.db-sidebar.collapsed .db-sidebar__footer {
+  padding: var(--space-3) 0;
+  display: flex;
+  justify-content: center;
+}
+
+.db-sidebar.collapsed .db-sidebar__nav-wrapper {
+  padding: var(--space-4) var(--space-2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.db-sidebar.collapsed .db-sidebar__nav {
+  align-items: center;
+}
+
+/* — Mobile Sidebar Overlay — */
+.db-sidebar__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  z-index: calc(var(--db-z-sidebar) - 1);
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-smooth);
+}
+
+.db-sidebar__overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+/* ============================================================
+   4. MAIN WRAPPER
+   ============================================================ */
+.db-main-wrapper {
+  flex: 1;
+  margin-left: var(--db-sidebar-width);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  transition: margin-left var(--transition-smooth);
+}
+
+.db-sidebar.collapsed ~ .db-main-wrapper {
+  margin-left: var(--db-sidebar-collapsed);
+}
+
+
+/* ============================================================
+   5. HEADER
+   ============================================================ */
+.db-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--db-z-header);
+  height: var(--db-header-height);
+  background: var(--db-header-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--db-header-border);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--db-main-padding);
+  gap: var(--space-4);
+  flex-shrink: 0;
+}
+
+/* Mobile sidebar toggle (hidden on desktop) */
+.db-header__menu-btn {
+  display: none;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-dark-text);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-base);
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.db-header__menu-btn:hover {
+  background: var(--color-secondary-50);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.db-header__menu-btn .icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Page title area */
+.db-header__title-area {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.db-header__greeting {
+  font-size: var(--fs-xs);
+  color: var(--color-light-text);
+  font-weight: var(--fw-medium);
+}
+
+.db-header__title {
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  font-weight: var(--fw-bold);
+  color: var(--color-dark-text);
+  line-height: 1.3;
+}
+
+/* Search */
+.db-header__search {
+  flex: 1;
+  max-width: 400px;
+  position: relative;
+  margin-left: auto;
+}
+
+.db-header__search-input {
+  width: 100%;
+  padding: var(--space-2) var(--space-4) var(--space-2) var(--space-10);
+  font-size: var(--fs-small);
+  color: var(--color-dark-text);
+  background: var(--color-surface);
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-full);
+  transition: all var(--transition-base);
+  outline: none;
+  height: 40px;
+}
+
+.db-header__search-input:focus {
+  background: var(--color-card);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-secondary-100);
+}
+
+.db-header__search-input::placeholder {
+  color: var(--color-light-text);
+  opacity: 0.7;
+}
+
+.db-header__search-icon {
+  position: absolute;
+  left: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-light-text);
+  pointer-events: none;
+  width: 18px;
+  height: 18px;
+}
+
+.db-header__search-results {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  left: 0;
+  right: 0;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  padding: var(--space-3);
+  z-index: var(--db-z-dropdown);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: all var(--transition-smooth);
+}
+
+.db-header__search-results.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.db-header__search-result {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  font-size: var(--fs-small);
+  color: var(--color-dark-text);
+}
+
+.db-header__search-result:hover {
+  background: var(--color-surface);
+}
+
+.db-header__search-result .icon {
+  width: 16px;
+  height: 16px;
+  color: var(--color-light-text);
+}
+
+.db-header__search-empty {
+  padding: var(--space-4);
+  text-align: center;
+  font-size: var(--fs-small);
+  color: var(--color-light-text);
+}
+
+/* Actions */
+.db-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+/* Notification bell */
+.db-header__notification-btn {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-light-text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-base);
+  padding: 0;
+}
+
+.db-header__notification-btn:hover {
+  background: var(--color-secondary-50);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.db-header__notification-btn .icon {
+  width: 20px;
+  height: 20px;
+}
+
+.db-header__notification-badge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  background: var(--color-danger);
+  border-radius: var(--radius-full);
+  font-size: 0.625rem;
+  font-weight: var(--fw-bold);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-bg);
+  line-height: 1;
+}
+
+/* Header Profile */
+.db-header__profile-wrapper {
+  position: relative;
+}
+
+.db-header__profile-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-1) var(--space-1);
+  border-radius: var(--radius-full);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.db-header__profile-btn:hover {
+  background: var(--color-surface);
+}
+
+.db-header__profile-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  border: 2px solid var(--color-secondary-200);
+  background: var(--color-secondary-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-secondary);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-small);
+  flex-shrink: 0;
+}
+
+.db-header__profile-info {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.db-header__profile-name {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  color: var(--color-dark-text);
+  line-height: 1.3;
+}
+
+.db-header__profile-role {
+  font-size: var(--fs-xs);
+  color: var(--color-light-text);
+  line-height: 1.3;
+}
+
+.db-header__profile-chevron {
+  width: 16px;
+  height: 16px;
+  color: var(--color-light-text);
+  transition: transform var(--transition-base);
+  flex-shrink: 0;
+}
+
+/* — Profile Dropdown — */
+.db-header__dropdown {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  right: 0;
+  width: 280px;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  z-index: var(--db-z-dropdown);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all var(--transition-smooth);
+  overflow: hidden;
+}
+
+.db-header__dropdown.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.db-header__dropdown-header {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-border-light);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.db-header__dropdown-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  border: 2px solid var(--color-secondary-200);
+  background: var(--color-secondary-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-secondary);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-body);
+  flex-shrink: 0;
+}
+
+.db-header__dropdown-name {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  color: var(--color-dark-text);
+}
+
+.db-header__dropdown-email {
+  font-size: var(--fs-xs);
+  color: var(--color-light-text);
+  white-space: normal;
+  word-break: break-all;
+  overflow-wrap: break-word;
+}
+
+.db-header__dropdown-body {
+  padding: var(--space-2) 0;
+}
+
+.db-header__dropdown-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  color: var(--color-dark-text);
+  text-decoration: none;
+  transition: all var(--transition-base);
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+
+.db-header__dropdown-link:hover {
+  background: var(--color-secondary-50);
+  color: var(--color-primary);
+}
+
+.db-header__dropdown-link .icon {
+  width: 18px;
+  height: 18px;
+  color: var(--color-light-text);
+  flex-shrink: 0;
+}
+
+.db-header__dropdown-link:hover .icon {
+  color: var(--color-primary);
+}
+
+.db-header__dropdown-divider {
+  height: 1px;
+  background: var(--color-border-light);
+  margin: var(--space-2) 0;
+}
+
+.db-header__dropdown-link--danger {
+  color: var(--color-danger);
+}
+
+.db-header__dropdown-link--danger .icon {
+  color: var(--color-danger);
+}
+
+.db-header__dropdown-link--danger:hover {
+  background: rgba(220,38,38,0.05);
+  color: var(--color-danger);
+}
+
+
+/* ============================================================
+   6. MAIN CONTENT AREA
+   ============================================================ */
+.db-main {
+  flex: 1;
+  padding: var(--db-main-padding);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* — Page Title Bar — */
+.db-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--db-section-gap);
+  flex-wrap: wrap;
+}
+
+.db-page-header__left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.db-page-header__breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-xs);
+  color: var(--color-light-text);
+}
+
+.db-page-header__breadcrumb a {
+  color: var(--color-secondary);
+  text-decoration: none;
+  font-weight: var(--fw-medium);
+}
+
+.db-page-header__breadcrumb a:hover {
+  color: var(--color-accent-600);
+}
+
+.db-page-header__title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-bold);
+  color: var(--color-dark-text);
+  line-height: var(--lh-tight);
+}
+
+.db-page-header__subtitle {
+  font-size: var(--fs-small);
+  color: var(--color-light-text);
+  margin-top: var(--space-1);
+}
+
+.db-page-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+
+/* ============================================================
+   7. DASHBOARD STAT CARDS
+   ============================================================ */
+.db-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--db-section-gap);
+  margin-bottom: var(--db-section-gap);
+}
+
+.db-stat-card {
+  background: var(--color-card);
+  border-radius: var(--db-card-radius);
+  border: var(--db-card-border);
+  padding: var(--space-5) var(--space-5);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  transition: all var(--transition-smooth);
+  box-shadow: var(--db-card-shadow);
+}
+
+.db-stat-card:hover {
+  box-shadow: var(--db-card-shadow-hover);
+  transform: translateY(-2px);
+}
+
+.db-stat-card__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.25rem;
+}
+
+.db-stat-card__icon--primary {
+  background: var(--color-secondary-100);
+  color: var(--color-primary);
+}
+
+.db-stat-card__icon--gold {
+  background: var(--color-accent-100);
+  color: var(--color-accent-600);
+}
+
+.db-stat-card__icon--success {
+  background: rgba(34,197,94,0.1);
+  color: var(--color-success);
+}
+
+.db-stat-card__icon--danger {
+  background: rgba(220,38,38,0.1);
+  color: var(--color-danger);
+}
+
+.db-stat-card__icon--warning {
+  background: rgba(234,88,12,0.1);
+  color: var(--color-warning);
+}
+
+.db-stat-card__icon--info {
+  background: rgba(59,130,246,0.1);
+  color: #3B82F6;
+}
+
+.db-stat-card__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.db-stat-card__label {
+  font-size: var(--fs-xs);
+  color: var(--color-light-text);
+  font-weight: var(--fw-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-1);
+}
+
+.db-stat-card__value {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: var(--fw-bold);
+  color: var(--color-dark-text);
+  line-height: 1.2;
+  margin-bottom: var(--space-1);
+}
+
+.db-stat-card__change {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+}
+
+.db-stat-card__change--up {
+  color: var(--color-success);
+}
+
+.db-stat-card__change--down {
+  color: var(--color-danger);
+}
+
+.db-stat-card__change-icon {
+  width: 14px;
+  height: 14px;
+}
+
+
+/* ============================================================
+   8. SECTION CARDS
+   ============================================================ */
+.db-section-card {
+  background: var(--color-card);
+  border-radius: var(--db-card-radius);
+  border: var(--db-card-border);
+  box-shadow: var(--db-card-shadow);
+  overflow: hidden;
+  transition: box-shadow var(--transition-smooth);
+}
+
+.db-section-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.db-section-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-border-light);
+  gap: var(--space-4);
+  min-height: 56px;
+}
+
+.db-section-card__title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-semibold);
+  color: var(--color-dark-text);
+}
+
+.db-section-card__subtitle {
+  font-size: var(--fs-xs);
+  color: var(--color-light-text);
+  margin-top: 2px;
+}
+
+.db-section-card__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.db-section-card__body {
+  padding: var(--space-5);
+}
+
+.db-section-card__body--flush {
+  padding: 0;
+}
+
+.db-section-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  border-top: 1px solid var(--color-border-light);
+  background: var(--color-surface);
+}
+
+/* Two-column section layout */
+.db-section-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--db-section-gap);
+  margin-bottom: var(--db-section-gap);
+}
+
+/* Three-column section layout */
+.db-section-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+
+/* ============================================================
+   9. DASHBOARD TABLES
+   ============================================================ */
+.db-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.db-table {
+  width: 100%;
+  border-collapse: collapse;
+  white-space: nowrap;
+}
+
+.db-table thead th {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-light-text);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+  position: sticky;
+  top: 0;
+}
+
+.db-table tbody td {
+  padding: var(--space-4);
+  font-size: var(--fs-small);
+  color: var(--color-dark-text);
+  border-bottom: 1px solid var(--color-border-light);
+  vertical-align: middle;
+}
+
+.db-table tbody tr {
+  transition: background var(--transition-fast);
+}
+
+.db-table tbody tr:hover {
+  background: var(--color-secondary-50);
+}
+
+.db-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Table cell with avatar */
+.db-table__user {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.db-table__user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  background: var(--color-secondary-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-secondary);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  flex-shrink: 0;
+}
+
+.db-table__user-name {
+  font-weight: var(--fw-medium);
+  color: var(--color-dark-text);
+}
+
+.db-table__user-email {
+  font-size: var(--fs-xs);
+  color: var(--color-light-text);
+}
+
+/* Table actions */
+.db-table__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.db-table__action-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-light-text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  padding: 0;
+}
+
+.db-table__action-btn:hover {
+  background: var(--color-secondary-50);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.db-table__action-btn--danger:hover {
+  background: rgba(220,38,38,0.05);
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}
+
+.db-table__action-btn .icon {
+  width: 16px;
+  height: 16px;
+}
+
+
+/* ============================================================
+   10. STATUS BADGES (extending existing)
+   ============================================================ */
+.db-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  line-height: 1.5;
+}
+
+.db-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.db-badge--pending {
+  background: rgba(234,88,12,0.08);
+  color: var(--color-warning);
+}
+.db-badge--pending::before { background: var(--color-warning); }
+
+.db-badge--approved,
+.db-badge--active {
+  background: rgba(34,197,94,0.08);
+  color: var(--color-success);
+}
+.db-badge--approved::before,
+.db-badge--active::before { background: var(--color-success); }
+
+.db-badge--rejected {
+  background: rgba(220,38,38,0.08);
+  color: var(--color-danger);
+}
+.db-badge--rejected::before { background: var(--color-danger); }
+
+.db-badge--completed,
+.db-badge--verified {
+  background: var(--color-accent-100);
+  color: var(--color-secondary);
+}
+.db-badge--completed::before,
+.db-badge--verified::before { background: var(--color-secondary); }
+
+.db-badge--inactive {
+  background: rgba(107,114,128,0.1);
+  color: var(--color-light-text);
+}
+.db-badge--inactive::before { background: var(--color-light-text); }
+
+.db-badge--booked {
+  background: rgba(59,130,246,0.08);
+  color: #3B82F6;
+}
+.db-badge--booked::before { background: #3B82F6; }
+
+.db-badge--available {
+  background: rgba(34,197,94,0.08);
+  color: var(--color-success);
+}
+.db-badge--available::before { background: var(--color-success); }
+
+.db-badge--cancelled {
+  background: rgba(220,38,38,0.06);
+  color: var(--color-danger);
+}
+.db-badge--cancelled::before { background: var(--color-danger); }
+
+.db-badge--expired {
+  background: rgba(107,114,128,0.08);
+  color: #6B7280;
+}
+.db-badge--expired::before { background: #6B7280; }
+
+.db-badge--processing,
+.db-badge--waiting {
+  background: rgba(139,92,246,0.08);
+  color: #7C3AED;
+}
+.db-badge--processing::before,
+.db-badge--waiting::before { background: #7C3AED; }
+
+
+/* ============================================================
+   11. FILTER BAR & SEARCH BAR (in-section)
+   ============================================================ */
+.db-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--color-border-light);
+  flex-wrap: wrap;
+}
+
+.db-filter-bar__search {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+  max-width: 320px;
+}
+
+.db-filter-bar__search-input {
+  width: 100%;
+  padding: var(--space-2) var(--space-4) var(--space-2) var(--space-10);
+  font-size: var(--fs-small);
+  background: var(--color-surface);
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: all var(--transition-base);
+  height: var(--db-input-height);
+  color: var(--color-dark-text);
+}
+
+.db-filter-bar__search-input:focus {
+  border-color: var(--color-primary);
+  background: var(--color-card);
+  box-shadow: 0 0 0 3px var(--color-secondary-100);
+}
+
+.db-filter-bar__search-input::placeholder {
+  color: var(--color-light-text);
+  opacity: 0.7;
+}
+
+.db-filter-bar__search-icon {
+  position: absolute;
+  left: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: var(--color-light-text);
+  pointer-events: none;
+}
+
+.db-filter-bar__select {
+  height: var(--db-input-height);
+  padding: var(--space-2) var(--space-8) var(--space-2) var(--space-3);
+  font-size: var(--fs-small);
+  background: var(--color-surface);
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-md);
+  outline: none;
+  color: var(--color-dark-text);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2364748B' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  transition: all var(--transition-base);
+}
+
+.db-filter-bar__select:focus {
+  border-color: var(--color-primary);
+  background-color: var(--color-card);
+}
+
+.db-filter-bar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-left: auto;
+}
+
+
+/* ============================================================
+   12. TABS (dashboard variant)
+   ============================================================ */
+.db-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--color-border-light);
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 0 var(--space-6);
+}
+
+.db-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.db-tab {
+  padding: var(--space-3) var(--space-5);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  color: var(--color-light-text);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-base);
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.db-tab:hover {
+  color: var(--color-secondary);
+}
+
+.db-tab.active {
+  color: var(--color-secondary);
+  border-bottom-color: var(--color-secondary);
+  font-weight: var(--fw-semibold);
+}
+
+.db-tab-content {
+  display: none;
+}
+
+.db-tab-content.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+
+/* ============================================================
+   13. TIMELINE
+   ============================================================ */
+.db-timeline {
+  position: relative;
+  padding-left: var(--space-8);
+}
+
+.db-timeline::before {
+  content: '';
+  position: absolute;
+  left: 11px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--color-border-light);
+}
+
+.db-timeline__item {
+  position: relative;
+  padding-bottom: var(--space-6);
+}
+
+.db-timeline__item:last-child {
+  padding-bottom: 0;
+}
+
+.db-timeline__dot {
+  position: absolute;
+  left: calc(-1 * var(--space-8) + 4px);
+  top: 4px;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-full);
+  background: var(--color-card);
+  border: 3px solid var(--color-secondary);
+  z-index: 1;
+}
+
+.db-timeline__dot--success { border-color: var(--color-success); }
+.db-timeline__dot--danger { border-color: var(--color-danger); }
+.db-timeline__dot--warning { border-color: var(--color-warning); }
+
+.db-timeline__time {
+  font-size: var(--fs-xs);
+  color: var(--color-light-text);
+  margin-bottom: var(--space-1);
+}
+
+.db-timeline__title {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  color: var(--color-dark-text);
+  margin-bottom: var(--space-1);
+}
+
+.db-timeline__text {
+  font-size: var(--fs-xs);
+  color: var(--color-light-text);
+  line-height: var(--lh-relaxed);
+}
+
+
+/* ============================================================
+   14. CHART PLACEHOLDER
+   ============================================================ */
+.db-chart-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 2px dashed var(--color-border);
+  gap: var(--space-3);
+  color: var(--color-light-text);
+  padding: var(--space-8);
+}
+
+.db-chart-placeholder .icon {
+  width: 40px;
+  height: 40px;
+  opacity: 0.4;
+}
+
+.db-chart-placeholder__text {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  text-align: center;
+}
+
+.db-chart-placeholder__sub {
+  font-size: var(--fs-xs);
+  opacity: 0.6;
+  text-align: center;
+}
+
+
+/* ============================================================
+   15. DASHBOARD PAGINATION
+   ============================================================ */
+.db-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.db-pagination__info {
+  font-size: var(--fs-small);
+  color: var(--color-light-text);
+}
+
+.db-pagination__buttons {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.db-pagination__btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  color: var(--color-dark-text);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  padding: 0;
+}
+
+.db-pagination__btn:hover {
+  background: var(--color-secondary-50);
+  border-color: var(--color-secondary);
+  color: var(--color-secondary);
+}
+
+.db-pagination__btn.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+.db-pagination__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.db-pagination__btn .icon {
+  width: 16px;
+  height: 16px;
+}
+
+
+/* ============================================================
+   16. DASHBOARD MODALS
+   ============================================================ */
+.db-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  z-index: var(--z-modal-backdrop);
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-smooth);
+}
+
+.db-modal-backdrop.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.db-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.95);
+  width: 90%;
+  max-width: 480px;
+  max-height: 85vh;
+  background: var(--color-card);
+  border-radius: var(--radius-2xl);
+  z-index: var(--z-modal);
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-smooth);
+  overflow: hidden;
+  box-shadow: var(--shadow-2xl);
+}
+
+.db-modal.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.db-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.db-modal__title {
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-semibold);
+  color: var(--color-dark-text);
+}
+
+.db-modal__close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: var(--color-surface);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  color: var(--color-light-text);
+  transition: all var(--transition-fast);
+  padding: 0;
+}
+
+.db-modal__close:hover {
+  background: var(--color-border);
+  color: var(--color-dark-text);
+}
+
+.db-modal__close .icon {
+  width: 16px;
+  height: 16px;
+}
+
+.db-modal__body {
+  padding: var(--space-6);
+  overflow-y: auto;
+  max-height: 60vh;
+}
+
+.db-modal__footer {
+  padding: var(--space-4) var(--space-6);
+  border-top: 1px solid var(--color-border-light);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+
+/* Modal icon */
+.db-modal__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-5);
+}
+
+.db-modal__icon--success {
+  background: rgba(34,197,94,0.1);
+  color: var(--color-success);
+}
+
+.db-modal__icon--danger {
+  background: rgba(220,38,38,0.1);
+  color: var(--color-danger);
+}
+
+.db-modal__icon--warning {
+  background: rgba(234,88,12,0.1);
+  color: var(--color-warning);
+}
+
+.db-modal__icon--info {
+  background: rgba(59,130,246,0.1);
+  color: #3B82F6;
+}
+
+.db-modal__icon .icon {
+  width: 28px;
+  height: 28px;
+}
+
+.db-modal__message {
+  text-align: center;
+  font-size: var(--fs-small);
+  color: var(--color-light-text);
+  line-height: var(--lh-relaxed);
+}
+
+.db-modal__message strong {
+  color: var(--color-dark-text);
+}
+
+
+/* ============================================================
+   17. EMPTY STATE (dashboard variant)
+   ============================================================ */
+.db-empty-state {
+  text-align: center;
+  padding: var(--space-12) var(--space-8);
+}
+
+.db-empty-state__icon {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto var(--space-5);
+  border-radius: var(--radius-full);
+  background: var(--color-accent-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-secondary);
+}
+
+.db-empty-state__icon .icon {
+  width: 32px;
+  height: 32px;
+}
+
+.db-empty-state__title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-semibold);
+  color: var(--color-dark-text);
+  margin-bottom: var(--space-2);
+}
+
+.db-empty-state__text {
+  font-size: var(--fs-small);
+  color: var(--color-light-text);
+  max-width: 360px;
+  margin: 0 auto var(--space-6);
+  line-height: var(--lh-relaxed);
+}
+
+
+/* ============================================================
+   18. LOADING SKELETON (dashboard variant)
+   ============================================================ */
+.db-skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-border-light);
+  border-radius: var(--radius-md);
+}
+
+.db-skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: shimmer 1.5s infinite;
+}
+
+.db-skeleton--stat {
+  height: 100px;
+  border-radius: var(--radius-xl);
+}
+
+.db-skeleton--card {
+  height: 200px;
+  border-radius: var(--radius-xl);
+}
+
+.db-skeleton--row {
+  height: 52px;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-2);
+}
+
+.db-skeleton--chart {
+  height: 280px;
+  border-radius: var(--radius-lg);
+}
+
+
+/* ============================================================
+   19. TOAST EXTENSION (adds info type)
+   ============================================================ */
+.toast--info {
+  border-left-color: #3B82F6;
+}
+
+.toast--info .toast__icon {
+  background: rgba(59,130,246,0.1);
+  color: #3B82F6;
+}
+
+
+/* ============================================================
+   20. DASHBOARD ACCORDION
+   ============================================================ */
+.db-accordion {
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.db-accordion__item {
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.db-accordion__item:last-child {
+  border-bottom: none;
+}
+
+.db-accordion__header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-card);
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  color: var(--color-dark-text);
+  transition: all var(--transition-base);
+}
+
+.db-accordion__header:hover {
+  background: var(--color-surface);
+}
+
+.db-accordion__icon {
+  width: 20px;
+  height: 20px;
+  color: var(--color-light-text);
+  transition: transform var(--transition-smooth);
+  flex-shrink: 0;
+}
+
+.db-accordion__item.open .db-accordion__icon {
+  transform: rotate(180deg);
+}
+
+.db-accordion__body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--transition-smooth);
+}
+
+.db-accordion__content {
+  padding: 0 var(--space-5) var(--space-5);
+  font-size: var(--fs-small);
+  color: var(--color-light-text);
+  line-height: var(--lh-relaxed);
+}
+
+
+/* ============================================================
+   21. DASHBOARD FORMS
+   ============================================================ */
+.db-form-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-5);
+}
+
+.db-form-row--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+
+/* ============================================================
+   22. BUTTON EXTENSIONS (danger, success)
+   ============================================================ */
+.btn--danger {
+  background: var(--color-danger);
+  color: #FFFFFF;
+  border-color: var(--color-danger);
+}
+
+.btn--danger:hover {
+  background: #B91C1C;
+  border-color: #B91C1C;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(220,38,38,0.3);
+}
+
+.btn--success {
+  background: var(--color-success);
+  color: #FFFFFF;
+  border-color: var(--color-success);
+}
+
+.btn--success:hover {
+  background: #15803D;
+  border-color: #15803D;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(34,197,94,0.3);
+}
+
+
+/* ============================================================
+   23. DASHBOARD NOTIFICATION PANEL
+   ============================================================ */
+.db-notification-panel {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  right: 0;
+  width: 360px;
+  max-height: 420px;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  z-index: var(--db-z-dropdown);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all var(--transition-smooth);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.db-notification-panel.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.db-notification-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-border-light);
+  flex-shrink: 0;
+}
+
+.db-notification-panel__title {
+  font-size: var(--fs-body);
+  font-weight: var(--fw-semibold);
+  color: var(--color-dark-text);
+}
+
+.db-notification-panel__body {
+  overflow-y: auto;
+  flex: 1;
+}
+
+.db-notification-panel__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-border-light);
+  transition: background var(--transition-fast);
+  cursor: pointer;
+}
+
+.db-notification-panel__item:hover {
+  background: var(--color-surface);
+}
+
+.db-notification-panel__item.unread {
+  background: var(--color-accent-50);
+}
+
+.db-notification-panel__item:last-child {
+  border-bottom: none;
+}
+
+.db-notification-panel__item-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: var(--fs-small);
+}
+
+.db-notification-panel__item-icon--success {
+  background: rgba(34,197,94,0.1);
+  color: var(--color-success);
+}
+
+.db-notification-panel__item-icon--warning {
+  background: rgba(234,88,12,0.1);
+  color: var(--color-warning);
+}
+
+.db-notification-panel__item-icon--info {
+  background: rgba(59,130,246,0.1);
+  color: #3B82F6;
+}
+
+.db-notification-panel__item-icon--danger {
+  background: rgba(220,38,38,0.1);
+  color: var(--color-danger);
+}
+
+.db-notification-panel__item-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.db-notification-panel__item-title {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  color: var(--color-dark-text);
+  margin-bottom: 2px;
+}
+
+.db-notification-panel__item-text {
+  font-size: var(--fs-xs);
+  color: var(--color-light-text);
+  line-height: var(--lh-normal);
+}
+
+.db-notification-panel__item-time {
+  font-size: 0.6875rem;
+  color: var(--color-light-text);
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.db-notification-panel__footer {
+  padding: var(--space-3) var(--space-5);
+  border-top: 1px solid var(--color-border-light);
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.db-notification-panel__footer a {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  color: var(--color-secondary);
+  text-decoration: none;
+}
+
+.db-notification-panel__footer a:hover {
+  color: var(--color-accent-600);
+}
+
+
+/* ============================================================
+   24. DASHBOARD ANIMATIONS
+   ============================================================ */
+@keyframes dbFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes dbSlideInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.db-animate-in {
+  animation: dbFadeIn 0.4s ease forwards;
+}
+
+.db-animate-stagger > * {
+  opacity: 0;
+  animation: dbFadeIn 0.4s ease forwards;
+}
+
+.db-animate-stagger > *:nth-child(1) { animation-delay: 50ms; }
+.db-animate-stagger > *:nth-child(2) { animation-delay: 100ms; }
+.db-animate-stagger > *:nth-child(3) { animation-delay: 150ms; }
+.db-animate-stagger > *:nth-child(4) { animation-delay: 200ms; }
+.db-animate-stagger > *:nth-child(5) { animation-delay: 250ms; }
+.db-animate-stagger > *:nth-child(6) { animation-delay: 300ms; }
+
+
+/* ============================================================
+   25. RESPONSIVE — DASHBOARD
+   ============================================================ */
+
+/* Large Desktop (≤ 1440px) */
+@media (max-width: 1440px) {
+  .db-stats-grid {
+    gap: var(--space-5);
+  }
+}
+
+/* Laptop (≤ 1200px) */
+@media (max-width: 1200px) {
+  :root {
+    --db-sidebar-width: 240px;
+  }
+
+  .db-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .db-section-grid--3 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Tablet (≤ 992px) */
+@media (max-width: 992px) {
+  .db-sidebar {
+    transform: translateX(-100%);
+    width: 280px;
+  }
+
+  .db-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .db-sidebar.collapsed {
+    width: 280px;
+    transform: translateX(-100%);
+  }
+
+  .db-sidebar.collapsed.mobile-open {
+    transform: translateX(0);
+  }
+
+  .db-sidebar.collapsed .db-sidebar__logo-text,
+  .db-sidebar.collapsed .db-sidebar__link-text,
+  .db-sidebar.collapsed .db-sidebar__link-badge,
+  .db-sidebar.collapsed .db-sidebar__profile-info,
+  .db-sidebar.collapsed .db-sidebar__nav-label {
+    opacity: 1;
+    width: auto;
+    pointer-events: auto;
+  }
+
+  .db-sidebar.collapsed .db-sidebar__header {
+    justify-content: space-between;
+    padding: var(--space-5);
+  }
+
+  .db-sidebar.collapsed .db-sidebar__logo {
+    display: flex;
+  }
+
+  .db-sidebar.collapsed .db-sidebar__link {
+    justify-content: flex-start;
+    padding: var(--space-3);
+  }
+
+  .db-sidebar.collapsed .db-sidebar__profile {
+    justify-content: flex-start;
+    padding: var(--space-3);
+  }
+
+  .db-sidebar.collapsed .db-sidebar__footer {
+    padding: var(--space-4) var(--space-3);
+  }
+
+  .db-sidebar.collapsed .db-sidebar__nav-wrapper {
+    padding: var(--space-4) var(--space-3);
+  }
+
+  .db-main-wrapper {
+    margin-left: 0;
+  }
+
+  .db-sidebar.collapsed ~ .db-main-wrapper {
+    margin-left: 0;
+  }
+
+  .db-header__menu-btn {
+    display: flex;
+  }
+
+  .db-sidebar__collapse-btn {
+    display: flex;
+  }
+
+  .db-header__profile-info {
+    display: none;
+  }
+
+  .db-header__profile-chevron {
+    display: none;
+  }
+
+  .db-section-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .db-notification-panel {
+    width: 320px;
+  }
+}
+
+/* Mobile Landscape (≤ 768px) */
+@media (max-width: 768px) {
+  :root {
+    --db-main-padding: var(--space-5);
+    --db-header-height: 60px;
+  }
+
+  .db-stats-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .db-section-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .db-section-grid--3 {
+    grid-template-columns: 1fr;
+  }
+
+  .db-page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .db-page-header__actions {
+    width: 100%;
+  }
+
+  .db-page-header__actions .btn {
+    flex: 1;
+  }
+
+  .db-header__search {
+    display: none;
+  }
+
+  .db-filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .db-filter-bar__search {
+    max-width: 100%;
+  }
+
+  .db-filter-bar__actions {
+    margin-left: 0;
+    justify-content: flex-end;
+  }
+
+  .db-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .db-form-row--3 {
+    grid-template-columns: 1fr;
+  }
+
+  .db-notification-panel {
+    position: fixed;
+    top: var(--db-header-height);
+    right: 0;
+    left: 0;
+    width: 100%;
+    max-height: calc(100vh - var(--db-header-height));
+    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+  }
+
+  .db-pagination {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* Mobile (≤ 576px) */
+@media (max-width: 576px) {
+  :root {
+    --db-main-padding: var(--space-4);
+  }
+
+  .db-stat-card {
+    padding: var(--space-4);
+  }
+
+  .db-stat-card__value {
+    font-size: 1.5rem;
+  }
+
+  .db-section-card__header {
+    padding: var(--space-4) var(--space-5);
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .db-section-card__body {
+    padding: var(--space-4);
+  }
+
+  .db-section-card__footer {
+    padding: var(--space-3) var(--space-4);
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .db-tabs {
+    padding: 0 var(--space-4);
+  }
+
+  .db-tab {
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--fs-xs);
+  }
+
+  .db-modal {
+    width: 95%;
+    max-width: 95%;
+  }
+
+  .db-header__actions {
+    gap: var(--space-2);
+  }
+}
+
+
+/* ============================================================
+   26. DASHBOARD HERO SECTION
+   ============================================================ */
+.db-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  background: linear-gradient(135deg, var(--color-primary) 0%, #0d2233 100%);
+  border-radius: var(--db-card-radius);
+  padding: var(--space-4) var(--space-6);
+  margin-bottom: var(--db-section-gap);
+  position: relative;
+  overflow: hidden;
+  color: #FFFFFF;
+  min-height: auto;
+}
+
+.db-hero::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -10%;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(198,169,98,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.db-hero__content {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+}
+
+.db-hero__greeting {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-small);
+  color: rgba(255,255,255,0.7);
+  margin-bottom: var(--space-2);
+}
+
+.db-hero__wave {
+  font-size: 1.5rem;
+  display: inline-block;
+  animation: waveHand 2.5s ease-in-out infinite;
+  transform-origin: 70% 70%;
+}
+
+@keyframes waveHand {
+  0%, 60%, 100% { transform: rotate(0deg); }
+  10%, 30% { transform: rotate(14deg); }
+  20% { transform: rotate(-8deg); }
+  40% { transform: rotate(-4deg); }
+  50% { transform: rotate(10deg); }
+}
+
+.db-hero__welcome {
+  font-weight: var(--fw-medium);
+}
+
+.db-hero__name {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: var(--fw-bold);
+  margin-bottom: var(--space-3);
+  line-height: 1.2;
+}
+
+.db-hero__text {
+  font-size: var(--fs-small);
+  color: rgba(255,255,255,0.65);
+  line-height: var(--lh-relaxed);
+  max-width: 540px;
+  margin-bottom: var(--space-6);
+}
+
+.db-hero__actions {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.db-hero__actions .btn--primary {
+  background: var(--color-secondary);
+  border-color: var(--color-secondary);
+  color: #111;
+}
+
+.db-hero__actions .btn--primary:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  box-shadow: 0 8px 25px rgba(198,169,98,0.35);
+}
+
+.db-hero__actions .btn--outline {
+  border-color: rgba(255,255,255,0.3);
+  color: #FFFFFF;
+}
+
+.db-hero__actions .btn--outline:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.5);
+}
+
+.db-hero__actions .btn--ghost {
+  color: rgba(255,255,255,0.8);
+}
+
+.db-hero__actions .btn--ghost:hover {
+  background: rgba(255,255,255,0.08);
+  color: #FFFFFF;
+}
+
+.db-hero__badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(198,169,98,0.25);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5) var(--space-6);
+  flex-shrink: 0;
+  backdrop-filter: blur(10px);
+}
+
+.db-hero__badge-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  background: rgba(198,169,98,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-secondary);
+}
+
+.db-hero__badge-label {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--color-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+
+/* ============================================================
+   27. CURRENT RENTAL OVERVIEW CARD
+   ============================================================ */
+.db-current-rental {
+  display: flex;
+  gap: var(--space-5);
+}
+
+.db-current-rental__image-wrap {
+  position: relative;
+  width: 200px;
+  flex-shrink: 0;
+  border-radius: var(--db-card-radius);
+  overflow: hidden;
+}
+
+.db-current-rental__image {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: var(--db-card-radius);
+  background: var(--color-surface);
+}
+
+.db-current-rental__image-wrap .db-badge {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+}
+
+.db-current-rental__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.db-current-rental__name {
+  font-family: var(--font-heading);
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-semibold);
+  color: var(--color-dark-text);
+  margin-bottom: var(--space-2);
+}
+
+.db-current-rental__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-size: var(--fs-xs);
+  color: var(--color-light-text);
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.db-current-rental__meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.db-current-rental__dates {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+}
+
+.db-current-rental__date-label {
+  font-size: 0.625rem;
+  font-weight: var(--fw-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-light-text);
+  display: block;
+}
+
+.db-current-rental__date-value {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  color: var(--color-dark-text);
+}
+
+.db-current-rental__date-arrow {
+  color: var(--color-secondary);
+  flex-shrink: 0;
+}
+
+.db-current-rental__timeline {
+  display: flex;
+  gap: 0;
+  margin-bottom: var(--space-4);
+  position: relative;
+}
+
+.db-current-rental__tl-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  position: relative;
+  padding-top: var(--space-3);
+}
+
+.db-current-rental__tl-step::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--space-3) + 5px);
+  left: 50%;
+  right: -50%;
+  height: 2px;
+  background: var(--color-success);
+}
+
+.db-current-rental__tl-step:last-child::before {
+  display: none;
+}
+
+.db-current-rental__tl-step--pending::before {
+  background: var(--color-border);
+  border-top: 2px dashed var(--color-border);
+  height: 0;
+}
+
+.db-current-rental__tl-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-full);
+  background: var(--color-success);
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.db-current-rental__tl-step--pending .db-current-rental__tl-dot {
+  background: var(--color-border);
+  border: 2px solid var(--color-light-text);
+}
+
+.db-current-rental__tl-text {
+  font-size: 0.625rem;
+  text-align: center;
+  color: var(--color-light-text);
+  line-height: 1.3;
+  max-width: 100px;
+}
+
+.db-current-rental__actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+
+/* ============================================================
+   28. NOTIFICATION PREVIEW (in-dashboard)
+   ============================================================ */
+.db-notification-preview {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--color-border-light);
+  transition: background var(--transition-fast);
+}
+
+.db-notification-preview:last-child {
+  border-bottom: none;
+}
+
+.db-notification-preview:hover {
+  background: var(--color-surface);
+}
+
+.db-notification-preview--unread {
+  background: var(--color-accent-50);
+}
+
+.db-notification-preview--unread:hover {
+  background: rgba(198,169,98,0.08);
+}
+
+.db-notification-preview__icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.db-notification-preview__icon--success { background: rgba(34,197,94,0.1); color: var(--color-success); }
+.db-notification-preview__icon--info { background: rgba(59,130,246,0.1); color: #3B82F6; }
+.db-notification-preview__icon--warning { background: rgba(234,88,12,0.1); color: var(--color-warning); }
+.db-notification-preview__icon--danger { background: rgba(220,38,38,0.1); color: var(--color-danger); }
+
+.db-notification-preview__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.db-notification-preview__title {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  color: var(--color-dark-text);
+  margin-bottom: 2px;
+}
+
+.db-notification-preview__text {
+  font-size: var(--fs-xs);
+  color: var(--color-light-text);
+  line-height: var(--lh-normal);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.db-notification-preview__time {
+  font-size: 0.6875rem;
+  color: var(--color-light-text);
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+
+/* ============================================================
+   29. RENTAL CARDS GRID
+   ============================================================ */
+.db-rentals-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--db-section-gap);
+  padding: var(--space-5);
+}
+
+.db-rental-card {
+  background: var(--color-card);
+  border: var(--db-card-border);
+  border-radius: var(--db-card-radius);
+  overflow: hidden;
+  transition: all var(--transition-smooth);
+  box-shadow: var(--db-card-shadow);
+  display: flex;
+  flex-direction: column;
+}
+
+.db-rental-card:hover {
+  box-shadow: var(--db-card-shadow-hover);
+  transform: translateY(-3px);
+}
+
+.db-rental-card__image-wrap {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+  background: var(--color-surface);
+}
+
+.db-rental-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform var(--transition-smooth);
+}
+
+.db-rental-card:hover .db-rental-card__image {
+  transform: scale(1.05);
+}
+
+.db-rental-card__image-wrap .db-badge {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+}
+
+.db-rental-card__body {
+  padding: var(--space-5);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.db-rental-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.db-rental-card__name {
+  font-family: var(--font-heading);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-semibold);
+  color: var(--color-dark-text);
+  line-height: 1.3;
+}
+
+.db-rental-card__id {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--color-light-text);
+  background: var(--color-surface);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.db-rental-card__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--fs-xs);
+  color: var(--color-light-text);
+  margin-bottom: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.db-rental-card__meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.db-rental-card__price {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.db-rental-card__price-total {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: var(--fw-bold);
+  color: var(--color-secondary);
+}
+
+.db-rental-card__price-rate {
+  font-size: var(--fs-xs);
+  color: var(--color-light-text);
+}
+
+.db-rental-card__actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+
+.db-rental-card__actions .btn {
+  flex: none;
+}
+
+
+/* ============================================================
+   30. RENTAL DETAIL MODAL
+   ============================================================ */
+.db-modal--lg {
+  max-width: 680px;
+  width: 94%;
+}
+
+.db-rental-detail__vehicle {
+  display: flex;
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.db-rental-detail__image {
+  width: 200px;
+  height: 130px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: var(--db-card-radius);
+  background: var(--color-surface);
+  flex-shrink: 0;
+}
+
+.db-rental-detail__vehicle-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.db-rental-detail__vehicle-name {
+  font-family: var(--font-heading);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  color: var(--color-dark-text);
+  margin-bottom: var(--space-2);
+}
+
+.db-rental-detail__vehicle-specs {
+  font-size: var(--fs-xs);
+  color: var(--color-light-text);
+  margin-top: var(--space-2);
+}
+
+.db-rental-detail__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.db-rental-detail__item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-3);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+}
+
+.db-rental-detail__label {
+  font-size: 0.625rem;
+  font-weight: var(--fw-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-light-text);
+}
+
+.db-rental-detail__value {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  color: var(--color-dark-text);
+}
+
+.db-rental-detail__value--highlight {
+  color: var(--color-secondary);
+  font-weight: var(--fw-bold);
+}
+
+.db-rental-detail__section-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-semibold);
+  color: var(--color-dark-text);
+  margin-bottom: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border-light);
+}
+
+.db-rental-detail__payment {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+}
+
+.db-rental-detail__payment-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-2) 0;
+  font-size: var(--fs-small);
+  color: var(--color-light-text);
+}
+
+.db-rental-detail__payment-row--total {
+  border-top: 1px solid var(--color-border);
+  margin-top: var(--space-2);
+  padding-top: var(--space-3);
+  font-weight: var(--fw-bold);
+  color: var(--color-dark-text);
+  font-size: var(--fs-body);
+}
+
+
+/* ============================================================
+   31. PRE-BOOKING CARDS
+   ============================================================ */
+.db-pb-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.db-pb-card {
+  background: var(--color-card);
+  border: var(--db-card-border);
+  border-radius: var(--db-card-radius);
+  overflow: hidden;
+  transition: all var(--transition-smooth);
+  box-shadow: var(--db-card-shadow);
+}
+
+.db-pb-card:hover {
+  box-shadow: var(--db-card-shadow-hover);
+}
+
+.db-pb-card--expanded {
+  border-color: rgba(139,92,246,0.25);
+}
+
+.db-pb-card__main {
+  display: flex;
+  gap: var(--space-5);
+  padding: var(--space-5);
+}
+
+.db-pb-card__image-wrap {
+  position: relative;
+  width: 180px;
+  height: 120px;
+  flex-shrink: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-surface);
+}
+
+.db-pb-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.db-pb-card__image-wrap .db-badge {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+}
+
+.db-pb-card__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.db-pb-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.db-pb-card__name {
+  font-family: var(--font-heading);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-semibold);
+  color: var(--color-dark-text);
+}
+
+.db-pb-card__ref {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--color-light-text);
+  background: var(--color-surface);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.db-pb-card__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-size: var(--fs-xs);
+  color: var(--color-light-text);
+  margin-bottom: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.db-pb-card__meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.db-pb-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.db-pb-card__submitted {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--fs-xs);
+  color: var(--color-light-text);
+}
+
+.db-pb-card__actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+
+/* ============================================================
+   32. ALTERNATIVE VEHICLE SUGGESTION UI
+   ============================================================ */
+.db-pb-card__alternative {
+  background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-card) 100%);
+  border-top: 1px solid var(--color-border-light);
+  padding: var(--space-6);
+}
+
+.db-pb-card__alt-flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+}
+
+.db-pb-card__alt-step {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-lg);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  width: 100%;
+  max-width: 400px;
+}
+
+.db-pb-card__alt-step-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.db-pb-card__alt-step--requested {
+  background: rgba(59,130,246,0.06);
+  color: #3B82F6;
+}
+
+.db-pb-card__alt-step--requested .db-pb-card__alt-step-icon {
+  background: rgba(59,130,246,0.1);
+}
+
+.db-pb-card__alt-step--unavailable {
+  background: rgba(220,38,38,0.05);
+  color: var(--color-danger);
+}
+
+.db-pb-card__alt-step--unavailable .db-pb-card__alt-step-icon {
+  background: rgba(220,38,38,0.1);
+}
+
+.db-pb-card__alt-step--suggested {
+  background: rgba(34,197,94,0.05);
+  color: var(--color-success);
+}
+
+.db-pb-card__alt-step--suggested .db-pb-card__alt-step-icon {
+  background: rgba(34,197,94,0.1);
+}
+
+.db-pb-card__alt-arrow {
+  color: var(--color-light-text);
+  opacity: 0.4;
+}
+
+.db-pb-card__alt-reason {
+  font-size: var(--fs-xs);
+  color: var(--color-light-text);
+  text-align: center;
+  padding: var(--space-2) var(--space-4);
+  background: rgba(234,88,12,0.04);
+  border-radius: var(--radius-md);
+  max-width: 400px;
+  width: 100%;
+  border: 1px dashed rgba(234,88,12,0.2);
+}
+
+.db-pb-card__alt-category {
+  margin-bottom: var(--space-5);
+}
+
+.db-pb-card__alt-category:last-of-type {
+  margin-bottom: var(--space-6);
+}
+
+.db-pb-card__alt-category-title {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-light-text);
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.db-pb-card__alt-vehicles {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+}
+
+.db-pb-card__alt-vehicle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: var(--color-card);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-base);
+  cursor: pointer;
+}
+
+.db-pb-card__alt-vehicle:hover {
+  border-color: var(--color-secondary);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.db-pb-card__alt-vehicle-img {
+  width: 80px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  flex-shrink: 0;
+}
+
+.db-pb-card__alt-vehicle-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.db-pb-card__alt-vehicle-name {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  color: var(--color-dark-text);
+  margin-bottom: 2px;
+}
+
+.db-pb-card__alt-vehicle-specs {
+  font-size: var(--fs-xs);
+  color: var(--color-light-text);
+  margin-bottom: 2px;
+}
+
+.db-pb-card__alt-vehicle-price {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-bold);
+  color: var(--color-secondary);
+}
+
+.db-pb-card__alt-actions {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border-light);
+}
+
+
+/* ============================================================
+   33. HIDE UTILITIES
+   ============================================================ */
+.hide-tablet {
+  display: flex;
+}
+
+.hide-mobile {
+  display: flex;
+}
+
+
+/* ============================================================
+   34. MODULE-SPECIFIC RESPONSIVE
+   ============================================================ */
+
+/* ≤ 1200px */
+@media (max-width: 1200px) {
+  .db-rentals-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .db-pb-card__alt-vehicles {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ≤ 992px */
+@media (max-width: 992px) {
+  .db-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--space-6);
+  }
+
+  .db-hero__badge {
+    flex-direction: row;
+    width: auto;
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .db-current-rental {
+    flex-direction: column;
+  }
+
+  .db-current-rental__image-wrap {
+    width: 100%;
+  }
+
+  .db-current-rental__image {
+    height: 180px;
+  }
+
+  .db-rental-detail__vehicle {
+    flex-direction: column;
+  }
+
+  .db-rental-detail__image {
+    width: 100%;
+    height: 180px;
+  }
+
+  .db-rental-detail__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .db-pb-card__main {
+    flex-direction: column;
+  }
+
+  .db-pb-card__image-wrap {
+    width: 100%;
+    height: 160px;
+  }
+
+  .hide-tablet {
+    display: none !important;
+  }
+
+  .db-rentals-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ≤ 768px */
+@media (max-width: 768px) {
+  .db-hero__name {
+    font-size: 1.375rem;
+  }
+
+  .db-hero__actions {
+    flex-direction: column;
+  }
+
+  .db-hero__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .db-current-rental__dates {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .db-current-rental__date-arrow {
+    transform: rotate(90deg);
+  }
+
+  .db-current-rental__timeline {
+    flex-wrap: wrap;
+  }
+
+  .db-current-rental__actions {
+    flex-direction: column;
+  }
+
+  .db-current-rental__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .db-notification-preview {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .db-rental-card__actions {
+    flex-direction: column;
+  }
+
+  .db-rental-card__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .db-pb-card__footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .db-pb-card__actions {
+    width: 100%;
+  }
+
+  .db-pb-card__actions .btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .db-pb-card__alt-vehicles {
+    grid-template-columns: 1fr;
+  }
+
+  .db-pb-card__alt-actions {
+    flex-direction: column;
+  }
+
+  .db-pb-card__alt-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+/* ≤ 576px */
+@media (max-width: 576px) {
+  .db-hero {
+    padding: var(--space-5);
+  }
+
+  .db-rental-card__image-wrap {
+    height: 130px;
+  }
+
+  .db-rental-card__body {
+    padding: var(--space-4);
+  }
+
+  .db-pb-card__main {
+    padding: var(--space-4);
+  }
+
+  .db-pb-card__alternative {
+    padding: var(--space-4);
+  }
+
+  .db-pb-card__alt-step {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--fs-xs);
+  }
+
+  .db-pb-card__alt-vehicle {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .db-pb-card__alt-vehicle-img {
+    width: 100%;
+    height: 100px;
+  }
+}
+
+/* ============================================================
+   35. CUSTOM HELPER UTILITIES & ACCORDIONS (PHASE 3)
+   ============================================================ */
+.hide-desktop {
+  display: none !important;
+}
+
+@media (max-width: 992px) {
+  .hide-desktop {
+    display: grid !important;
+  }
+}
+
+.db-accordion {
+  width: 100%;
+}
+
+.db-accordion__content {
+  display: none;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.db-accordion__content.active {
+  display: block;
+  max-height: 300px;
+  padding: 0 var(--space-6) var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.db-accordion__trigger svg {
+  transition: transform var(--transition-base);
+}
+
+.db-accordion__content.active + .db-accordion__trigger svg {
+  transform: rotate(180deg);
+}
+
+
+/* ============================================================
+   36. VISUAL CONSISTENCY PASS (UNIFIED STYLING MODULE)
+   ============================================================ */
+
+/* Ensure button height uniformity across all dashboard modules */
+.db-layout .btn {
+  height: 40px !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.db-layout .btn--sm {
+  height: 34px !important;
+}
+
+.db-layout .btn--xs {
+  height: 28px !important;
+}
+
+/* Ensure all inputs and selects have uniform heights and radius */
+.db-layout input[type="text"],
+.db-layout input[type="email"],
+.db-layout input[type="password"],
+.db-layout input[type="number"],
+.db-layout input[type="date"],
+.db-layout select,
+.db-layout textarea {
+  height: 40px !important;
+  border-radius: var(--radius-md) !important;
+  border: 1.5px solid var(--color-border-light) !important;
+  background: var(--color-surface) !important;
+  color: var(--color-dark-text) !important;
+  font-size: var(--fs-small) !important;
+  padding: 8px 12px !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.db-layout textarea {
+  height: auto !important;
+  min-height: 80px !important;
+}
+
+.db-layout input:focus,
+.db-layout select:focus,
+.db-layout textarea:focus {
+  border-color: var(--color-primary) !important;
+  background: var(--color-card) !important;
+  box-shadow: 0 0 0 3px var(--color-secondary-100) !important;
+}
+
+/* Ensure all table rows and cell paddings are consistent */
+.db-layout .db-table th,
+.db-layout .db-table td {
+  padding: var(--space-4) var(--space-5) !important;
+  vertical-align: middle !important;
+  font-size: var(--fs-xs) !important;
+}
+
+.db-layout .db-table th {
+  background: var(--color-surface-hover) !important;
+  font-weight: var(--fw-bold) !important;
+  color: var(--color-primary) !important;
+  text-transform: uppercase !important;
+  font-size: 10px !important;
+  letter-spacing: 0.05em !important;
+  border-bottom: 2px solid var(--color-border-light) !important;
+}
+
+.db-layout .db-table tr {
+  border-bottom: 1px solid var(--color-border-light) !important;
+}
+
+.db-layout .db-table tr:hover {
+  background: rgba(198,169,98,0.02) !important;
+}
+
+/* Unified status badge design */
+.db-layout .badge,
+.db-layout .db-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: var(--space-1) !important;
+  padding: 4px 10px !important;
+  font-size: 10px !important;
+  font-weight: var(--fw-bold) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  border-radius: var(--radius-full) !important;
+  white-space: nowrap !important;
+  line-height: 1.2 !important;
+  height: auto !important;
+}
+
+.db-layout .badge::before,
+.db-layout .db-badge::before {
+  content: none !important;
+}
+
+/* Color schemes for unified badges */
+.db-layout .badge--success,
+.db-layout .db-badge--available,
+.db-layout .db-badge--approved,
+.db-layout .db-badge--active {
+  background: rgba(34,197,94,0.1) !important;
+  color: var(--color-success) !important;
+  border: 1px solid rgba(34,197,94,0.2) !important;
+}
+
+.db-layout .badge--warning,
+.db-layout .db-badge--pending,
+.db-layout .db-badge--waiting {
+  background: rgba(245,158,11,0.1) !important;
+  color: var(--color-warning) !important;
+  border: 1px solid rgba(245,158,11,0.2) !important;
+}
+
+.db-layout .badge--danger,
+.db-layout .db-badge--rejected,
+.db-layout .db-badge--cancelled {
+  background: rgba(239,68,68,0.1) !important;
+  color: var(--color-danger) !important;
+  border: 1px solid rgba(239,68,68,0.2) !important;
+}
+
+.db-layout .badge--gold {
+  background: rgba(198,169,98,0.1) !important;
+  color: var(--color-secondary) !important;
+  border: 1px solid rgba(198,169,98,0.2) !important;
+}
+
+.db-layout .badge--neutral,
+.db-layout .db-badge--inactive,
+.db-layout .db-badge--expired {
+  background: rgba(107,114,128,0.1) !important;
+  color: var(--color-light-text) !important;
+  border: 1px solid rgba(107,114,128,0.2) !important;
+}
+
+/* Consistent vehicle image ratios */
+.db-layout img.db-current-rental__image,
+.db-layout img.db-pb-card__image,
+.db-layout .db-table img,
+.db-layout .wiz-uploaded-photo img {
+  object-fit: cover !important;
+  aspect-ratio: 16 / 10 !important;
+  max-width: 100% !important;
+}
+
+/* Consistent transitions and hover states for interactive components */
+.db-layout a,
+.db-layout button,
+.db-layout .db-sidebar__link,
+.db-layout .db-stat-card,
+.db-layout .db-rental-card,
+.db-layout .db-pb-card,
+.db-layout .db-section-card,
+.db-layout .db-filter-bar__search-input,
+.db-layout .db-filter-bar__select,
+.db-layout input,
+.db-layout select,
+.db-layout textarea,
+.db-layout tr {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Unified section and page header titles typography */
+.db-layout .db-page-header__title,
+.db-layout .db-section-card__title,
+.db-layout h2.db-page-header__title,
+.db-layout h3.db-section-card__title {
+  font-family: var(--font-heading) !important;
+  font-weight: var(--fw-bold) !important;
+  color: var(--color-primary) !important;
+  letter-spacing: -0.02em !important;
+}
+
+.db-layout .db-page-header__title {
+  font-size: 1.75rem !important;
+}
+
+.db-layout .db-section-card__title {
+  font-size: 1.125rem !important;
+}
+
+/* ==========================================
+   USER DASHBOARD UI/UX REFINEMENT OVERRIDES
+   ========================================== */
+
+/* 1. Dashboard Hero Section Card Refinements */
+.db-layout .db-hero {
+  background: linear-gradient(135deg, #0f172A 0%, #1E293B 100%) !important; /* Premium dark slate/navy blue */
+  border: 1px solid rgba(198, 169, 98, 0.15) !important;
+  box-shadow: var(--shadow-sm) !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  padding: var(--space-4) var(--space-5) !important; /* Shorter padding to reduce visual weight */
+  min-height: auto !important;
+  position: relative !important;
+}
+
+.db-layout .db-hero__greeting {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.db-layout .db-hero__welcome {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.db-layout .db-hero__name {
+  color: #ffffff !important; /* PURE WHITE username */
+  font-family: var(--font-heading) !important;
+  font-weight: 700 !important;
+}
+
+.db-layout .db-hero__text {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: var(--fs-xs) !important;
+  max-width: 500px !important;
+  margin-bottom: var(--space-4) !important;
+}
+
+.db-layout .db-hero__actions {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: var(--space-3) !important;
+  flex-wrap: wrap !important;
+}
+
+.db-layout .db-hero__actions .btn {
+  height: 36px !important;
+  font-size: var(--fs-xs) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.db-layout .db-hero__actions .btn--primary {
+  background: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: #ffffff !important;
+}
+
+.db-layout .db-hero__actions .btn--primary:hover {
+  background: var(--color-primary-dark) !important;
+  border-color: var(--color-primary-dark) !important;
+}
+
+.db-layout .db-hero__actions .btn--outline {
+  border-color: rgba(255,255,255,0.3) !important;
+  color: #ffffff !important;
+  background: transparent !important;
+}
+
+.db-layout .db-hero__actions .btn--outline:hover {
+  background: rgba(255,255,255,0.1) !important;
+  border-color: rgba(255,255,255,0.5) !important;
+}
+
+.db-layout .db-hero__actions .btn--ghost {
+  color: rgba(255,255,255,0.7) !important;
+}
+
+.db-layout .db-hero__actions .btn--ghost:hover {
+  background: rgba(255,255,255,0.05) !important;
+  color: #ffffff !important;
+}
+
+.db-layout .db-hero__badge {
+  background: rgba(198, 169, 98, 0.1) !important;
+  border: 1px solid rgba(198, 169, 98, 0.25) !important;
+  color: var(--color-secondary) !important;
+}
+
+.db-layout .db-hero__badge-label {
+  color: var(--color-secondary) !important;
+}
+
+
+.db-layout .db-header__search-icon,
+span.db-filter-bar__search-icon,
+.db-layout .db-filter-bar__search-icon {
+  position: absolute !important;
+  left: 16px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 18px !important;
+  height: 18px !important;
+  color: var(--color-light-text) !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
+  margin: 0 !important;
+}
+
+.db-layout .db-header__search-icon i,
+.db-layout .db-filter-bar__search-icon i,
+.db-layout .db-header__search-icon svg,
+.db-layout .db-filter-bar__search-icon svg {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+}
+
+.db-layout .db-header__search-input {
+  padding-left: 48px !important; /* Header search retains icon spacing */
+  text-indent: 0 !important;
+}
+.db-layout .db-filter-bar__search-input {
+  padding-left: var(--space-4) !important; /* Removed icon, left-align placeholder/text with normal padding */
+  text-indent: 0 !important;
+}
+
+
+/* 3. Compact My Rentals Cards & Grid Refinements */
+.db-layout .db-rentals-grid {
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: var(--space-4) !important;
+  padding: var(--space-4) !important;
+}
+
+@media (max-width: 1200px) {
+  .db-layout .db-rentals-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .db-layout .db-rentals-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.db-layout .db-rental-card {
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.db-layout .db-rental-card__image-wrap {
+  height: auto !important;
+  aspect-ratio: 16 / 9 !important;
+  position: relative !important;
+}
+
+.db-layout .db-rental-card__body {
+  padding: var(--space-4) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: var(--space-2) !important;
+}
+
+.db-layout .db-rental-card__header {
+  margin-bottom: 0 !important;
+}
+
+.db-layout .db-rental-card__name {
+  font-size: var(--fs-xs) !important;
+  font-weight: 600 !important;
+  color: var(--color-dark-text) !important;
+}
+
+.db-layout .db-rental-card__meta {
+  margin-bottom: 0 !important;
+  gap: var(--space-2) !important;
+}
+
+.db-layout .db-rental-card__price {
+  margin-bottom: 2px !important;
+}
+
+.db-layout .db-rental-card__price-total {
+  font-size: var(--fs-body) !important;
+}
+
+.db-layout .db-rental-card__actions {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  gap: var(--space-2) !important;
+  margin-top: auto !important;
+}
+
+.db-layout .db-rental-card__actions .btn {
+  padding: 6px 10px !important;
+  font-size: 11px !important;
+  height: 32px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+}
+
+
+/* 4. Compact Pre-Bookings Alternatives Comparison card styling */
+.db-pb-card__alternative-rebuilt {
+  animation: fadeIn var(--transition-base) ease;
+}
+
+
+/* 5. Support Hub & Accompanying Styling */
+.db-support-grid-rebuilt {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+@media (max-width: 992px) {
+  .db-support-grid-rebuilt {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .db-support-grid-rebuilt {
+    grid-template-columns: 1fr;
+  }
+}
+
+.db-support-card-item {
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  background: var(--color-card);
+  text-align: center;
+  transition: all var(--transition-base);
+  text-decoration: none;
+}
+
+.db-support-card-item:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
+}
+
+.db-faq-item {
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.db-faq-trigger {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: var(--space-4) var(--space-6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  color: var(--color-dark-text);
+  cursor: pointer;
+}
+
+.db-faq-content {
+  display: none;
+  padding: 0 var(--space-6) var(--space-4) var(--space-6);
+  font-size: var(--fs-xs);
+  color: var(--color-light-text);
+  line-height: 1.5;
+}
+
+.db-faq-content.active {
+  display: block;
+}
+
+/* ============================================================
+   USER DASHBOARD UI/UX BUG FIXES OVERRIDES
+   ============================================================ */
+
+/* 1. Dashboard -> Current Rental Action Buttons Consistency */
+.db-current-rental__actions {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  gap: var(--space-3) !important;
+  align-items: center !important;
+}
+
+.db-current-rental__actions .btn {
+  flex: 1 !important;
+  min-width: 170px !important;
+  max-width: 220px !important;
+  height: 38px !important;
+  padding: 0 var(--space-4) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  border-radius: var(--radius-md) !important;
+  font-size: var(--fs-xs) !important;
+  box-sizing: border-box !important;
+  white-space: nowrap !important;
+}
+
+/* Align icons inside current rental buttons */
+.db-current-rental__actions .btn i,
+.db-current-rental__actions .btn svg {
+  margin-right: 6px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+}
+
+/* Standardize borders and background families */
+.db-current-rental__actions .btn--ghost {
+  border: 1px solid var(--color-border) !important;
+  background: transparent !important;
+}
+.db-current-rental__actions .btn--ghost:hover {
+  background: var(--color-surface) !important;
+}
+
+@media (max-width: 768px) {
+  .db-current-rental__actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .db-current-rental__actions .btn {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+}
+
+/* 2. My Rentals -> Vehicle Image Aspect Ratio & Entire Image Visible */
+.db-layout .db-rental-card__image-wrap {
+  height: auto !important;
+  aspect-ratio: 16 / 9 !important;
+  padding: var(--space-4) !important;
+  background: var(--color-surface) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: visible !important;
+  box-sizing: border-box !important;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important;
+}
+
+.db-layout .db-rental-card__image {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  background: transparent !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+.db-layout .db-rental-card:hover .db-rental-card__image {
+  transform: none !important;
+}
+
+/* 3. Reusable Unified Search Input Overlap Fix */
+.db-layout .db-filter-bar__search,
+.db-layout .db-header__search,
+div.db-filter-bar__search {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+.db-layout .db-filter-bar__search-icon,
+.db-layout .db-header__search-icon,
+span.db-filter-bar__search-icon,
+i.db-filter-bar__search-icon {
+  position: absolute !important;
+  left: 16px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 16px !important;
+  height: 16px !important;
+  color: var(--color-light-text) !important;
+  pointer-events: none !important;
+  z-index: 5 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+}
+
+.db-layout .db-filter-bar__search-icon i,
+.db-layout .db-header__search-icon i,
+.db-layout .db-filter-bar__search-icon svg,
+.db-layout .db-header__search-icon svg,
+span.db-filter-bar__search-icon svg {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+}
+
+.db-layout .db-header__search-input {
+  padding-left: 48px !important;
+  text-indent: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.db-layout .db-filter-bar__search-input,
+input.db-filter-bar__search-input {
+  padding-left: var(--space-4) !important; /* Left-align placeholder/text with normal input padding */
+  text-indent: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Redesigned Pre-Booking Alternative Suggestions Component */
+.db-pb-card__alternative-rebuilt {
+  margin-top: var(--space-5);
+  border-top: 1px dashed var(--color-border);
+  padding: var(--space-5) var(--space-6) var(--space-6) var(--space-6) !important;
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.db-pb-card__alert {
+  background: rgba(239, 68, 68, 0.04) !important;
+  border: 1px solid rgba(239, 68, 68, 0.15) !important;
+  border-radius: var(--radius-md) !important;
+  padding: var(--space-4) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: var(--space-3) !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+
+.db-pb-card__alert-icon {
+  color: var(--color-danger) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.db-pb-card__alert-content {
+  flex: 1 !important;
+  min-width: 0 !important;
+  text-align: left !important;
+}
+
+.db-pb-card__alert-title {
+  font-weight: var(--fw-semibold) !important;
+  color: var(--color-danger) !important;
+  font-size: var(--fs-xs) !important;
+  margin: 0 0 2px 0 !important;
+}
+
+.db-pb-card__alert-text {
+  font-size: 11px !important;
+  color: var(--color-light-text) !important;
+  line-height: 1.4 !important;
+  margin: 0 !important;
+}
+
+.db-pb-card__rec-veh {
+  background: var(--color-surface-light) !important;
+  border: 1px solid var(--color-border-light) !important;
+  border-radius: var(--radius-lg) !important;
+  padding: var(--space-4) !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  display: flex !important;
+  gap: var(--space-4) !important;
+  align-items: center !important;
+}
+
+.db-pb-card__rec-img-wrap {
+  width: 110px !important;
+  height: 70px !important;
+  flex-shrink: 0 !important;
+  padding: var(--space-2) !important;
+  box-sizing: border-box !important;
+  background: var(--color-card) !important;
+  border: 1px solid var(--color-border-light) !important;
+  border-radius: var(--radius-md) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.db-pb-card__rec-img {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+}
+
+.db-pb-card__rec-details {
+  flex: 1 !important;
+  min-width: 0 !important;
+  text-align: left !important;
+}
+
+.db-pb-card__rec-title {
+  font-weight: var(--fw-semibold) !important;
+  color: var(--color-dark-text) !important;
+  font-size: var(--fs-xs) !important;
+  margin: 0 0 4px 0 !important;
+}
+
+.db-pb-card__rec-meta {
+  font-size: 11px !important;
+  color: var(--color-light-text) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 3px !important;
+}
+
+.db-pb-card__comp-section {
+  border: 1px solid var(--color-border-light) !important;
+  border-radius: var(--radius-lg) !important;
+  background: var(--color-card) !important;
+  padding: var(--space-4) !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  text-align: left !important;
+}
+
+.db-pb-card__comp-header {
+  font-size: 11px !important;
+  font-weight: var(--fw-bold) !important;
+  color: var(--color-primary) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  margin-bottom: var(--space-3) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: var(--space-2) !important;
+  border-bottom: 1px solid var(--color-border-light) !important;
+  padding-bottom: var(--space-2) !important;
+}
+
+.db-pb-card__comp-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: var(--space-4) !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+
+.db-pb-card__comp-col {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: var(--space-1) !important;
+}
+
+.db-pb-card__comp-col:first-child {
+  border-right: 1px solid var(--color-border-light) !important;
+  padding-right: var(--space-4) !important;
+}
+
+.db-pb-card__comp-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  font-size: var(--fs-xs) !important;
+  color: var(--color-light-text) !important;
+  margin-top: 2px !important;
+}
+
+.db-pb-card__comp-label {
+  color: var(--color-light-text) !important;
+}
+
+.db-pb-card__comp-value {
+  font-weight: var(--fw-semibold) !important;
+  color: var(--color-dark-text) !important;
+}
+
+.db-pb-card__comp-value--accent {
+  font-weight: var(--fw-semibold) !important;
+  color: var(--color-secondary) !important;
+}
+
+.db-pb-card__note {
+  background: var(--color-surface-light) !important;
+  border-left: 3px solid var(--color-primary) !important;
+  padding: var(--space-3) var(--space-4) !important;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0 !important;
+  font-size: 11px !important;
+  color: var(--color-light-text) !important;
+  line-height: 1.5 !important;
+  text-align: left !important;
+  margin: 0 !important;
+}
+
+.db-pb-card__actions-row {
+  display: flex !important;
+  gap: var(--space-3) !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+
+.db-pb-card__actions-row .btn {
+  flex: 1 !important;
+  min-width: 160px !important;
+  justify-content: center !important;
+  height: 38px !important;
+  font-size: var(--fs-xs) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+@media (max-width: 576px) {
+  .db-pb-card__rec-veh {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: var(--space-3) !important;
+  }
+  .db-pb-card__rec-img-wrap {
+    width: 100% !important;
+    height: 110px !important;
+  }
+  .db-pb-card__comp-grid {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-3) !important;
+  }
+  .db-pb-card__comp-col:first-child {
+    border-right: none !important;
+    padding-right: 0 !important;
+    border-bottom: 1px solid var(--color-border-light) !important;
+    padding-bottom: var(--space-3) !important;
+  }
+}
+
+
+/* ============================================================
+   ADDITIONAL RESPONSIVE REFINEMENTS — USER DASHBOARD
+   Appended to fill remaining gaps without modifying desktop.
+   ============================================================ */
+
+/* ---- Tablet (≤ 992px) ---- */
+@media (max-width: 992px) {
+  /* Sidebar overlay correct z-index */
+  .db-sidebar__overlay {
+    z-index: calc(var(--db-z-sidebar) - 1);
+  }
+
+  /* Main wrapper fills full width */
+  .db-main-wrapper {
+    width: 100%;
+    margin-left: 0 !important;
+  }
+
+  /* Dashboard hero wraps on tablet */
+  .db-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .db-hero__badge {
+    align-self: flex-start;
+  }
+
+  /* Header search hidden */
+  .db-header__search {
+    display: none;
+  }
+
+  /* Section grids stack */
+  .db-section-grid,
+  .db-section-grid--2,
+  .db-section-grid--3 {
+    grid-template-columns: 1fr;
+  }
+
+  /* Tabs become scrollable */
+  .db-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+  }
+
+  .db-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .db-tab {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+}
+
+/* ---- Mobile Landscape (≤ 768px) ---- */
+@media (max-width: 768px) {
+  /* Page header stacks */
+  .db-page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .db-page-header__actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .db-page-header__actions .btn {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Filter bar stacks */
+  .db-filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
+
+  .db-filter-bar__search {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .db-filter-bar__actions {
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  /* Stats grid single column */
+  .db-stats-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  /* Form rows single column */
+  .db-form-row,
+  .db-form-row--3,
+  .db-form-row--2 {
+    grid-template-columns: 1fr;
+  }
+
+  /* Notification panel full width */
+  .db-notification-panel {
+    position: fixed;
+    top: var(--db-header-height);
+    right: 0;
+    left: 0;
+    width: 100%;
+    max-height: calc(100vh - var(--db-header-height));
+    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+  }
+
+  /* Pagination stacks */
+  .db-pagination {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  /* Hero actions stack on narrow tablet */
+  .db-hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .db-hero__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Header dropdown mobile safe */
+  .db-header__dropdown {
+    right: 0;
+    width: 260px;
+  }
+}
+
+/* ---- Mobile (≤ 576px) ---- */
+@media (max-width: 576px) {
+  :root {
+    --db-main-padding: var(--space-4);
+  }
+
+  /* Stat card compact */
+  .db-stat-card {
+    padding: var(--space-4);
+  }
+
+  .db-stat-card__value {
+    font-size: 1.5rem;
+  }
+
+  .db-stat-card__icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* Section card compact */
+  .db-section-card__header {
+    padding: var(--space-4) var(--space-5);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .db-section-card__body {
+    padding: var(--space-4);
+  }
+
+  .db-section-card__footer {
+    padding: var(--space-3) var(--space-4);
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  /* Tabs smaller */
+  .db-tabs {
+    padding: 0 var(--space-4);
+  }
+
+  .db-tab {
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--fs-xs);
+  }
+
+  /* Modal full width */
+  .db-modal {
+    width: 95%;
+    max-width: 95%;
+  }
+
+  /* Profile form stacking */
+  .db-profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .db-profile-sidebar {
+    order: -1;
+  }
+
+  /* Hero text smaller */
+  .db-hero__name {
+    font-size: clamp(1.25rem, 4vw, 1.625rem);
+  }
+
+  .db-hero__text {
+    font-size: var(--fs-xs);
+    margin-bottom: var(--space-4);
+  }
+
+  /* Section card title smaller */
+  .db-section-card__title {
+    font-size: 1rem;
+  }
+
+  /* Page header title */
+  .db-page-header__title {
+    font-size: clamp(1.25rem, 4vw, 1.625rem);
+  }
+
+  /* Header compact */
+  .db-header {
+    padding: 0 var(--space-4);
+    gap: var(--space-3);
+  }
+
+  .db-header__title-area .db-header__title {
+    font-size: 1rem;
+  }
+
+  /* Header dropdown */
+  .db-header__dropdown {
+    width: calc(100vw - var(--space-8));
+    right: calc(-1 * var(--space-4));
+  }
+
+  /* Notification badge shrink */
+  .db-header__notification-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  /* Support grid */
+  .db-support-grid-rebuilt {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- Small Phones (≤ 480px) ---- */
+@media (max-width: 480px) {
+  :root {
+    --db-main-padding: var(--space-3);
+    --db-header-height: 56px;
+  }
+
+  /* Hide greeting subtext */
+  .db-header__greeting {
+    display: none;
+  }
+
+  .db-header__title {
+    font-size: 0.9375rem;
+  }
+
+  /* Sidebar narrower on tiny screens */
+  .db-sidebar {
+    width: 260px;
+  }
+
+  .db-sidebar.collapsed {
+    width: 260px;
+  }
+
+  /* Hero even more compact */
+  .db-hero {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .db-hero__name {
+    font-size: 1.125rem;
+  }
+
+  .db-hero__greeting {
+    font-size: var(--fs-xs);
+  }
+
+  /* Stat card micro */
+  .db-stat-card {
+    padding: var(--space-3);
+    gap: var(--space-3);
+  }
+
+  .db-stat-card__value {
+    font-size: 1.25rem;
+  }
+
+  .db-stat-card__label {
+    font-size: 0.6875rem;
+  }
+
+  /* Section card body micro padding */
+  .db-section-card__body {
+    padding: var(--space-3);
+  }
+
+  /* Current rental action buttons stack fully */
+  .db-current-rental__actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .db-current-rental__actions .btn {
+    max-width: 100% !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  /* Rental card actions */
+  .db-rental-card__actions .btn {
+    flex: 1 !important;
+    min-width: 0 !important;
+    font-size: 10px !important;
+    padding: 4px 8px !important;
+    height: 30px !important;
+  }
+
+  /* Pre-booking card action row */
+  .db-pb-card__actions-row .btn {
+    min-width: 0 !important;
+    flex: 1 !important;
+    font-size: 11px !important;
+    height: 34px !important;
+  }
+}
+
+/* ============================================================
+   USER DASHBOARD RESPONSIVENESS OVERRIDES (MOBILE & TABLET ONLY)
+   ============================================================ */
+
+/* 1. TABLET & MOBILE RESPONSIVE OVERRIDES (max-width: 1023px) */
+@media (max-width: 1023px) {
+  /* Hide the desktop-only collapse button on tablet/mobile */
+  .db-sidebar__collapse-btn {
+    display: none !important;
+  }
+
+  /* --- Welcome Back Hero Card Centering --- */
+  .db-hero {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    justify-content: center !important;
+    padding: var(--space-6) !important;
+  }
+
+  .db-hero__content {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  .db-hero__greeting {
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .db-hero__name {
+    text-align: center !important;
+  }
+
+  .db-hero__text {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .db-hero__actions {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    gap: var(--space-3) !important;
+  }
+
+  .db-hero__actions .btn {
+    flex: none !important;
+    justify-content: center !important;
+  }
+
+  .db-hero__badge {
+    align-self: center !important;
+    margin: var(--space-4) auto 0 auto !important;
+  }
+
+  /* --- Current Rental Action Buttons Consistency --- */
+  .db-current-rental__actions {
+    display: flex !important;
+    flex-direction: column !important; /* Stack vertically to guarantee equal width */
+    align-items: stretch !important;
+    width: 100% !important;
+    gap: var(--space-3) !important; /* Equal spacing */
+    margin-top: var(--space-4) !important;
+  }
+
+  .db-current-rental__actions .btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    height: 40px !important; /* Equal height */
+    padding: var(--space-2) var(--space-4) !important; /* Equal padding */
+    border-radius: var(--radius-md) !important; /* Equal border radius */
+    font-size: var(--fs-xs) !important;
+    font-weight: var(--fw-semibold) !important;
+    box-sizing: border-box !important;
+    text-align: center !important;
+    white-space: normal !important; /* Prevent text truncation or clipping */
+    word-break: keep-all !important;
+    overflow: visible !important;
+  }
+
+  /* --- Rental History: Preserve Desktop Table Layout --- */
+  #history-list .hide-tablet {
+    display: block !important; /* Force show table wrapper on mobile/tablet */
+  }
+  #history-list .hide-desktop {
+    display: none !important; /* Force hide mobile card grid on mobile/tablet */
+  }
+
+  #history-list .db-table-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    margin: 0 !important;
+    border-radius: var(--radius-md) !important;
+    border: 1px solid var(--color-border-light) !important;
+  }
+  
+  #history-list .db-table {
+    width: 100% !important;
+    min-width: 1290px !important; /* Prevent column compression */
+    table-layout: auto !important;
+  }
+
+  #history-list .db-table th,
+  #history-list .db-table td {
+    padding: var(--space-4) var(--space-5) !important; /* Increase cell padding */
+    white-space: nowrap !important; /* Prevent text wrapping and collision */
+  }
+
+  #history-list .db-table th:nth-child(1),
+  #history-list .db-table td:nth-child(1) {
+    min-width: 250px !important; /* Vehicle column independent width */
+  }
+  #history-list .db-table th:nth-child(2),
+  #history-list .db-table td:nth-child(2) {
+    min-width: 140px !important; /* Booking ID column */
+  }
+  #history-list .db-table th:nth-child(3),
+  #history-list .db-table td:nth-child(3) {
+    min-width: 100px !important; /* Type column */
+  }
+  #history-list .db-table th:nth-child(4),
+  #history-list .db-table td:nth-child(4) {
+    min-width: 200px !important; /* Dates column */
+  }
+  #history-list .db-table th:nth-child(5),
+  #history-list .db-table td:nth-child(5) {
+    min-width: 100px !important; /* Duration column */
+  }
+  #history-list .db-table th:nth-child(6),
+  #history-list .db-table td:nth-child(6) {
+    min-width: 120px !important; /* Total Cost column */
+  }
+  #history-list .db-table th:nth-child(7),
+  #history-list .db-table td:nth-child(7) {
+    min-width: 120px !important; /* Status column */
+  }
+  #history-list .db-table th:nth-child(8),
+  #history-list .db-table td:nth-child(8) {
+    min-width: 260px !important; /* Actions column */
+  }
+
+  /* --- Extensions: Extension Request History formatting --- */
+  #eligible-extensions ~ .db-section-card .db-table-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    margin: 0 !important;
+    border-radius: var(--radius-md) !important;
+    border: 1px solid var(--color-border-light) !important;
+  }
+
+  #eligible-extensions ~ .db-section-card .db-table {
+    width: 100% !important;
+    min-width: 1060px !important; /* Prevent columns collapsing/compressing */
+    table-layout: auto !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+  }
+
+  #eligible-extensions ~ .db-section-card .db-table th,
+  #eligible-extensions ~ .db-section-card .db-table td {
+    padding: var(--space-4) var(--space-5) !important; /* Increase horizontal padding */
+    text-align: left !important;
+    vertical-align: middle !important;
+    white-space: nowrap !important; /* Prevent text collision */
+  }
+
+  #eligible-extensions ~ .db-section-card .db-table th:nth-child(1),
+  #eligible-extensions ~ .db-section-card .db-table td:nth-child(1) {
+    min-width: 220px !important; /* Vehicle column */
+  }
+  #eligible-extensions ~ .db-section-card .db-table th:nth-child(2),
+  #eligible-extensions ~ .db-section-card .db-table td:nth-child(2) {
+    min-width: 240px !important; /* Request Details column */
+  }
+  #eligible-extensions ~ .db-section-card .db-table th:nth-child(3),
+  #eligible-extensions ~ .db-section-card .db-table td:nth-child(3) {
+    min-width: 160px !important; /* Original Return column */
+  }
+  #eligible-extensions ~ .db-section-card .db-table th:nth-child(4),
+  #eligible-extensions ~ .db-section-card .db-table td:nth-child(4) {
+    min-width: 160px !important; /* New Return column */
+  }
+  #eligible-extensions ~ .db-section-card .db-table th:nth-child(5),
+  #eligible-extensions ~ .db-section-card .db-table td:nth-child(5) {
+    min-width: 130px !important; /* Estimated Cost column */
+  }
+  #eligible-extensions ~ .db-section-card .db-table th:nth-child(6),
+  #eligible-extensions ~ .db-section-card .db-table td:nth-child(6) {
+    min-width: 150px !important; /* Status column */
+  }
+
+  #eligible-extensions ~ .db-section-card .db-table tbody tr {
+    height: 56px !important;
+  }
+
+  /* --- Profile & Account Settings: Tab Scroll discoverability --- */
+  .db-tabs {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: var(--color-secondary) var(--color-border-light) !important;
+    padding-bottom: 6px !important;
+    background: var(--color-surface) !important;
+    border-bottom: 1.5px solid var(--color-border-light) !important;
+    
+    /* Elegant right-side fade indicator for scrollable tabs to improve discoverability */
+    mask-image: linear-gradient(to right, #000 88%, transparent 100%) !important;
+    -webkit-mask-image: linear-gradient(to right, #000 88%, transparent 100%) !important;
+  }
+
+  .db-tabs::-webkit-scrollbar {
+    display: block !important;
+    height: 4px !important;
+  }
+
+  .db-tabs::-webkit-scrollbar-track {
+    background: var(--color-border-light) !important;
+    border-radius: var(--radius-full) !important;
+  }
+
+  .db-tabs::-webkit-scrollbar-thumb {
+    background: var(--color-secondary) !important;
+    border-radius: var(--radius-full) !important;
+  }
+
+  .db-tab {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    padding: var(--space-3) var(--space-4) !important;
+    font-size: var(--fs-xs) !important;
+    transition: all var(--transition-base) !important;
+  }
+
+  /* Restructure stats card columns on tablet viewports */
+  .db-stats-grid,
+  .db-stats-grid[style*="repeat(3, 1fr)"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: var(--space-4) !important;
+  }
+
+  /* Support ticketing and payments split grids overrides */
+  .db-main div[style*="grid-template-columns: 1fr 3fr"],
+  .db-main div[style*="grid-template-columns: 3fr 2fr"],
+  .db-main div[style*="grid-template-columns: 2fr 3fr"] {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  /* Ensure verification photo uploads stack to 2 columns on tablet */
+  .db-rentals-grid[style*="repeat(3, 1fr)"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: var(--space-4) !important;
+  }
+
+  /* Ensure search bar stays visible and resizes gracefully */
+  .db-header__search {
+    display: block !important;
+    max-width: 220px !important;
+    margin-left: auto !important;
+  }
+}
+
+/* 2. MOBILE ONLY RESPONSIVE OVERRIDES (max-width: 767px) */
+@media (max-width: 767px) {
+  /* --- Global Header Alignment & No Overflow --- */
+  .db-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: var(--space-2) !important;
+    padding: 0 var(--space-3) !important;
+    height: 60px !important;
+    min-width: 0 !important;
+  }
+
+  .db-header__menu-btn {
+    display: flex !important;
+    flex-shrink: 0 !important;
+  }
+
+  .db-header__title-area {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+  }
+
+  .db-header__greeting {
+    display: none !important; /* Hide greeting subtext to save space */
+  }
+
+  .db-header__title {
+    font-size: var(--fs-small) !important;
+    font-weight: var(--fw-bold) !important;
+    color: var(--color-dark-text) !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Make Search Icon Container exactly like the Notification Icon */
+  .db-header__search {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    border-radius: var(--radius-full) !important;
+    border: 1px solid var(--color-border) !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    position: relative !important;
+    flex-shrink: 0 !important;
+    cursor: pointer !important;
+  }
+
+  .db-header__search:hover {
+    background: var(--color-secondary-50) !important;
+    border-color: var(--color-primary) !important;
+    color: var(--color-primary) !important;
+  }
+
+  .db-header__search:hover .db-header__search-icon {
+    color: var(--color-primary) !important;
+  }
+
+  .db-header__search-input,
+  .db-header__search-results {
+    display: none !important; /* Hide input text box and results wrapper on mobile */
+  }
+
+  .db-layout .db-header__search-icon {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 20px !important;
+    height: 20px !important;
+    color: var(--color-light-text) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    pointer-events: none !important;
+    z-index: 1 !important;
+    box-sizing: border-box !important;
+  }
+
+  .db-header__search-icon svg {
+    width: 20px !important;
+    height: 20px !important;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .db-header__actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: var(--space-2) !important;
+    flex-shrink: 0 !important;
+  }
+
+  .db-header__notification-btn {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .db-header__profile-wrapper {
+    flex-shrink: 0 !important;
+  }
+
+  .db-header__profile-btn {
+    padding: 0 !important;
+    flex-shrink: 0 !important;
+  }
+
+  .db-header__profile-avatar {
+    width: 36px !important;
+    height: 36px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* --- 2. My Rentals - Card Actions Row Layout (No Text wrap & No Font reduction) --- */
+  .db-rental-card__actions {
+    display: flex !important;
+    flex-direction: row !important; /* Keep aligned on one row */
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    gap: var(--space-2) !important; /* Equal spacing */
+  }
+
+  .db-rental-card__actions .btn {
+    flex: 1 1 auto !important; /* Allow proportional resize */
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: 38px !important; /* Equal heights */
+    padding: 0 var(--space-2) !important; /* Compact padding to increase available width */
+    font-size: var(--fs-xs) !important; /* Do NOT reduce font size */
+    font-weight: var(--fw-semibold) !important;
+    white-space: nowrap !important; /* Ensure single line, no wrapping */
+    text-align: center !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  /* Reduce card padding slightly on mobile to increase available button group width */
+  .db-rentals-grid .db-rental-card {
+    padding: var(--space-3) !important;
+  }
+
+  /* Hide button icons on narrow mobile viewports to prevent overflow & wrapping */
+  @media (max-width: 480px) {
+    .db-rental-card__actions .btn .icon {
+      display: none !important;
+    }
+  }
+
+  /* --- 3. Pre-Bookings - Card Actions Stack (No Font size reductions) --- */
+  .db-pb-card__actions,
+  .db-pb-card__actions-row {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: var(--space-2) !important;
+    align-items: stretch !important;
+  }
+
+  .db-pb-card__actions .btn,
+  .db-pb-card__actions-row .btn {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    height: 38px !important;
+    padding: var(--space-2) var(--space-3) !important;
+    font-size: var(--fs-xs) !important;
+    white-space: normal !important;
+    text-align: center !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  /* --- 4. Rental History - Table button formatting --- */
+  #history-list .db-table .btn {
+    height: 32px !important;
+    padding: 0 var(--space-3) !important;
+    font-size: var(--fs-xs) !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  /* --- 5. Notifications Page - Scroll list horizontally as a single container on mobile --- */
+  #notifications-list {
+    display: block !important; /* Stack rows vertically exactly like desktop */
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: var(--color-secondary) var(--color-border-light) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    background: var(--color-surface) !important;
+  }
+
+  #notifications-list::-webkit-scrollbar {
+    display: block !important;
+    height: 4px !important;
+  }
+
+  #notifications-list::-webkit-scrollbar-track {
+    background: var(--color-border-light) !important;
+    border-radius: var(--radius-full) !important;
+  }
+
+  #notifications-list::-webkit-scrollbar-thumb {
+    background: var(--color-secondary) !important;
+    border-radius: var(--radius-full) !important;
+  }
+
+  #notifications-list .db-notification-preview {
+    min-width: 900px !important; /* Prevent column compression and preserve horizontal space */
+    display: flex !important;
+    flex-direction: row !important; /* Row layout with details left, delete right */
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: var(--space-5) var(--space-6) !important;
+    border-bottom: 1px solid var(--color-border-light) !important;
+    border-right: none !important;
+    box-sizing: border-box !important;
+  }
+
+  #notifications-list .db-notification-preview * {
+    white-space: nowrap !important; /* Do not wrap text */
+  }
+
+  /* --- Other Mobile Adjustments --- */
+  .db-stats-grid,
+  .db-stats-grid[style*="repeat(3, 1fr)"] {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .db-rental-detail__grid[style*="grid-template-columns: repeat(2, 1fr)"],
+  .db-rental-detail__grid[style*="repeat(2, 1fr)"] {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .db-rental-detail__item[style*="grid-column: span 2"] {
+    grid-column: span 1 !important;
+  }
+
+  .db-main div[style*="grid-template-columns: 1fr 3fr"],
+  .db-main div[style*="grid-template-columns: 3fr 2fr"],
+  .db-main div[style*="grid-template-columns: 2fr 3fr"] {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .db-main div[style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .db-rentals-grid[style*="repeat(3, 1fr)"] {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: var(--space-4) !important;
+  }
+
+  .db-main div[style*="justify-content:space-between; align-items:center; position:relative; max-width:800px"] span[style*="white-space:nowrap"] {
+    white-space: normal !important;
+    max-width: 65px !important;
+    text-align: center !important;
+    font-size: 8px !important;
+  }
+
+  .db-header__dropdown,
+  .db-notification-panel {
+    position: fixed !important;
+    top: var(--db-header-height) !important;
+    right: var(--space-4) !important;
+    left: var(--space-4) !important;
+    width: auto !important;
+    max-width: none !important;
+  }
+
+  .db-notification-panel {
+    max-height: calc(100vh - var(--db-header-height) - var(--space-6)) !important;
+  }
+
+  .db-header__dropdown-email,
+  .db-header__dropdown-name {
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+    white-space: normal !important;
+  }
+
+  .db-hero__actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .db-hero__actions .btn {
+    width: 100% !important;
+  }
+}
+
+/* ============================================================
+   USER DASHBOARD VEHICLE IMAGES TABLET OPTIMIZATIONS (768px - 1023px)
+   ============================================================ */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* --- 1. Vehicle Images: Prevent aggressive cover cropping or distortion --- */
+  .db-layout .db-current-rental__image,
+  .db-layout .db-rental-card__image,
+  .db-layout .db-pb-card__image,
+  .db-layout .db-pb-card__rec-img,
+  .db-layout .db-pb-card__alt-vehicle-img,
+  .db-layout .db-rental-detail__image,
+  .db-layout .db-rental-card__image-wrap img,
+  .db-layout .db-pb-card__image-wrap img,
+  .db-layout .db-rental-card__image img,
+  .db-layout .db-pb-card__image img {
+    object-fit: contain !important;
+    object-position: center !important;
+    background: transparent !important;
+    transform: none !important;
+    transition: none !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  /* Table small images keep dimensions but preserve object-fit contain */
+  .db-layout .db-table td img,
+  .db-layout .db-table img {
+    object-fit: contain !important;
+    background: transparent !important;
+  }
+
+  /* --- 2. Rental History Page: Spacious Columns & Scrolling --- */
+  .db-layout #history-list .db-table {
+    width: 100% !important;
+    min-width: 1350px !important; /* Spacious column width */
+    table-layout: auto !important;
+  }
+
+  .db-layout #history-list .db-table th,
+  .db-layout #history-list .db-table td {
+    padding: var(--space-4) var(--space-5) !important; /* Increase cell padding */
+    white-space: nowrap !important; /* Prevent overlapping & text collision */
+  }
+
+  /* --- 3. Extensions Page: spacious column formatting --- */
+  .db-layout #eligible-extensions ~ .db-section-card .db-table {
+    width: 100% !important;
+    min-width: 1100px !important; /* Spacious column spacing */
+    table-layout: auto !important;
+  }
+
+  .db-layout #eligible-extensions ~ .db-section-card .db-table th,
+  .db-layout #eligible-extensions ~ .db-section-card .db-table td {
+    padding: var(--space-4) var(--space-5) !important; /* Increase cell padding */
+    white-space: nowrap !important; /* Prevent text overlap */
+    text-align: left !important;
+  }
+
+  /* --- 4. Profile Page: Remove horizontal scrolling on Tablet --- */
+  .db-layout .db-tabs {
+    overflow-x: visible !important;
+    flex-wrap: nowrap !important;
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+    padding-bottom: 0 !important;
+    display: flex !important;
+    justify-content: space-between !important; /* Distribute evenly in a single visible row */
+    width: 100% !important;
+    scrollbar-width: none !important;
+  }
+
+  .db-layout .db-tabs::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .db-layout .db-tab {
+    flex: 1 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    padding: var(--space-3) var(--space-2) !important;
+  }
+}
+
+/* ============================================================
+   USER DASHBOARD LAPTOP RESPONSIVE OPTIMIZATIONS (1024px - 1439px)
+   ============================================================ */
+
+@media (min-width: 1024px) and (max-width: 1439px) {
+  /* Prevent flex layout blowout and page overflow on Laptop screen widths */
+  .db-main-wrapper {
+    min-width: 0 !important;
+  }
+
+  .db-main {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .db-section-card {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  /* Current Rental layout adjustments when sidebar is expanded */
+  .db-sidebar:not(.collapsed) ~ .db-main-wrapper .db-current-rental {
+    flex-direction: column !important;
+  }
+  .db-sidebar:not(.collapsed) ~ .db-main-wrapper .db-current-rental__image-wrap {
+    width: 100% !important;
+  }
+  .db-sidebar:not(.collapsed) ~ .db-main-wrapper .db-current-rental__image {
+    height: 180px !important;
+  }
+  .db-sidebar:not(.collapsed) ~ .db-main-wrapper .db-current-rental__actions {
+    flex-wrap: wrap !important;
+    gap: var(--space-2) !important;
+  }
+  .db-sidebar:not(.collapsed) ~ .db-main-wrapper .db-current-rental__actions .btn {
+    flex: 1 1 auto !important;
+    min-width: 120px !important;
+  }
+
+  /* Rental History table scroll adjustments on laptop */
+  .db-layout #history-list .db-table-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    margin: 0 !important;
+    border-radius: var(--radius-md) !important;
+    border: 1px solid var(--color-border-light) !important;
+  }
+  .db-layout #history-list .db-table {
+    width: 100% !important;
+    min-width: 1290px !important; /* Prevent column compression */
+    table-layout: auto !important;
+  }
+  .db-layout #history-list .db-table th,
+  .db-layout #history-list .db-table td {
+    padding: var(--space-4) var(--space-5) !important; /* Increase cell padding */
+    white-space: nowrap !important; /* Prevent overlapping & text collision */
+  }
+  .db-layout #history-list .db-table th:nth-child(1),
+  .db-layout #history-list .db-table td:nth-child(1) {
+    min-width: 250px !important;
+  }
+  .db-layout #history-list .db-table th:nth-child(2),
+  .db-layout #history-list .db-table td:nth-child(2) {
+    min-width: 140px !important;
+  }
+  .db-layout #history-list .db-table th:nth-child(3),
+  .db-layout #history-list .db-table td:nth-child(3) {
+    min-width: 100px !important;
+  }
+  .db-layout #history-list .db-table th:nth-child(4),
+  .db-layout #history-list .db-table td:nth-child(4) {
+    min-width: 200px !important;
+  }
+  .db-layout #history-list .db-table th:nth-child(5),
+  .db-layout #history-list .db-table td:nth-child(5) {
+    min-width: 100px !important;
+  }
+  .db-layout #history-list .db-table th:nth-child(6),
+  .db-layout #history-list .db-table td:nth-child(6) {
+    min-width: 120px !important;
+  }
+  .db-layout #history-list .db-table th:nth-child(7),
+  .db-layout #history-list .db-table td:nth-child(7) {
+    min-width: 120px !important;
+  }
+  .db-layout #history-list .db-table th:nth-child(8),
+  .db-layout #history-list .db-table td:nth-child(8) {
+    min-width: 260px !important;
+  }
+
+  /* Extensions table scroll adjustments on laptop */
+  .db-layout #eligible-extensions ~ .db-section-card .db-table-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    margin: 0 !important;
+    border-radius: var(--radius-md) !important;
+    border: 1px solid var(--color-border-light) !important;
+  }
+  .db-layout #eligible-extensions ~ .db-section-card .db-table {
+    width: 100% !important;
+    min-width: 1060px !important; /* Prevent column compression */
+    table-layout: auto !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+  }
+  .db-layout #eligible-extensions ~ .db-section-card .db-table th,
+  .db-layout #eligible-extensions ~ .db-section-card .db-table td {
+    padding: var(--space-4) var(--space-5) !important; /* Increase cell padding */
+    text-align: left !important;
+    vertical-align: middle !important;
+    white-space: nowrap !important; /* Prevent text collision */
+  }
+  .db-layout #eligible-extensions ~ .db-section-card .db-table th:nth-child(1),
+  .db-layout #eligible-extensions ~ .db-section-card .db-table td:nth-child(1) {
+    min-width: 220px !important;
+  }
+  .db-layout #eligible-extensions ~ .db-section-card .db-table th:nth-child(2),
+  .db-layout #eligible-extensions ~ .db-section-card .db-table td:nth-child(2) {
+    min-width: 240px !important;
+  }
+  .db-layout #eligible-extensions ~ .db-section-card .db-table th:nth-child(3),
+  .db-layout #eligible-extensions ~ .db-section-card .db-table td:nth-child(3) {
+    min-width: 160px !important;
+  }
+  .db-layout #eligible-extensions ~ .db-section-card .db-table th:nth-child(4),
+  .db-layout #eligible-extensions ~ .db-section-card .db-table td:nth-child(4) {
+    min-width: 160px !important;
+  }
+  .db-layout #eligible-extensions ~ .db-section-card .db-table th:nth-child(5),
+  .db-layout #eligible-extensions ~ .db-section-card .db-table td:nth-child(5) {
+    min-width: 130px !important;
+  }
+  .db-layout #eligible-extensions ~ .db-section-card .db-table th:nth-child(6),
+  .db-layout #eligible-extensions ~ .db-section-card .db-table td:nth-child(6) {
+    min-width: 150px !important;
+  }
+  .db-layout #eligible-extensions ~ .db-section-card .db-table tbody tr {
+    height: 56px !important;
+  }
+
+  /* Profile page layout stacking when sidebar is expanded */
+  .db-sidebar:not(.collapsed) ~ .db-main-wrapper div[style*="grid-template-columns: 1fr 3fr"] {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  .db-sidebar:not(.collapsed) ~ .db-main-wrapper div[style*="grid-template-columns: 1fr 3fr"] div[style*="position: sticky"] {
+    position: static !important;
+  }
+
+  /* Profile tabs: remove scrolling and gradient overlay on Laptop */
+  .db-layout .db-tabs {
+    overflow-x: visible !important;
+    flex-wrap: nowrap !important;
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+    padding-bottom: 0 !important;
+    display: flex !important;
+    justify-content: space-between !important; /* Spread evenly in a single row */
+    width: 100% !important;
+    scrollbar-width: none !important;
+  }
+  .db-layout .db-tabs::-webkit-scrollbar {
+    display: none !important;
+  }
+  .db-layout .db-tab {
+    flex: 1 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    padding: var(--space-3) var(--space-2) !important;
+  }
+}
+
