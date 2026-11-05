@@ -177,45 +177,33 @@ const getBookingById = async (req, res, next) => {
  * @access  Private
  */
 const uploadPickupPhoto = async (req, res, next) => {
-  const session = await mongoose.startSession();
-  session.startTransaction();
   try {
     const bookingId = req.params.id;
-    const booking = await Booking.findById(bookingId).session(session);
+    const booking = await Booking.findById(bookingId);
 
     if (!booking) {
-      await session.abortTransaction();
-      session.endSession();
       res.status(404);
       return next(new Error('Booking not found'));
     }
 
     if (booking.customer.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
-      await session.abortTransaction();
-      session.endSession();
       res.status(403);
       return next(new Error('Not authorized.'));
     }
 
     if (booking.bookingStatus !== 'Pending Pickup') {
-      await session.abortTransaction();
-      session.endSession();
       res.status(400);
       return next(new Error('Cannot upload pickup photo for a booking that is not Pending Pickup.'));
     }
 
     if (!req.file) {
-      await session.abortTransaction();
-      session.endSession();
       res.status(400);
       return next(new Error('Please upload a pickup photo.'));
     }
 
     // 1. Check if car is still available
-    const car = await Car.findById(booking.car).session(session);
+    const car = await Car.findById(booking.car);
     if (!car || car.availableUnits <= 0) {
-      await session.abortTransaction();
-      session.endSession();
       res.status(409);
       return next(new Error('Car is no longer available.'));
     }
@@ -225,13 +213,11 @@ const uploadPickupPhoto = async (req, res, next) => {
     try {
       uploadedImage = await uploadToCloudinary(req.file.buffer, 'bookings');
     } catch (err) {
-      await session.abortTransaction();
-      session.endSession();
       res.status(500);
       return next(new Error('Failed to upload image. Inventory unchanged.'));
     }
 
-    // 3. Atomically update Booking and Car
+    // 3. Update Booking and Car
     booking.pickupPhoto = {
       public_id: uploadedImage.public_id,
       url: uploadedImage.secure_url
@@ -240,13 +226,10 @@ const uploadPickupPhoto = async (req, res, next) => {
     booking.rentalStartTime = Date.now();
     booking.inventoryRestored = false;
 
-    await booking.save({ session });
+    await booking.save();
 
     car.availableUnits -= 1;
-    await car.save({ session });
-
-    await session.commitTransaction();
-    session.endSession();
+    await car.save();
 
     // Notification: Rental Started
     createNotification({
@@ -259,8 +242,6 @@ const uploadPickupPhoto = async (req, res, next) => {
 
     res.status(200).json({ success: true, message: 'Pickup photo uploaded and rental activated.', data: booking });
   } catch (error) {
-    await session.abortTransaction();
-    session.endSession();
     next(error);
   }
 };
@@ -271,44 +252,32 @@ const uploadPickupPhoto = async (req, res, next) => {
  * @access  Private
  */
 const uploadReturnPhoto = async (req, res, next) => {
-  const session = await mongoose.startSession();
-  session.startTransaction();
   try {
     const bookingId = req.params.id;
-    const booking = await Booking.findById(bookingId).session(session);
+    const booking = await Booking.findById(bookingId);
 
     if (!booking) {
-      await session.abortTransaction();
-      session.endSession();
       res.status(404);
       return next(new Error('Booking not found'));
     }
 
     if (booking.customer.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
-      await session.abortTransaction();
-      session.endSession();
       res.status(403);
       return next(new Error('Not authorized.'));
     }
 
     if (booking.bookingStatus !== 'Active' && booking.bookingStatus !== 'Extended') {
-      await session.abortTransaction();
-      session.endSession();
       res.status(400);
       return next(new Error('Return photo can only be uploaded for Active or Extended rentals.'));
     }
 
     if (!req.file) {
-      await session.abortTransaction();
-      session.endSession();
       res.status(400);
       return next(new Error('Please upload a return photo.'));
     }
 
-    const car = await Car.findById(booking.car).session(session);
+    const car = await Car.findById(booking.car);
     if (!car) {
-      await session.abortTransaction();
-      session.endSession();
       res.status(404);
       return next(new Error('Car not found'));
     }
@@ -317,8 +286,6 @@ const uploadReturnPhoto = async (req, res, next) => {
     try {
       uploadedImage = await uploadToCloudinary(req.file.buffer, 'bookings');
     } catch (err) {
-      await session.abortTransaction();
-      session.endSession();
       res.status(500);
       return next(new Error('Failed to upload image. Inventory unchanged.'));
     }
@@ -330,13 +297,10 @@ const uploadReturnPhoto = async (req, res, next) => {
     booking.bookingStatus = 'Completed';
     booking.rentalEndTime = Date.now();
     booking.inventoryRestored = true;
-    await booking.save({ session });
+    await booking.save();
 
     car.availableUnits += 1;
-    await car.save({ session });
-
-    await session.commitTransaction();
-    session.endSession();
+    await car.save();
 
     // Notification: Rental Completed + stop any pending reminders for this booking
     createNotification({
@@ -350,8 +314,6 @@ const uploadReturnPhoto = async (req, res, next) => {
 
     res.status(200).json({ success: true, message: 'Return photo uploaded and rental completed.', data: booking });
   } catch (error) {
-    await session.abortTransaction();
-    session.endSession();
     next(error);
   }
 };

@@ -74,21 +74,15 @@ const listBookings = async (req, res, next) => {
  * @access  Private/Admin
  */
 const updateBookingStatus = async (req, res, next) => {
-  const session = await mongoose.startSession();
-  session.startTransaction();
   try {
     const { bookingStatus } = req.body;
     if (!bookingStatus) {
-      await session.abortTransaction();
-      session.endSession();
       res.status(400);
       return next(new Error('Please provide a booking status.'));
     }
 
-    const booking = await Booking.findById(req.params.id).session(session);
+    const booking = await Booking.findById(req.params.id);
     if (!booking) {
-      await session.abortTransaction();
-      session.endSession();
       res.status(404);
       return next(new Error('Booking not found'));
     }
@@ -96,20 +90,14 @@ const updateBookingStatus = async (req, res, next) => {
     const current = booking.bookingStatus;
     const allowed = ['Active', 'Completed'];
     if (!allowed.includes(bookingStatus)) {
-      await session.abortTransaction();
-      session.endSession();
       res.status(422);
       return next(new Error(`Status transition to '${bookingStatus}' is not allowed. Use Active or Completed.`));
     }
     if (current === bookingStatus) {
-      await session.abortTransaction();
-      session.endSession();
       res.status(409);
       return next(new Error(`Booking is already ${current}.`));
     }
     if (current === 'Completed' || current === 'Cancelled') {
-      await session.abortTransaction();
-      session.endSession();
       res.status(409);
       return next(new Error(`Cannot change a ${current.toLowerCase()} booking.`));
     }
@@ -117,22 +105,18 @@ const updateBookingStatus = async (req, res, next) => {
     // Active requires the pickup photo so inventory was decremented consistently
     if (bookingStatus === 'Active') {
       if (current !== 'Pending Pickup' || !booking.pickupPhoto || !booking.pickupPhoto.url) {
-        await session.abortTransaction();
-        session.endSession();
         res.status(422);
         return next(new Error('Booking can only be activated after a pickup photo is uploaded.'));
       }
       // A Pending Pickup booking has never decremented inventory, so activation
-      // must claim one unit atomically (mirrors uploadPickupPhoto).
-      const car = await Car.findById(booking.car).session(session);
+      // must claim one unit (mirrors uploadPickupPhoto).
+      const car = await Car.findById(booking.car);
       if (!car || car.availableUnits <= 0) {
-        await session.abortTransaction();
-        session.endSession();
         res.status(409);
         return next(new Error('Car is no longer available.'));
       }
       car.availableUnits = Math.max(0, car.availableUnits - 1);
-      await car.save({ session });
+      await car.save();
       booking.rentalStartTime = Date.now();
       booking.inventoryRestored = false;
     }
@@ -140,25 +124,20 @@ const updateBookingStatus = async (req, res, next) => {
     // Completed from Active/Extended: restore inventory if no return photo exists
     if (bookingStatus === 'Completed' && (current === 'Active' || current === 'Extended')) {
       if (!booking.returnPhoto || !booking.returnPhoto.url) {
-        const car = await Car.findById(booking.car).session(session);
+        const car = await Car.findById(booking.car);
         if (!car) {
-          await session.abortTransaction();
-          session.endSession();
           res.status(404);
           return next(new Error('Car not found'));
         }
         car.availableUnits = Math.min(car.availableUnits + 1, car.totalUnits);
-        await car.save({ session });
+        await car.save();
         booking.inventoryRestored = true;
       }
       if (!booking.rentalEndTime) booking.rentalEndTime = Date.now();
     }
 
     booking.bookingStatus = bookingStatus;
-    await booking.save({ session });
-
-    await session.commitTransaction();
-    session.endSession();
+    await booking.save();
 
     const populated = await Booking.findById(booking._id).populate('car');
 
@@ -183,8 +162,6 @@ const updateBookingStatus = async (req, res, next) => {
 
     res.status(200).json({ success: true, message: 'Booking status updated successfully.', data: populated });
   } catch (error) {
-    await session.abortTransaction();
-    session.endSession();
     next(error);
   }
 };
@@ -195,39 +172,30 @@ const updateBookingStatus = async (req, res, next) => {
  * @access  Private/Admin
  */
 const cancelBookingAdmin = async (req, res, next) => {
-  const session = await mongoose.startSession();
-  session.startTransaction();
   try {
-    const booking = await Booking.findById(req.params.id).session(session);
+    const booking = await Booking.findById(req.params.id);
     if (!booking) {
-      await session.abortTransaction();
-      session.endSession();
       res.status(404);
       return next(new Error('Booking not found'));
     }
 
     if (booking.bookingStatus === 'Completed' || booking.bookingStatus === 'Cancelled') {
-      await session.abortTransaction();
-      session.endSession();
       res.status(409);
       return next(new Error('Booking is already completed or cancelled.'));
     }
 
     const wasActive = booking.bookingStatus === 'Active' || booking.bookingStatus === 'Extended';
     if (wasActive && !booking.inventoryRestored) {
-      const car = await Car.findById(booking.car).session(session);
+      const car = await Car.findById(booking.car);
       if (car) {
         car.availableUnits = Math.min(car.availableUnits + 1, car.totalUnits);
-        await car.save({ session });
+        await car.save();
       }
       booking.inventoryRestored = true;
     }
 
     booking.bookingStatus = 'Cancelled';
-    await booking.save({ session });
-
-    await session.commitTransaction();
-    session.endSession();
+    await booking.save();
 
     clearReminders(booking._id);
     createNotification({
@@ -242,8 +210,6 @@ const cancelBookingAdmin = async (req, res, next) => {
 
     res.status(200).json({ success: true, message: 'Booking cancelled successfully.', data: booking });
   } catch (error) {
-    await session.abortTransaction();
-    session.endSession();
     next(error);
   }
 };
