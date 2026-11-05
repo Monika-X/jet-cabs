@@ -68,6 +68,7 @@ const createBooking = async (req, res, next) => {
 
     // Duplicate booking prevention: same customer + same car + overlapping
     // window while the earlier booking is still pending.
+    // Auto-cancel the existing pending booking so the user can proceed with the new one.
     if (rentalDetails && rentalDetails.pickupDateTime && rentalDetails.returnDateTime) {
       const duplicate = await Booking.findOne({
         customer: req.user._id,
@@ -81,8 +82,15 @@ const createBooking = async (req, res, next) => {
         ]
       });
       if (duplicate) {
-        res.status(409);
-        return next(new Error('You already have a pending booking for this vehicle in the same time window.'));
+        duplicate.bookingStatus = 'Cancelled';
+        await duplicate.save();
+        createNotification({
+          customer: req.user._id,
+          booking: duplicate._id,
+          title: 'Booking Cancelled',
+          message: 'Your previous pending booking was cancelled to make way for your new booking.',
+          type: TYPES.BOOKING_CANCELLED
+        });
       }
     }
 
