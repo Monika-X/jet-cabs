@@ -3956,7 +3956,7 @@
       if (!btn) return;
       
       const vehicleSelected = bookingState.selectedVehicleId !== null;
-      const kycVerified = bookingState.kycStatus === 'VERIFIED';
+      const kycVerified = bookingState.kycStatus === 'VERIFIED' || bookingState.kycStatus === 'VERIFICATION_PENDING';
       const paymentSuccess = bookingState.paymentStatus === 'SUCCESS';
       const photosValid = bookingState.uploadedPhotos.length === 6;
       
