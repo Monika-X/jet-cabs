@@ -713,7 +713,7 @@
                 <!-- Forms Area -->
                 <div style="background: rgba(255,255,255,0.01); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6);">
                   <!-- 1. Card Form -->
-                  <div id="pm-form-card">
+                  <form id="pm-form-card" novalidate>
                     <div class="form-group" style="margin-bottom: var(--space-4);">
                       <label for="card-name">Cardholder Name <span class="required">*</span></label>
                       <input type="text" id="card-name" class="form-input" placeholder="JOHN DOE">
@@ -732,7 +732,7 @@
                         <input type="password" id="card-cvv" class="form-input" placeholder="***" maxlength="4">
                       </div>
                     </div>
-                  </div>
+                  </form>
 
                   <!-- 2. UPI Form -->
                   <div id="pm-form-upi" style="display: none;">
