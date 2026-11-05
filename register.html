@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create your JET CABS account to access our premium fleet, manage bookings, and enjoy exclusive member benefits.">
+  <title>Create Account — JET CABS</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/sprite.svg#icon-car">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/utilities.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/pages/register.css">
+</head>
+<body class="register-page">
+
+
+  <main id="main-content" class="auth-shell">
+    
+    <!-- BRAND LOGO -->
+    <div class="login-header">
+      <a href="index.html" class="login-logo" aria-label="JET CABS Home">
+        <div class="login-logo-text"><span>JET</span> CABS</div>
+      </a>
+      <h1 class="login-title">Create <span class="highlight">Account</span></h1>
+      <p class="login-subtitle">Join JET CABS and begin your premium driving experience.</p>
+    </div>
+
+    <!-- REGISTER CARD -->
+    <div class="register-card">
+      <form class="auth-form" id="register-form" novalidate>
+        
+        <!-- Name Row (Grid) -->
+        <div class="form-grid">
+          
+          <!-- First Name -->
+          <div class="form-group">
+            <label for="first-name">First Name <span class="required">*</span></label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </span>
+              <input type="text" id="first-name" class="form-input" placeholder="John" required autocomplete="given-name">
+            </div>
+            <span class="form-error" id="firstname-error">First name is required.</span>
+          </div>
+
+          <!-- Last Name -->
+          <div class="form-group">
+            <label for="last-name">Last Name <span class="required">*</span></label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </span>
+              <input type="text" id="last-name" class="form-input" placeholder="Doe" required autocomplete="family-name">
+            </div>
+            <span class="form-error" id="lastname-error">Last name is required.</span>
+          </div>
+
+        </div>
+
+        <!-- Email Address -->
+        <div class="form-group">
+          <label for="reg-email">Email Address <span class="required">*</span></label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+            </span>
+            <input type="email" id="reg-email" class="form-input" placeholder="john@example.com" required autocomplete="email">
+          </div>
+          <span class="form-error" id="email-error">Please enter a valid email address.</span>
+        </div>
+
+        <!-- Phone Number -->
+        <div class="form-group">
+          <label for="reg-phone">Phone Number <span class="required">*</span></label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+            </span>
+            <input type="tel" id="reg-phone" class="form-input" placeholder="+1 (555) 123-4567" required autocomplete="tel">
+          </div>
+          <span class="form-error" id="phone-error">Please enter a valid phone number.</span>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+          <label for="reg-password">Password <span class="required">*</span></label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </span>
+            <input type="password" id="reg-password" class="form-input password-field" placeholder="Create a strong password" required autocomplete="new-password">
+            <button type="button" class="password-toggle" id="toggle-password" aria-label="Show password" title="Show password">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+          
+          <!-- Strength Indicator -->
+          <div class="password-strength" id="password-strength">
+            <div class="password-strength__bars">
+              <div class="password-strength__bar"></div>
+              <div class="password-strength__bar"></div>
+              <div class="password-strength__bar"></div>
+              <div class="password-strength__bar"></div>
+            </div>
+            <div class="password-strength__text">Password Strength: <strong>Too Short</strong></div>
+          </div>
+
+          <!-- Requirements -->
+          <div class="password-requirements">
+            <div class="password-req" id="req-length">
+              <span class="password-req__icon">✗</span> Minimum 8 characters
+            </div>
+            <div class="password-req" id="req-case">
+              <span class="password-req__icon">✗</span> Uppercase & lowercase letters
+            </div>
+            <div class="password-req" id="req-number">
+              <span class="password-req__icon">✗</span> At least one number (0-9)
+            </div>
+            <div class="password-req" id="req-special">
+              <span class="password-req__icon">✗</span> At least one special character (!@#$)
+            </div>
+          </div>
+        </div>
+
+        <!-- Confirm Password Field -->
+        <div class="form-group">
+          <label for="reg-confirm">Confirm Password <span class="required">*</span></label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </span>
+            <input type="password" id="reg-confirm" class="form-input password-field" placeholder="Re-enter your password" required autocomplete="new-password">
+            <button type="button" class="password-toggle" id="toggle-confirm" aria-label="Show password" title="Show password">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+          <span class="form-error" id="confirm-error">Passwords do not match.</span>
+        </div>
+
+        <!-- Terms & Conditions Acceptance -->
+        <div class="terms-group">
+          <input type="checkbox" id="reg-terms" required>
+          <label for="reg-terms">
+            I agree to the <a href="terms-and-conditions.html" target="_blank">Terms & Conditions</a> and <a href="privacy-policy.html" target="_blank">Privacy Policy</a>
+          </label>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn--primary btn--lg submit-btn" id="register-btn">
+          Create Account
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 2px;">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+
+      </form>
+
+      <!-- Social login divider -->
+      <div class="social-divider">
+        <span class="divider-line"></span>
+        <span class="divider-text">OR CONTINUE WITH</span>
+        <span class="divider-line"></span>
+      </div>
+
+      <!-- Social login buttons -->
+      <div class="social-buttons">
+        
+        <!-- Google button -->
+        <button type="button" class="social-btn" id="google-register-btn">
+          <!-- Official multicolor Google G SVG -->
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.85z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.85c.87-2.6 3.3-4.53 6.16-4.53z"/>
+          </svg>
+          Continue with Google
+        </button>
+
+        <!-- Apple button -->
+        <button type="button" class="social-btn" id="apple-register-btn">
+          <!-- Official Apple monochrome SVG -->
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 4.17c.66-.81 1.11-1.93.99-3.06-1 .04-2.21.67-2.93 1.49-.62.69-1.16 1.84-1.01 2.96 1.12.09 2.27-.58 2.95-1.39z"/>
+          </svg>
+          Continue with Apple
+        </button>
+
+      </div>
+    </div>
+
+    <!-- SIGN IN FOOTER LINK -->
+    <div class="login-footer">
+      Already have an account? <a href="login.html">Sign In</a>
+    </div>
+
+  </main>
+
+  <div class="toast-container" id="toast-container"></div>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/validation.js"></script>
+  <script src="assets/js/animation.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    /* ---- Password Visibility Toggle ---- */
+    function setupPasswordToggle(toggleBtnId, passwordInputId) {
+      const toggleBtn = document.getElementById(toggleBtnId);
+      const passwordInput = document.getElementById(passwordInputId);
+      if (toggleBtn && passwordInput) {
+        toggleBtn.addEventListener('click', () => {
+          const isPassword = passwordInput.type === 'password';
+          passwordInput.type = isPassword ? 'text' : 'password';
+          
+          toggleBtn.innerHTML = isPassword 
+            ? `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>` 
+            : `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>`;
+              
+          toggleBtn.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+          toggleBtn.title = isPassword ? 'Hide password' : 'Show password';
+        });
+      }
+    }
+    setupPasswordToggle('toggle-password', 'reg-password');
+    setupPasswordToggle('toggle-confirm', 'reg-confirm');
+
+    /* ---- Password Strength Checker ---- */
+    const passwordInput = document.getElementById('reg-password');
+    const strengthBars = document.querySelectorAll('.password-strength__bar');
+    const strengthText = document.querySelector('.password-strength__text strong');
+    
+    const reqLength = document.getElementById('req-length');
+    const reqCase = document.getElementById('req-case');
+    const reqNumber = document.getElementById('req-number');
+    const reqSpecial = document.getElementById('req-special');
+
+    if (passwordInput) {
+      passwordInput.addEventListener('input', () => {
+        const val = passwordInput.value;
+        
+        // 1. Validate requirements
+        const hasLength = val.length >= 8;
+        const hasCase = /[a-z]/.test(val) && /[A-Z]/.test(val);
+        const hasNumber = /[0-9]/.test(val);
+        const hasSpecial = /[!@#\$%\^&\*\(\)_\+\-\=\[\]\{\};':",\.\/<>\?\\\|]/.test(val);
+
+        updateRequirement(reqLength, hasLength);
+        updateRequirement(reqCase, hasCase);
+        updateRequirement(reqNumber, hasNumber);
+        updateRequirement(reqSpecial, hasSpecial);
+
+        // 2. Score strength
+        let score = 0;
+        if (val.length > 0) {
+          if (hasLength) score++;
+          if (hasCase) score++;
+          if (hasNumber) score++;
+          if (hasSpecial) score++;
+        }
+
+        // Update UI bars
+        strengthBars.forEach((bar, index) => {
+          bar.className = 'password-strength__bar'; // reset classes
+          if (val.length > 0 && index < score) {
+            if (score <= 1) {
+              bar.classList.add('weak');
+            } else if (score <= 3) {
+              bar.classList.add('medium');
+            } else {
+              bar.classList.add('strong');
+            }
+          }
+        });
+
+        // Update text label
+        if (val.length === 0) {
+          strengthText.textContent = 'Too Short';
+        } else if (score <= 1) {
+          strengthText.textContent = 'Weak';
+        } else if (score <= 3) {
+          strengthText.textContent = 'Medium';
+        } else {
+          strengthText.textContent = 'Strong';
+        }
+      });
+    }
+
+    function updateRequirement(el, isMet) {
+      if (!el) return;
+      if (isMet) {
+        el.classList.add('met');
+        el.querySelector('.password-req__icon').innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>`;
+      } else {
+        el.classList.remove('met');
+        el.querySelector('.password-req__icon').textContent = '✗';
+      }
+    }
+
+    /* ---- Submit & Validation Validation ---- */
+    const registerForm = document.getElementById('register-form');
+    const firstNameInput = document.getElementById('first-name');
+    const lastNameInput = document.getElementById('last-name');
+    const emailInput = document.getElementById('reg-email');
+    const phoneInput = document.getElementById('reg-phone');
+    const confirmInput = document.getElementById('reg-confirm');
+    const termsCheckbox = document.getElementById('reg-terms');
+
+    const firstnameError = document.getElementById('firstname-error');
+    const lastnameError = document.getElementById('lastname-error');
+    const emailError = document.getElementById('email-error');
+    const phoneError = document.getElementById('phone-error');
+    const confirmError = document.getElementById('confirm-error');
+
+    if (registerForm) {
+      registerForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        let isValid = true;
+
+        // First Name
+        if (!firstNameInput.value.trim()) {
+          firstNameInput.classList.add('error');
+          if (firstnameError) firstnameError.classList.add('visible');
+          isValid = false;
+        } else {
+          firstNameInput.classList.remove('error');
+          if (firstnameError) firstnameError.classList.remove('visible');
+        }
+
+        // Last Name
+        if (!lastNameInput.value.trim()) {
+          lastNameInput.classList.add('error');
+          if (lastnameError) lastnameError.classList.add('visible');
+          isValid = false;
+        } else {
+          lastNameInput.classList.remove('error');
+          if (lastnameError) lastnameError.classList.remove('visible');
+        }
+
+        // Email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailInput.value.trim())) {
+          emailInput.classList.add('error');
+          if (emailError) emailError.classList.add('visible');
+          isValid = false;
+        } else {
+          emailInput.classList.remove('error');
+          if (emailError) emailError.classList.remove('visible');
+        }
+
+        // Phone
+        if (!phoneInput.value.trim()) {
+          phoneInput.classList.add('error');
+          if (phoneError) phoneError.classList.add('visible');
+          isValid = false;
+        } else {
+          phoneInput.classList.remove('error');
+          if (phoneError) phoneError.classList.remove('visible');
+        }
+
+        // Password & Confirm Match
+        if (passwordInput.value !== confirmInput.value) {
+          confirmInput.classList.add('error');
+          if (confirmError) confirmError.classList.add('visible');
+          isValid = false;
+        } else {
+          confirmInput.classList.remove('error');
+          if (confirmError) confirmError.classList.remove('visible');
+        }
+
+        // Terms checked
+        if (!termsCheckbox.checked) {
+          termsCheckbox.style.outline = '2px solid var(--color-danger)';
+          isValid = false;
+        } else {
+          termsCheckbox.style.outline = '';
+        }
+
+        if (isValid) {
+          const registerData = {
+            fullName: `${firstNameInput.value.trim()} ${lastNameInput.value.trim()}`,
+            email: emailInput.value.trim(),
+            phone: phoneInput.value.trim(),
+            password: passwordInput.value,
+            confirmPassword: confirmInput.value
+          };
+
+          fetch('http://localhost:5000/api/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(registerData)
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              localStorage.setItem('token', data.token);
+              localStorage.setItem('userRole', data.data.role);
+              if (typeof UI !== 'undefined' && UI.showToast) {
+                UI.showToast({
+                  title: 'Success',
+                  message: 'Account created successfully! Redirecting...',
+                  type: 'success',
+                  duration: 2000
+                });
+              }
+              setTimeout(() => {
+                window.location.href = 'user-dashboard.html';
+              }, 1500);
+            } else {
+              throw new Error(data.message || 'Registration failed');
+            }
+          })
+          .catch(err => {
+            if (typeof UI !== 'undefined' && UI.showToast) {
+              UI.showToast({
+                title: 'Error',
+                message: err.message,
+                type: 'error',
+                duration: 4000
+              });
+            }
+          });
+        }
+      });
+
+      // Clear errors on focus
+      const inputs = [firstNameInput, lastNameInput, emailInput, phoneInput, confirmInput];
+      const errors = [firstnameError, lastnameError, emailError, phoneError, confirmError];
+
+      inputs.forEach((input, idx) => {
+        if (input) {
+          input.addEventListener('focus', () => {
+            input.classList.remove('error');
+            if (errors[idx]) errors[idx].classList.remove('visible');
+          });
+        }
+      });
+
+      if (termsCheckbox) {
+        termsCheckbox.addEventListener('change', () => {
+          termsCheckbox.style.outline = '';
+        });
+      }
+    }
+
+    /* ---- OAuth Google / Apple Registrations ---- */
+    const googleBtn = document.getElementById('google-register-btn');
+    const appleBtn = document.getElementById('apple-register-btn');
+
+    if (googleBtn) {
+      googleBtn.addEventListener('click', () => {
+        if (typeof UI !== 'undefined' && UI.showToast) {
+          UI.showToast({
+            title: 'Google OAuth',
+            message: 'Connecting to Google register services...',
+            type: 'info',
+            duration: 3000
+          });
+        }
+      });
+    }
+
+    if (appleBtn) {
+      appleBtn.addEventListener('click', () => {
+        if (typeof UI !== 'undefined' && UI.showToast) {
+          UI.showToast({
+            title: 'Apple OAuth',
+            message: 'Connecting to Apple registration services...',
+            type: 'info',
+            duration: 3000
+          });
+        }
+      });
+    }
+
+  })();
+  </script>
+</body>
+</html>

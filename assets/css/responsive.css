@@ -1,0 +1,778 @@
+/* ============================================================
+   JET CABS — COMPREHENSIVE RESPONSIVE STYLESHEET
+   Breakpoints: 1440 / 1200 / 992 / 768 / 576 / 480
+   Desktop layout is untouched — all rules are max-width only.
+   ============================================================ */
+
+/* ---- Prevent overflow (always active) ---- */
+html,
+body {
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ============================================================
+   EXTRA LARGE (≤ 1440px)
+   ============================================================ */
+@media (max-width: 1440px) {
+  :root {
+    --container-max: 1200px;
+  }
+}
+
+/* ============================================================
+   LARGE / SMALL LAPTOP (≤ 1200px)
+   ============================================================ */
+@media (max-width: 1200px) {
+  :root {
+    --container-max: 960px;
+  }
+
+  .footer__grid {
+    grid-template-columns: 1.2fr 0.8fr 1.2fr 1.8fr;
+    gap: var(--space-6);
+  }
+
+  /* Profile dropdown overflow safety */
+  .profile-dropdown {
+    right: 0;
+    left: auto;
+  }
+}
+
+/* ============================================================
+   MEDIUM / TABLET (≤ 1024px)
+   ============================================================ */
+@media (max-width: 1024px) {
+  :root {
+    --container-max: 720px;
+  }
+
+  /* —— Navbar —— */
+  .navbar__links {
+    display: none;
+  }
+
+  .navbar__actions {
+    display: flex !important;
+    align-items: center !important;
+    margin-left: auto !important;
+    margin-right: var(--space-4) !important;
+  }
+
+  .navbar__toggle {
+    display: flex;
+  }
+
+  /* Profile dropdown — position right-aligned */
+  .profile-dropdown {
+    right: 0;
+    left: auto;
+    width: 220px;
+  }
+
+  /* —— Mobile/Tablet slide-out menu consistency —— */
+  .navbar__mobile {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: var(--space-4) !important;
+  }
+
+  .navbar__mobile .navbar__link {
+    display: inline-flex !important;
+    width: max-content !important;
+    max-width: 100% !important;
+    padding: var(--space-4) !important;
+    justify-content: center !important;
+    text-align: center !important;
+    position: relative !important;
+  }
+
+  /* Hamburger toggle morph to close (✕) icon */
+  .navbar__toggle {
+    position: relative !important;
+  }
+
+  .navbar__toggle.open span:nth-child(1) {
+    transform: translateY(0) rotate(45deg) !important;
+    position: absolute !important;
+    top: 50% !important;
+    margin-top: -1.25px !important;
+    left: 4px !important;
+    width: calc(100% - 8px) !important;
+  }
+
+  .navbar__toggle.open span:nth-child(2) {
+    opacity: 0 !important;
+    transform: scaleX(0) !important;
+  }
+
+  .navbar__toggle.open span:nth-child(3) {
+    transform: translateY(0) rotate(-45deg) !important;
+    position: absolute !important;
+    top: 50% !important;
+    margin-top: -1.25px !important;
+    left: 4px !important;
+    width: calc(100% - 8px) !important;
+  }
+
+  /* Stacking context corrections to keep header elements on top of mobile menu drawer */
+  .navbar {
+    z-index: calc(var(--z-navbar) + 2) !important;
+  }
+
+  .navbar__mobile {
+    z-index: calc(var(--z-navbar) + 1) !important;
+  }
+
+  .navbar__mobile-overlay {
+    z-index: var(--z-navbar) !important;
+  }
+
+  /* —— Footer —— */
+  .footer__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-8);
+    max-width: 800px;
+    margin: 0 auto;
+    justify-content: center;
+  }
+
+  .footer__brand {
+    max-width: 100%;
+    grid-column: span 1;
+  }
+
+  .footer__newsletter-column {
+    grid-column: span 1;
+  }
+
+  .footer__newsletter-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* —— Grid utility overrides —— */
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* —— Hero —— */
+  .hero {
+    min-height: 420px;
+  }
+
+  .hero--inner {
+    min-height: 300px;
+  }
+
+  /* —— Stats cards —— */
+  .stats-card__number {
+    font-size: 2rem;
+  }
+
+  /* —— Section headers —— */
+  .section__header {
+    max-width: 100%;
+    padding: 0 var(--space-4);
+  }
+}
+
+/* ============================================================
+   SMALL / MOBILE LANDSCAPE (≤ 767px)
+   ============================================================ */
+@media (max-width: 767px) {
+  :root {
+    --container-padding: 1.25rem;
+  }
+
+  /* —— Hero —— */
+  .hero {
+    min-height: 380px;
+    padding: calc(70px + var(--space-12)) 0 var(--space-12);
+  }
+
+  .hero--inner {
+    min-height: 260px;
+    padding: calc(70px + var(--space-10)) 0 var(--space-10);
+  }
+
+  .hero--auth {
+    min-height: 200px;
+    padding: calc(70px + var(--space-8)) 0 var(--space-6);
+  }
+
+  .hero__actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero__actions .btn {
+    width: 100%;
+  }
+
+  /* —— Sections —— */
+  .section {
+    padding: var(--space-12) 0;
+  }
+
+  .section--lg {
+    padding: var(--space-16) 0;
+  }
+
+  /* —— Grid utility overrides —— */
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* —— Footer —— */
+  .footer__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .footer__brand {
+    grid-column: span 1;
+  }
+
+  .footer__newsletter-column {
+    grid-column: span 1;
+  }
+
+  .footer__bottom {
+    flex-direction: column;
+    gap: var(--space-4);
+    text-align: center;
+  }
+
+  .footer__bottom-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* —— CTA Sections (global) —— */
+  .cta-section {
+    padding: var(--space-12) 0;
+  }
+
+  .cta-section__actions,
+  .home-cta__actions,
+  .cars-cta__actions,
+  .cta-section .hero__actions {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .cta-section__actions .btn,
+  .home-cta__actions .btn,
+  .cars-cta__actions .btn {
+    width: 100%;
+    max-width: 320px;
+    justify-content: center;
+  }
+
+  .cta-section__title,
+  .home-cta__title,
+  .cars-cta__title {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+  }
+
+  .cta-section__desc,
+  .home-cta__text,
+  .cars-cta__text {
+    font-size: var(--fs-small);
+  }
+
+  /* —— Pagination —— */
+  .pagination {
+    gap: var(--space-1);
+  }
+
+  .pagination__btn {
+    width: 36px;
+    height: 36px;
+    font-size: var(--fs-xs);
+  }
+
+  /* —— Auth —— */
+  .auth-card {
+    padding: var(--space-8);
+  }
+
+  /* —— Toast —— */
+  .toast-container {
+    left: var(--space-4);
+    right: var(--space-4);
+    top: var(--space-4);
+  }
+
+  .toast {
+    min-width: auto;
+    width: 100%;
+  }
+
+  /* —— Modal —— */
+  .modal {
+    width: 95%;
+  }
+
+  /* —— Newsletter —— */
+  .footer__newsletter-form {
+    flex-direction: column;
+  }
+
+  /* —— Social login —— */
+  .social-login {
+    flex-direction: column;
+  }
+
+  /* —— Profile Dropdown —— */
+  .profile-dropdown {
+    width: 200px;
+    right: 0;
+  }
+
+  /* —— Table wrapper overflow safety —— */
+  .table-wrapper,
+  .db-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+  }
+
+  /* —— Cards reduce padding —— */
+  .card__body {
+    padding: var(--space-4);
+  }
+
+  .card__footer {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .feature-card {
+    padding: var(--space-6);
+  }
+
+  .service-card {
+    padding: var(--space-6);
+  }
+
+  .stats-card {
+    padding: var(--space-6);
+  }
+
+  /* —— CTA Card —— */
+  .cta-card {
+    padding: var(--space-8) var(--space-6);
+  }
+
+  /* —— Forms —— */
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-group--half {
+    grid-column: span 1;
+  }
+
+  /* —— Buttons in sections —— */
+  .btn--cta {
+    padding: var(--space-4) var(--space-8);
+    font-size: var(--fs-btn);
+  }
+}
+
+/* ============================================================
+   EXTRA SMALL / MOBILE (≤ 576px)
+   ============================================================ */
+@media (max-width: 576px) {
+  :root {
+    --container-padding: 1rem;
+  }
+
+  /* —— Typography scale down —— */
+  body {
+    font-size: 0.9375rem;
+  }
+
+  /* —— Hero —— */
+  .hero {
+    min-height: 340px;
+  }
+
+  .hero__badge {
+    font-size: 0.625rem;
+  }
+
+  .hero__title,
+  .hero h1 {
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+  }
+
+  /* —— Grid utility overrides —— */
+  .grid-3,
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  /* —— Car card specs —— */
+  .car-card__specs {
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  /* —— Auth —— */
+  .auth-layout {
+    padding: var(--space-4) 0 var(--space-8);
+  }
+
+  .auth-card {
+    padding: var(--space-6);
+    border-radius: var(--radius-xl);
+  }
+
+  /* —— Tabs scroll —— */
+  .tabs {
+    gap: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+  }
+
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab {
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--fs-xs);
+    flex-shrink: 0;
+  }
+
+  /* —— Accordion —— */
+  .accordion__header {
+    padding: var(--space-4) var(--space-5);
+    font-size: var(--fs-small);
+  }
+
+  .accordion__content {
+    padding: 0 var(--space-5) var(--space-5);
+  }
+
+  /* —— Back to top —— */
+  .back-to-top {
+    bottom: var(--space-5);
+    right: var(--space-5);
+    width: 42px;
+    height: 42px;
+    font-size: 1rem;
+  }
+
+  /* —— Mobile menu —— */
+  .navbar__mobile {
+    width: 100%;
+    max-width: 100vw;
+  }
+
+  /* —— Empty state —— */
+  .empty-state {
+    padding: var(--space-10) var(--space-4);
+  }
+
+  .empty-state__icon {
+    width: 64px;
+    height: 64px;
+    font-size: 1.5rem;
+  }
+
+  /* —— Notification card —— */
+  .notification-card {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .notification-card__time {
+    align-self: flex-start;
+  }
+
+  /* —— Page header —— */
+  .page-header {
+    padding: var(--space-8) 0 var(--space-6);
+  }
+
+  /* —— Stats —— */
+  .stats-card__number {
+    font-size: 1.75rem;
+  }
+
+  /* —— Section header —— */
+  .section__header {
+    margin-bottom: var(--space-8);
+  }
+
+  /* —— Section titles —— */
+  .section__title {
+    font-size: clamp(1.375rem, 4vw, 1.75rem);
+  }
+
+  /* —— Buttons full width when in hero/CTA —— */
+  .hero__actions .btn,
+  .cta-section__actions .btn {
+    width: 100%;
+  }
+
+  /* —— Profile dropdown —— */
+  .profile-dropdown {
+    width: 190px;
+    font-size: var(--fs-small);
+  }
+
+  /* —— Cards compact —— */
+  .card__body {
+    padding: var(--space-4);
+  }
+
+  .feature-card {
+    padding: var(--space-5);
+  }
+
+  .feature-card__icon {
+    width: 52px;
+    height: 52px;
+    font-size: 1.25rem;
+    margin-bottom: var(--space-4);
+  }
+
+  .service-card {
+    padding: var(--space-5);
+  }
+
+  /* —— Car card price —— */
+  .car-card__price {
+    font-size: 1.1rem;
+  }
+
+  /* —— Profile card —— */
+  .profile-card {
+    padding: var(--space-6);
+  }
+
+  .profile-card__avatar {
+    width: 72px;
+    height: 72px;
+  }
+
+  /* —— Navbar logo —— */
+  .navbar__logo {
+    font-size: 1.25rem;
+  }
+}
+
+/* ============================================================
+   EXTRA EXTRA SMALL / SMALL PHONES (≤ 480px)
+   ============================================================ */
+@media (max-width: 480px) {
+  :root {
+    --container-padding: 0.875rem;
+  }
+
+  /* —— Navbar —— */
+  .navbar__logo {
+    font-size: 1.125rem;
+    gap: var(--space-2);
+  }
+
+  .navbar__logo-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  /* —— Hero further compact —— */
+  .hero {
+    min-height: 300px;
+    padding-top: calc(60px + var(--space-8));
+  }
+
+  .hero--inner {
+    min-height: 220px;
+    padding-top: calc(60px + var(--space-6));
+  }
+
+  /* —— Buttons compact —— */
+  .btn--cta {
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--fs-small);
+  }
+
+  .btn--lg {
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--fs-btn);
+  }
+
+  /* —— Auth extra compact —— */
+  .auth-card {
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+  }
+
+  /* —— Section compact —— */
+  .section {
+    padding: var(--space-10) 0;
+  }
+
+  .section--lg {
+    padding: var(--space-12) 0;
+  }
+
+  /* —— Footer compact —— */
+  .footer {
+    padding-top: var(--space-10);
+  }
+
+  /* —— CTA sections extra compact —— */
+  .cta-section__title,
+  .home-cta__title,
+  .cars-cta__title {
+    font-size: clamp(1.25rem, 5vw, 1.625rem);
+  }
+
+  .cta-section__desc,
+  .home-cta__text,
+  .cars-cta__text {
+    font-size: var(--fs-xs);
+  }
+
+  /* —— Stats card tiny —— */
+  .stats-card__number {
+    font-size: 1.5rem;
+  }
+
+  /* —— Modal full width —— */
+  .modal {
+    width: 98%;
+    margin: var(--space-3);
+  }
+
+  /* —— Disable button interaction-based movement/lift/scaling for Mobile and Tablet —— */
+  .btn,
+  .btn:hover,
+  .btn:active,
+  .btn:focus,
+  button,
+  button:hover,
+  button:active,
+  button:focus,
+  input[type="button"],
+  input[type="button"]:hover,
+  input[type="button"]:active,
+  input[type="submit"],
+  input[type="submit"]:hover,
+  input[type="submit"]:active,
+  .navbar__search-btn,
+  .navbar__search-btn:hover,
+  .navbar__search-btn:active,
+  .navbar__profile-btn,
+  .navbar__profile-btn:hover,
+  .navbar__profile-btn:active,
+  .back-to-top,
+  .back-to-top:hover,
+  .back-to-top:active,
+  .testimonials-btn,
+  .testimonials-btn:hover,
+  .testimonials-btn:active,
+  .tab-btn,
+  .tab-btn:hover,
+  .tab-btn:active,
+  .filter-btn,
+  .filter-btn:hover,
+  .filter-btn:active,
+  .pagination-btn,
+  .pagination-btn:hover,
+  .pagination-btn:active,
+  .db-quick-filter-buttons .btn,
+  .db-quick-filter-buttons .btn:hover,
+  .db-quick-filter-buttons .btn:active,
+  .db-filter-bar__actions .btn,
+  .db-filter-bar__actions .btn:hover,
+  .db-filter-bar__actions .btn:active,
+  .db-pagination .btn,
+  .db-pagination .btn:hover,
+  .db-pagination .btn:active {
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .btn--primary:hover,
+  .btn--primary:active,
+  .btn--primary:focus {
+    box-shadow: 0 4px 15px rgba(27, 59, 95, 0.25) !important;
+  }
+
+  .btn--accent:hover,
+  .btn--accent:active,
+  .btn--accent:focus {
+    box-shadow: 0 4px 15px rgba(198, 169, 98, 0.3) !important;
+  }
+
+  .btn--secondary:hover,
+  .btn--secondary:active,
+  .btn--secondary:focus,
+  .btn--outline:hover,
+  .btn--outline:active,
+  .btn--outline:focus,
+  .btn--ghost:hover,
+  .btn--ghost:active,
+  .btn--ghost:focus {
+    box-shadow: none !important;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE VISIBILITY UTILITIES
+   ============================================================ */
+.hide-mobile {
+  display: block;
+}
+
+.show-mobile {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .hide-mobile {
+    display: none !important;
+  }
+
+  .show-mobile {
+    display: block !important;
+  }
+}
+
+.hide-tablet {
+  display: block;
+}
+
+.show-tablet {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .hide-tablet {
+    display: none !important;
+  }
+
+  .show-tablet {
+    display: block !important;
+  }
+}

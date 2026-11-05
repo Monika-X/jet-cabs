@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Browse our exclusive fleet of luxury rental cars. Filter by type, brand, price, and more to find your perfect ride.">
+  <title>Our Fleet — JET CABS</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/sprite.svg#icon-car">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/utilities.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/pages/cars.css">
+</head>
+<body>
+
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="navbar__logo">
+        <span class="navbar__logo-text"><span>JET</span> CABS</span>
+      </a>
+      <div class="navbar__links">
+        <a href="index.html" class="navbar__link">Home</a>
+        <a href="about.html" class="navbar__link">About</a>
+        <a href="cars.html" class="navbar__link">Cars</a>
+        <a href="services.html" class="navbar__link">Services</a>
+        <a href="contact.html" class="navbar__link">Contact</a>
+      </div>
+      <div class="navbar__actions">
+        <div class="navbar__profile-menu-wrapper">
+          <button class="navbar__profile-btn" aria-label="Open account menu" aria-expanded="false" aria-haspopup="true">
+            <span class="icon"><svg><use href="assets/icons/sprite.svg#icon-user"/></svg></span>
+          </button>
+          <div class="profile-dropdown">
+            <a href="login.html" class="profile-dropdown__link">
+              <span class="icon"><svg><use href="assets/icons/sprite.svg#icon-user"/></svg></span>
+              Login / Signup
+            </a>
+            <a href="#" class="profile-dropdown__link dashboard-placeholder">
+              <span class="icon"><svg><use href="assets/icons/sprite.svg#icon-users"/></svg></span>
+              User Dashboard
+            </a>
+            <a href="#" class="profile-dropdown__link dashboard-placeholder">
+              <span class="icon"><svg><use href="assets/icons/sprite.svg#icon-shield-check"/></svg></span>
+              Admin Dashboard
+            </a>
+          </div>
+        </div>
+      </div>
+      <button class="navbar__toggle" aria-label="Toggle mobile menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="navbar__mobile-overlay"></div>
+  <div class="navbar__mobile">
+    <a href="index.html" class="navbar__link">Home</a>
+    <a href="about.html" class="navbar__link">About</a>
+    <a href="cars.html" class="navbar__link">Cars</a>
+    <a href="services.html" class="navbar__link">Services</a>
+    <a href="contact.html" class="navbar__link">Contact</a>
+    
+  </div>
+
+  <!-- ============================================================
+       HERO BANNER
+       ============================================================ -->
+  <section class="cars-hero">
+    <div class="cars-hero__overlay"></div>
+    <div class="container">
+      <div class="cars-hero__content scroll-reveal">
+        <div class="cars-hero__badge">Our Premium Fleet</div>
+        <h1 class="cars-hero__title">Find Your <span class="highlight">Perfect Ride</span></h1>
+        <p class="cars-hero__desc">Browse our handpicked collection of luxury, performance, and comfort vehicles. Advanced filters help you find exactly what you need.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SEARCH PANEL SECTION
+       ============================================================ -->
+  <section class="cars-search-section">
+    <div class="container">
+      <div class="cars-search__card scroll-reveal" style="--delay:.2s">
+        <div class="cars-search__row">
+          <div class="cars-search__field">
+            <label for="search-keyword">Search Vehicle</label>
+            <input type="text" id="search-keyword" class="form-input" placeholder="Search by name, brand, or model...">
+          </div>
+          <div class="cars-search__field">
+            <label for="search-brand">Brand</label>
+            <select id="search-brand" class="form-select">
+              <option value="">All Brands</option>
+              <option>Audi</option>
+              <option>BMW</option>
+              <option>Ford</option>
+              <option>Honda</option>
+              <option>Hyundai</option>
+              <option>Mercedes-Benz</option>
+              <option>Porsche</option>
+              <option>Range Rover</option>
+              <option>Tesla</option>
+              <option>Toyota</option>
+            </select>
+          </div>
+          <div class="cars-search__field">
+            <label for="search-category">Category</label>
+            <select id="search-category" class="form-select">
+              <option value="">All Categories</option>
+              <option>Luxury</option>
+              <option>SUV</option>
+              <option>Sedan</option>
+              <option>Sports</option>
+              <option>Electric</option>
+              <option>Convertible</option>
+            </select>
+          </div>
+          <div class="cars-search__actions">
+            <button class="btn btn--primary"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-search"/></svg></span> Search</button>
+            <button class="btn btn--ghost">Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BREADCRUMB -->
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb__list">
+        <li class="breadcrumb__item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb__separator">›</li>
+        <li class="breadcrumb__item active">Cars</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       MAIN CONTENT
+       ============================================================ -->
+  <main id="main-content">
+
+    <!-- ============================================================
+         FILTER + VEHICLE GRID LAYOUT
+         ============================================================ -->
+    <section class="section u-cars-1">
+      <div class="container">
+
+        <!-- Mobile filter toggle -->
+        <button class="filter-toggle-mobile" id="filter-toggle">
+          <span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-wrench"/></svg></span> Show Filters
+        </button>
+
+        <div class="cars-layout">
+
+          <!-- ======== FILTER SIDEBAR ======== -->
+          <aside class="filter-sidebar" id="filter-sidebar">
+            <div class="filter-sidebar__header">
+              <h3 class="filter-sidebar__title"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-wrench"/></svg></span> Filters</h3>
+              <button class="filter-sidebar__clear">Clear All</button>
+            </div>
+
+            <!-- Scrollable Content -->
+            <div class="filter-sidebar__content">
+            <!-- Vehicle Category -->
+            <div class="filter-group">
+              <h4 class="filter-group__title">Vehicle Category <span class="filter-group__toggle"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-chevron-down"/></svg></span></span></h4>
+              <div class="filter-group__options">
+                <label class="filter-checkbox"><input type="checkbox"> Luxury <span class="filter-checkbox__count">24</span></label>
+                <label class="filter-checkbox"><input type="checkbox"> SUV <span class="filter-checkbox__count">18</span></label>
+                <label class="filter-checkbox"><input type="checkbox"> Sedan <span class="filter-checkbox__count">32</span></label>
+                <label class="filter-checkbox"><input type="checkbox"> Sports <span class="filter-checkbox__count">12</span></label>
+                <label class="filter-checkbox"><input type="checkbox"> Electric <span class="filter-checkbox__count">15</span></label>
+                <label class="filter-checkbox"><input type="checkbox"> Convertible <span class="filter-checkbox__count">8</span></label>
+                <label class="filter-checkbox"><input type="checkbox"> Hatchback <span class="filter-checkbox__count">10</span></label>
+              </div>
+            </div>
+
+            <!-- Brand -->
+            <div class="filter-group">
+              <h4 class="filter-group__title">Brand <span class="filter-group__toggle"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-chevron-down"/></svg></span></span></h4>
+              <div class="filter-group__options">
+                <label class="filter-checkbox"><input type="checkbox"> Audi <span class="filter-checkbox__count">2</span></label>
+                <label class="filter-checkbox"><input type="checkbox"> BMW <span class="filter-checkbox__count">1</span></label>
+                <label class="filter-checkbox"><input type="checkbox"> Ford <span class="filter-checkbox__count">1</span></label>
+                <label class="filter-checkbox"><input type="checkbox"> Honda <span class="filter-checkbox__count">1</span></label>
+                <label class="filter-checkbox"><input type="checkbox"> Hyundai <span class="filter-checkbox__count">1</span></label>
+                <label class="filter-checkbox"><input type="checkbox"> Mercedes <span class="filter-checkbox__count">2</span></label>
+                <label class="filter-checkbox"><input type="checkbox"> Porsche <span class="filter-checkbox__count">2</span></label>
+                <label class="filter-checkbox"><input type="checkbox"> Range Rover <span class="filter-checkbox__count">1</span></label>
+                <label class="filter-checkbox"><input type="checkbox"> Tesla <span class="filter-checkbox__count">1</span></label>
+                <label class="filter-checkbox"><input type="checkbox"> Toyota <span class="filter-checkbox__count">1</span></label>
+              </div>
+            </div>
+
+            <!-- Rental Type -->
+            <div class="filter-group">
+              <h4 class="filter-group__title">Rental Type <span class="filter-group__toggle"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-chevron-down"/></svg></span></span></h4>
+              <div class="filter-group__options">
+                <label class="filter-checkbox"><input type="checkbox"> Hourly</label>
+                <label class="filter-checkbox"><input type="checkbox"> Daily</label>
+              </div>
+            </div>
+
+            <!-- Fuel Type -->
+            <div class="filter-group">
+              <h4 class="filter-group__title">Fuel Type <span class="filter-group__toggle"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-chevron-down"/></svg></span></span></h4>
+              <div class="filter-group__options">
+                <label class="filter-checkbox"><input type="checkbox"> Petrol <span class="filter-checkbox__count">45</span></label>
+                <label class="filter-checkbox"><input type="checkbox"> Diesel <span class="filter-checkbox__count">22</span></label>
+                <label class="filter-checkbox"><input type="checkbox"> Electric <span class="filter-checkbox__count">15</span></label>
+                <label class="filter-checkbox"><input type="checkbox"> Hybrid <span class="filter-checkbox__count">8</span></label>
+              </div>
+            </div>
+
+            <!-- Transmission -->
+            <div class="filter-group">
+              <h4 class="filter-group__title">Transmission <span class="filter-group__toggle"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-chevron-down"/></svg></span></span></h4>
+              <div class="filter-group__options">
+                <label class="filter-checkbox"><input type="checkbox"> Automatic <span class="filter-checkbox__count">72</span></label>
+                <label class="filter-checkbox"><input type="checkbox"> Manual <span class="filter-checkbox__count">18</span></label>
+              </div>
+            </div>
+
+            <!-- Seats -->
+            <div class="filter-group">
+              <h4 class="filter-group__title">Seats <span class="filter-group__toggle"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-chevron-down"/></svg></span></span></h4>
+              <div class="filter-group__options">
+                <label class="filter-checkbox"><input type="checkbox"> 2 Seats <span class="filter-checkbox__count">8</span></label>
+                <label class="filter-checkbox"><input type="checkbox"> 4 Seats <span class="filter-checkbox__count">20</span></label>
+                <label class="filter-checkbox"><input type="checkbox"> 5 Seats <span class="filter-checkbox__count">45</span></label>
+                <label class="filter-checkbox"><input type="checkbox"> 7 Seats <span class="filter-checkbox__count">12</span></label>
+              </div>
+            </div>
+
+            <!-- Price Range -->
+            <div class="filter-group">
+              <h4 class="filter-group__title">Price Range ($/hr) <span class="filter-group__toggle"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-chevron-down"/></svg></span></span></h4>
+              <div class="filter-group__options">
+                <div class="filter-range">
+                  <div class="filter-range__inputs">
+                    <div class="filter-range__input">
+                      <input type="number" value="0" min="0" placeholder="Min">
+                    </div>
+                    <div class="filter-range__input">
+                      <input type="number" value="500" max="500" placeholder="Max">
+                    </div>
+                  </div>
+                  <input type="range" class="filter-range__slider" min="0" max="500" value="500">
+                </div>
+              </div>
+            </div>
+
+            <!-- Availability -->
+            <div class="filter-group">
+              <h4 class="filter-group__title">Availability <span class="filter-group__toggle"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-chevron-down"/></svg></span></span></h4>
+              <div class="filter-group__options">
+                <label class="filter-checkbox"><input type="checkbox"> Available Now <span class="filter-checkbox__count">65</span></label>
+                <label class="filter-checkbox"><input type="checkbox"> Coming Soon <span class="filter-checkbox__count">12</span></label>
+                <label class="filter-checkbox"><input type="checkbox"> Featured Cars <span class="filter-checkbox__count">8</span></label>
+              </div>
+            </div>
+
+            <!-- Luxury Features -->
+            <div class="filter-group">
+              <h4 class="filter-group__title">Luxury Features <span class="filter-group__toggle"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-chevron-down"/></svg></span></span></h4>
+              <div class="filter-group__options">
+                <label class="filter-checkbox"><input type="checkbox" value="AC"> AC <span class="filter-checkbox__count">12</span></label>
+                <label class="filter-checkbox"><input type="checkbox" value="GPS"> GPS <span class="filter-checkbox__count">12</span></label>
+                <label class="filter-checkbox"><input type="checkbox" value="Bluetooth"> Bluetooth <span class="filter-checkbox__count">8</span></label>
+                <label class="filter-checkbox"><input type="checkbox" value="Autopilot"> Autopilot <span class="filter-checkbox__count">2</span></label>
+              </div>
+            </div>
+
+            <!-- Ratings -->
+            <div class="filter-group">
+              <h4 class="filter-group__title">Rating <span class="filter-group__toggle"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-chevron-down"/></svg></span></span></h4>
+              <div class="filter-group__options">
+                <div class="filter-rating">
+                  <label class="filter-rating__option"><input class="u-cars-2" type="radio" name="rating"> <span class="filter-rating__stars"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span></span> <span class="filter-rating__text">5.0</span></label>
+                  <label class="filter-rating__option"><input class="u-cars-3" type="radio" name="rating"> <span class="filter-rating__stars"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span></span> <span class="filter-rating__text">4.0+</span></label>
+                  <label class="filter-rating__option"><input class="u-cars-4" type="radio" name="rating"> <span class="filter-rating__stars"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span></span> <span class="filter-rating__text">3.0+</span></label>
+                </div>
+              </div>
+            </div>
+            </div> <!-- End Scrollable Content -->
+          </aside>
+
+          <!-- ======== MAIN CONTENT AREA ======== -->
+          <div>
+            <!-- Toolbar -->
+            <div class="cars-toolbar scroll-reveal">
+              <div class="cars-toolbar__count">Showing <span>12</span> of 90 vehicles</div>
+              <div class="cars-toolbar__controls">
+                <div class="cars-toolbar__sort">
+                  <label for="sort-by">Sort by:</label>
+                  <select id="sort-by" class="form-select">
+                    <option>Newest</option>
+                    <option>Price Low → High</option>
+                    <option>Price High → Low</option>
+                    <option>Most Popular</option>
+                    <option>Highest Rated</option>
+                    <option>Alphabetical</option>
+                  </select>
+                </div>
+                <div class="cars-toolbar__view">
+                  <button class="view-btn active" aria-label="Grid view" title="Grid View"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-grid"/></svg></span></button>
+                  <button class="view-btn" aria-label="List view" title="List View"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-menu"/></svg></span></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Empty State (hidden by default) -->
+            <div class="cars-empty" id="cars-empty">
+              <div class="cars-empty__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-search"/></svg></span></div>
+              <h3 class="cars-empty__title">No Vehicles Found</h3>
+              <p class="cars-empty__text">We couldn't find any vehicles matching your criteria. Try adjusting your filters or search terms.</p>
+              <button class="btn btn--primary">Reset Filters</button>
+            </div>
+
+            <!-- Loading Skeleton Grid -->
+            <div class="vehicle-grid" id="loading-skeleton" style="display: none;">
+              <!-- Skeleton Card 1 -->
+              <div class="v-card">
+                <div class="skeleton skeleton--image" style="aspect-ratio: 16/10; width: 100%;"></div>
+                <div class="v-card__body" style="gap: var(--space-3); padding: var(--space-6);">
+                  <div class="skeleton skeleton--text" style="width: 30%;"></div>
+                  <div class="skeleton skeleton--text" style="width: 60%; height: 24px;"></div>
+                  <div class="skeleton skeleton--text" style="width: 100%;"></div>
+                  <div class="skeleton skeleton--text" style="width: 90%;"></div>
+                  <div style="display: flex; gap: var(--space-2); margin-top: auto;">
+                    <div class="skeleton skeleton--btn" style="flex: 1; height: 40px; border-radius: var(--radius-lg);"></div>
+                    <div class="skeleton skeleton--btn" style="flex: 1; height: 40px; border-radius: var(--radius-lg);"></div>
+                  </div>
+                </div>
+              </div>
+              <!-- Skeleton Card 2 -->
+              <div class="v-card">
+                <div class="skeleton skeleton--image" style="aspect-ratio: 16/10; width: 100%;"></div>
+                <div class="v-card__body" style="gap: var(--space-3); padding: var(--space-6);">
+                  <div class="skeleton skeleton--text" style="width: 25%;"></div>
+                  <div class="skeleton skeleton--text" style="width: 50%; height: 24px;"></div>
+                  <div class="skeleton skeleton--text" style="width: 100%;"></div>
+                  <div class="skeleton skeleton--text" style="width: 85%;"></div>
+                  <div style="display: flex; gap: var(--space-2); margin-top: auto;">
+                    <div class="skeleton skeleton--btn" style="flex: 1; height: 40px; border-radius: var(--radius-lg);"></div>
+                    <div class="skeleton skeleton--btn" style="flex: 1; height: 40px; border-radius: var(--radius-lg);"></div>
+                  </div>
+                </div>
+              </div>
+              <!-- Skeleton Card 3 -->
+              <div class="v-card">
+                <div class="skeleton skeleton--image" style="aspect-ratio: 16/10; width: 100%;"></div>
+                <div class="v-card__body" style="gap: var(--space-3); padding: var(--space-6);">
+                  <div class="skeleton skeleton--text" style="width: 35%;"></div>
+                  <div class="skeleton skeleton--text" style="width: 70%; height: 24px;"></div>
+                  <div class="skeleton skeleton--text" style="width: 100%;"></div>
+                  <div class="skeleton skeleton--text" style="width: 95%;"></div>
+                  <div style="display: flex; gap: var(--space-2); margin-top: auto;">
+                    <div class="skeleton skeleton--btn" style="flex: 1; height: 40px; border-radius: var(--radius-lg);"></div>
+                    <div class="skeleton skeleton--btn" style="flex: 1; height: 40px; border-radius: var(--radius-lg);"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Vehicle Grid -->
+            <div class="vehicle-grid" id="vehicle-grid">
+
+              <!-- Card 1 -->
+              <div class="v-card scroll-reveal">
+                <div class="v-card__image">
+                  <img src="assets/images/cars/luxury.png" alt="Mercedes-Benz AMG GT 63 S luxury performance sedan" class="v-card__car-img" loading="lazy">
+                  <div class="v-card__badges">
+                    <span class="badge badge--available">Available</span>
+                    <span class="badge badge--popular">Featured</span>
+                  </div>
+                  <div class="v-card__actions-overlay">
+                    <button class="v-card__icon-btn" aria-label="Favorite" title="Add to favorites">♡</button>
+                    <button class="v-card__icon-btn" aria-label="Compare" title="Add to compare"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></button>
+                  </div>
+                  <div class="v-card__brand-logo">MB</div>
+                </div>
+                <div class="v-card__body">
+                  <div class="v-card__brand">Mercedes-Benz</div>
+                  <h3 class="v-card__name">AMG GT 63 S</h3>
+                  <p class="v-card__desc">Ultimate performance sedan with twin-turbo V8 engine, hand-crafted luxury interior.</p>
+                  <div class="v-card__specs">
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-fuel"/></svg></span></span> Petrol</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></span> Auto</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-user"/></svg></span></span> 4</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-gauge"/></svg></span></span> 12K mi</span>
+                  </div>
+                  <div class="v-card__features">
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> AC</span>
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> GPS</span>
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> Bluetooth</span>
+                  </div>
+                  <div class="v-card__footer">
+                    <div>
+                      <div class="v-card__price">$85<span class="v-card__price-unit">/hr</span></div>
+                      <div class="v-card__price-daily">$520/day</div>
+                    </div>
+                    <div class="v-card__rating">
+                      <span class="v-card__rating-star"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span></span> 4.9
+                      <span class="v-card__rating-count">(128)</span>
+                    </div>
+                  </div>
+                  <div class="v-card__cta">
+                    <a href="car-details.html?id=1" class="btn btn--outline btn--sm">Details</a>
+                    <a href="booking.html" class="btn btn--primary btn--sm">Rent Now</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 2 -->
+              <div class="v-card scroll-reveal" style="--delay:.1s">
+                <div class="v-card__image">
+                  <img src="assets/images/cars/suv.png" alt="BMW X7 luxury SUV" class="v-card__car-img" loading="lazy">
+                  <div class="v-card__badges">
+                    <span class="badge badge--available">Available</span>
+                    <span class="badge badge--suv">SUV</span>
+                  </div>
+                  <div class="v-card__actions-overlay">
+                    <button class="v-card__icon-btn" aria-label="Favorite">♡</button>
+                    <button class="v-card__icon-btn" aria-label="Compare"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></button>
+                  </div>
+                  <div class="v-card__brand-logo">BMW</div>
+                </div>
+                <div class="v-card__body">
+                  <div class="v-card__brand">BMW</div>
+                  <h3 class="v-card__name">X7 xDrive40i</h3>
+                  <p class="v-card__desc">Spacious luxury SUV with third-row seating and cutting-edge technology.</p>
+                  <div class="v-card__specs">
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-fuel"/></svg></span></span> Petrol</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></span> Auto</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-user"/></svg></span></span> 7</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-gauge"/></svg></span></span> 8K mi</span>
+                  </div>
+                  <div class="v-card__features">
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> AC</span>
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> GPS</span>
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> Bluetooth</span>
+                  </div>
+                  <div class="v-card__footer">
+                    <div>
+                      <div class="v-card__price">$65<span class="v-card__price-unit">/hr</span></div>
+                      <div class="v-card__price-daily">$420/day</div>
+                    </div>
+                    <div class="v-card__rating"><span class="v-card__rating-star"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span></span> 4.8 <span class="v-card__rating-count">(96)</span></div>
+                  </div>
+                  <div class="v-card__cta">
+                    <a href="car-details.html?id=2" class="btn btn--outline btn--sm">Details</a>
+                    <a href="booking.html" class="btn btn--primary btn--sm">Rent Now</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 3 -->
+              <div class="v-card scroll-reveal" style="--delay:.2s">
+                <div class="v-card__image">
+                  <img src="assets/images/cars/electric.png" alt="Tesla Model S Plaid electric sedan" class="v-card__car-img" loading="lazy">
+                  <div class="v-card__badges">
+                    <span class="badge badge--available">Available</span>
+                    <span class="badge badge--electric">Electric</span>
+                  </div>
+                  <div class="v-card__actions-overlay">
+                    <button class="v-card__icon-btn" aria-label="Favorite">♡</button>
+                    <button class="v-card__icon-btn" aria-label="Compare"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></button>
+                  </div>
+                  <div class="v-card__brand-logo">T</div>
+                </div>
+                <div class="v-card__body">
+                  <div class="v-card__brand">Tesla</div>
+                  <h3 class="v-card__name">Model S Plaid</h3>
+                  <p class="v-card__desc">The quickest production car ever. 0-60 in under 2 seconds with 390 mile range.</p>
+                  <div class="v-card__specs">
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-zap"/></svg></span></span> Electric</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></span> Auto</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-user"/></svg></span></span> 5</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-gauge"/></svg></span></span> 5K mi</span>
+                  </div>
+                  <div class="v-card__features">
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> AC</span>
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> GPS</span>
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> Autopilot</span>
+                  </div>
+                  <div class="v-card__footer">
+                    <div>
+                      <div class="v-card__price">$75<span class="v-card__price-unit">/hr</span></div>
+                      <div class="v-card__price-daily">$480/day</div>
+                    </div>
+                    <div class="v-card__rating"><span class="v-card__rating-star"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span></span> 4.9 <span class="v-card__rating-count">(142)</span></div>
+                  </div>
+                  <div class="v-card__cta">
+                    <a href="car-details.html?id=3" class="btn btn--outline btn--sm">Details</a>
+                    <a href="booking.html" class="btn btn--primary btn--sm">Rent Now</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 4 -->
+              <div class="v-card scroll-reveal">
+                <div class="v-card__image">
+                  <img src="assets/images/cars/sports.png" alt="Porsche 911 Turbo S sports car" class="v-card__car-img" loading="lazy">
+                  <div class="v-card__badges">
+                    <span class="badge badge--available">Available</span>
+                    <span class="badge badge--luxury">Luxury</span>
+                  </div>
+                  <div class="v-card__actions-overlay">
+                    <button class="v-card__icon-btn" aria-label="Favorite">♡</button>
+                    <button class="v-card__icon-btn" aria-label="Compare"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></button>
+                  </div>
+                  <div class="v-card__brand-logo">P</div>
+                </div>
+                <div class="v-card__body">
+                  <div class="v-card__brand">Porsche</div>
+                  <h3 class="v-card__name">911 Turbo S</h3>
+                  <p class="v-card__desc">Iconic sports car with 640 hp twin-turbo flat-six engine and all-wheel drive.</p>
+                  <div class="v-card__specs">
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-fuel"/></svg></span></span> Petrol</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></span> Auto</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-user"/></svg></span></span> 2</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-gauge"/></svg></span></span> 3K mi</span>
+                  </div>
+                  <div class="v-card__features">
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> AC</span>
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> GPS</span>
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> Sport Mode</span>
+                  </div>
+                  <div class="v-card__footer">
+                    <div>
+                      <div class="v-card__price">$120<span class="v-card__price-unit">/hr</span></div>
+                      <div class="v-card__price-daily">$750/day</div>
+                    </div>
+                    <div class="v-card__rating"><span class="v-card__rating-star"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span></span> 5.0 <span class="v-card__rating-count">(87)</span></div>
+                  </div>
+                  <div class="v-card__cta">
+                    <a href="car-details.html?id=4" class="btn btn--outline btn--sm">Details</a>
+                    <a href="booking.html" class="btn btn--primary btn--sm">Rent Now</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 5 -->
+              <div class="v-card scroll-reveal" style="--delay:.1s">
+                <div class="v-card__image">
+                  <img src="assets/images/cars/sedan.png" alt="Audi A8 L Quattro luxury sedan" class="v-card__car-img" loading="lazy">
+                  <div class="v-card__badges">
+                    <span class="badge badge--available">Available</span>
+                    <span class="badge badge--sedan">Sedan</span>
+                  </div>
+                  <div class="v-card__actions-overlay">
+                    <button class="v-card__icon-btn" aria-label="Favorite">♡</button>
+                    <button class="v-card__icon-btn" aria-label="Compare"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></button>
+                  </div>
+                  <div class="v-card__brand-logo">A</div>
+                </div>
+                <div class="v-card__body">
+                  <div class="v-card__brand">Audi</div>
+                  <h3 class="v-card__name">A8 L Quattro</h3>
+                  <p class="v-card__desc">Flagship luxury sedan with adaptive air suspension and executive rear seating.</p>
+                  <div class="v-card__specs">
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-fuel"/></svg></span></span> Petrol</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></span> Auto</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-user"/></svg></span></span> 5</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-gauge"/></svg></span></span> 10K mi</span>
+                  </div>
+                  <div class="v-card__features">
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> AC</span>
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> GPS</span>
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> Bluetooth</span>
+                  </div>
+                  <div class="v-card__footer">
+                    <div>
+                      <div class="v-card__price">$55<span class="v-card__price-unit">/hr</span></div>
+                      <div class="v-card__price-daily">$350/day</div>
+                    </div>
+                    <div class="v-card__rating"><span class="v-card__rating-star"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span></span> 4.7 <span class="v-card__rating-count">(64)</span></div>
+                  </div>
+                  <div class="v-card__cta">
+                    <a href="car-details.html?id=5" class="btn btn--outline btn--sm">Details</a>
+                    <a href="booking.html" class="btn btn--primary btn--sm">Rent Now</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 6 -->
+              <div class="v-card scroll-reveal" style="--delay:.2s">
+                <div class="v-card__image">
+                  <img src="assets/images/cars/suv.png" alt="Range Rover Sport SVR luxury SUV" class="v-card__car-img" loading="lazy">
+                  <div class="v-card__badges">
+                    <span class="badge badge--available">Available</span>
+                    <span class="badge badge--new">New</span>
+                  </div>
+                  <div class="v-card__actions-overlay">
+                    <button class="v-card__icon-btn" aria-label="Favorite">♡</button>
+                    <button class="v-card__icon-btn" aria-label="Compare"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></button>
+                  </div>
+                  <div class="v-card__brand-logo">RR</div>
+                </div>
+                <div class="v-card__body">
+                  <div class="v-card__brand">Range Rover</div>
+                  <h3 class="v-card__name">Sport SVR</h3>
+                  <p class="v-card__desc">The most dynamic Range Rover ever built with supercharged V8 performance.</p>
+                  <div class="v-card__specs">
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-fuel"/></svg></span></span> Diesel</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></span> Auto</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-user"/></svg></span></span> 5</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-gauge"/></svg></span></span> 6K mi</span>
+                  </div>
+                  <div class="v-card__features">
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> AC</span>
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> GPS</span>
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> 4WD</span>
+                  </div>
+                  <div class="v-card__footer">
+                    <div>
+                      <div class="v-card__price">$90<span class="v-card__price-unit">/hr</span></div>
+                      <div class="v-card__price-daily">$580/day</div>
+                    </div>
+                    <div class="v-card__rating"><span class="v-card__rating-star"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span></span> 4.8 <span class="v-card__rating-count">(73)</span></div>
+                  </div>
+                  <div class="v-card__cta">
+                    <a href="car-details.html?id=6" class="btn btn--outline btn--sm">Details</a>
+                    <a href="booking.html" class="btn btn--primary btn--sm">Rent Now</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ===== PROMO BANNER (after first 6 cards) ===== -->
+              <div class="promo-banner scroll-reveal">
+                <div class="promo-banner__pattern"></div>
+                <div class="promo-banner__content">
+                  <div class="promo-banner__tag"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-zap"/></svg></span> Limited Time Offer</div>
+                  <h3 class="promo-banner__title">Weekend Special — Up to 30% Off</h3>
+                  <p class="promo-banner__text">Book any luxury vehicle for the weekend and save big. Corporate packages also available with exclusive fleet access.</p>
+                </div>
+                <div class="promo-banner__actions">
+                  <a href="booking.html" class="btn btn--accent btn--lg">Book Now →</a>
+                </div>
+              </div>
+
+              <!-- Card 7 -->
+              <div class="v-card scroll-reveal">
+                <div class="v-card__image">
+                  <img src="assets/images/cars/luxury.png" alt="Mercedes-Benz S-Class S580 luxury sedan" class="v-card__car-img" loading="lazy">
+                  <div class="v-card__badges">
+                    <span class="badge badge--available">Available</span>
+                    <span class="badge badge--premium">Premium</span>
+                  </div>
+                  <div class="v-card__actions-overlay">
+                    <button class="v-card__icon-btn" aria-label="Favorite">♡</button>
+                    <button class="v-card__icon-btn" aria-label="Compare"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></button>
+                  </div>
+                  <div class="v-card__brand-logo">MB</div>
+                </div>
+                <div class="v-card__body">
+                  <div class="v-card__brand">Mercedes-Benz</div>
+                  <h3 class="v-card__name">S-Class S580</h3>
+                  <p class="v-card__desc">The benchmark luxury sedan featuring MBUX, massage seats, and executive class.</p>
+                  <div class="v-card__specs">
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-fuel"/></svg></span></span> Petrol</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></span> Auto</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-user"/></svg></span></span> 5</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-gauge"/></svg></span></span> 9K mi</span>
+                  </div>
+                  <div class="v-card__features">
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> AC</span>
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> GPS</span>
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> Massage</span>
+                  </div>
+                  <div class="v-card__footer">
+                    <div>
+                      <div class="v-card__price">$95<span class="v-card__price-unit">/hr</span></div>
+                      <div class="v-card__price-daily">$600/day</div>
+                    </div>
+                    <div class="v-card__rating"><span class="v-card__rating-star"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span></span> 4.9 <span class="v-card__rating-count">(156)</span></div>
+                  </div>
+                  <div class="v-card__cta">
+                    <a href="car-details.html?id=7" class="btn btn--outline btn--sm">Details</a>
+                    <a href="booking.html" class="btn btn--primary btn--sm">Rent Now</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 8 -->
+              <div class="v-card scroll-reveal" style="--delay:.1s">
+                <div class="v-card__image">
+                  <img src="assets/images/cars/sedan.png" alt="Toyota Camry Hybrid XSE sedan" class="v-card__car-img" loading="lazy">
+                  <div class="v-card__badges">
+                    <span class="badge badge--available">Available</span>
+                    <span class="badge badge--electric">Hybrid</span>
+                  </div>
+                  <div class="v-card__actions-overlay">
+                    <button class="v-card__icon-btn" aria-label="Favorite">♡</button>
+                    <button class="v-card__icon-btn" aria-label="Compare"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></button>
+                  </div>
+                  <div class="v-card__brand-logo">T</div>
+                </div>
+                <div class="v-card__body">
+                  <div class="v-card__brand">Toyota</div>
+                  <h3 class="v-card__name">Camry Hybrid XSE</h3>
+                  <p class="v-card__desc">Fuel-efficient hybrid with sporty styling, advanced safety, and premium comfort.</p>
+                  <div class="v-card__specs">
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-shield-check"/></svg></span></span> Hybrid</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></span> Auto</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-user"/></svg></span></span> 5</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-gauge"/></svg></span></span> 15K mi</span>
+                  </div>
+                  <div class="v-card__features">
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> AC</span>
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> GPS</span>
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> Bluetooth</span>
+                  </div>
+                  <div class="v-card__footer">
+                    <div>
+                      <div class="v-card__price">$35<span class="v-card__price-unit">/hr</span></div>
+                      <div class="v-card__price-daily">$220/day</div>
+                    </div>
+                    <div class="v-card__rating"><span class="v-card__rating-star"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span></span> 4.6 <span class="v-card__rating-count">(89)</span></div>
+                  </div>
+                  <div class="v-card__cta">
+                    <a href="car-details.html?id=8" class="btn btn--outline btn--sm">Details</a>
+                    <a href="booking.html" class="btn btn--primary btn--sm">Rent Now</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 9 -->
+              <div class="v-card scroll-reveal" style="--delay:.2s">
+                <div class="v-card__image">
+                  <img src="assets/images/cars/sports.png" alt="Audi R8 V10 Plus sports car" class="v-card__car-img" loading="lazy">
+                  <div class="v-card__badges">
+                    <span class="badge badge--available">Available</span>
+                    <span class="badge badge--luxury">Best Seller</span>
+                  </div>
+                  <div class="v-card__actions-overlay">
+                    <button class="v-card__icon-btn" aria-label="Favorite">♡</button>
+                    <button class="v-card__icon-btn" aria-label="Compare"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></button>
+                  </div>
+                  <div class="v-card__brand-logo">A</div>
+                </div>
+                <div class="v-card__body">
+                  <div class="v-card__brand">Audi</div>
+                  <h3 class="v-card__name">R8 V10 Plus</h3>
+                  <p class="v-card__desc">Naturally aspirated V10 supercar with Quattro AWD and carbon ceramic brakes.</p>
+                  <div class="v-card__specs">
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-fuel"/></svg></span></span> Petrol</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></span> Auto</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-user"/></svg></span></span> 2</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-gauge"/></svg></span></span> 4K mi</span>
+                  </div>
+                  <div class="v-card__features">
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> AC</span>
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> GPS</span>
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> Launch Ctrl</span>
+                  </div>
+                  <div class="v-card__footer">
+                    <div>
+                      <div class="v-card__price">$110<span class="v-card__price-unit">/hr</span></div>
+                      <div class="v-card__price-daily">$700/day</div>
+                    </div>
+                    <div class="v-card__rating"><span class="v-card__rating-star"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span></span> 5.0 <span class="v-card__rating-count">(67)</span></div>
+                  </div>
+                  <div class="v-card__cta">
+                    <a href="car-details.html?id=9" class="btn btn--outline btn--sm">Details</a>
+                    <a href="booking.html" class="btn btn--primary btn--sm">Rent Now</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 10 -->
+              <div class="v-card scroll-reveal">
+                <div class="v-card__image">
+                  <img src="assets/images/cars/suv.png" alt="Honda CR-V Touring family SUV" class="v-card__car-img" loading="lazy">
+                  <div class="v-card__badges">
+                    <span class="badge badge--available">Available</span>
+                  </div>
+                  <div class="v-card__actions-overlay">
+                    <button class="v-card__icon-btn" aria-label="Favorite">♡</button>
+                    <button class="v-card__icon-btn" aria-label="Compare"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></button>
+                  </div>
+                  <div class="v-card__brand-logo">H</div>
+                </div>
+                <div class="v-card__body">
+                  <div class="v-card__brand">Honda</div>
+                  <h3 class="v-card__name">CR-V Touring</h3>
+                  <p class="v-card__desc">Versatile family SUV with Honda Sensing suite, spacious cabin, and AWD.</p>
+                  <div class="v-card__specs">
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-fuel"/></svg></span></span> Petrol</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></span> Auto</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-user"/></svg></span></span> 5</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-gauge"/></svg></span></span> 18K mi</span>
+                  </div>
+                  <div class="v-card__features">
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> AC</span>
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> GPS</span>
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> Bluetooth</span>
+                  </div>
+                  <div class="v-card__footer">
+                    <div>
+                      <div class="v-card__price">$40<span class="v-card__price-unit">/hr</span></div>
+                      <div class="v-card__price-daily">$260/day</div>
+                    </div>
+                    <div class="v-card__rating"><span class="v-card__rating-star"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span></span> 4.5 <span class="v-card__rating-count">(112)</span></div>
+                  </div>
+                  <div class="v-card__cta">
+                    <a href="car-details.html?id=10" class="btn btn--outline btn--sm">Details</a>
+                    <a href="booking.html" class="btn btn--primary btn--sm">Rent Now</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 11 -->
+              <div class="v-card scroll-reveal" style="--delay:.1s">
+                <div class="v-card__image">
+                  <img src="assets/images/cars/suv.png" alt="Hyundai Tucson Limited compact SUV" class="v-card__car-img" loading="lazy">
+                  <div class="v-card__badges">
+                    <span class="badge badge--available">Available</span>
+                    <span class="badge badge--new">New Arrival</span>
+                  </div>
+                  <div class="v-card__actions-overlay">
+                    <button class="v-card__icon-btn" aria-label="Favorite">♡</button>
+                    <button class="v-card__icon-btn" aria-label="Compare"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></button>
+                  </div>
+                  <div class="v-card__brand-logo">HY</div>
+                </div>
+                <div class="v-card__body">
+                  <div class="v-card__brand">Hyundai</div>
+                  <h3 class="v-card__name">Tucson Limited</h3>
+                  <p class="v-card__desc">Modern compact SUV with striking design, Bose audio, and panoramic sunroof.</p>
+                  <div class="v-card__specs">
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-fuel"/></svg></span></span> Petrol</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></span> Auto</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-user"/></svg></span></span> 5</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-gauge"/></svg></span></span> 7K mi</span>
+                  </div>
+                  <div class="v-card__features">
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> AC</span>
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> GPS</span>
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> Sunroof</span>
+                  </div>
+                  <div class="v-card__footer">
+                    <div>
+                      <div class="v-card__price">$38<span class="v-card__price-unit">/hr</span></div>
+                      <div class="v-card__price-daily">$240/day</div>
+                    </div>
+                    <div class="v-card__rating"><span class="v-card__rating-star"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span></span> 4.6 <span class="v-card__rating-count">(58)</span></div>
+                  </div>
+                  <div class="v-card__cta">
+                    <a href="car-details.html?id=11" class="btn btn--outline btn--sm">Details</a>
+                    <a href="booking.html" class="btn btn--primary btn--sm">Rent Now</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 12 -->
+              <div class="v-card scroll-reveal" style="--delay:.2s">
+                <div class="v-card__image">
+                  <img src="assets/images/cars/electric.png" alt="Ford Mustang Mach-E GT electric SUV" class="v-card__car-img" loading="lazy">
+                  <div class="v-card__badges">
+                    <span class="badge badge--available">Available</span>
+                    <span class="badge badge--electric">Electric</span>
+                  </div>
+                  <div class="v-card__actions-overlay">
+                    <button class="v-card__icon-btn" aria-label="Favorite">♡</button>
+                    <button class="v-card__icon-btn" aria-label="Compare"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></button>
+                  </div>
+                  <div class="v-card__brand-logo">F</div>
+                </div>
+                <div class="v-card__body">
+                  <div class="v-card__brand">Ford</div>
+                  <h3 class="v-card__name">Mustang Mach-E GT</h3>
+                  <p class="v-card__desc">All-electric performance SUV with 480 hp, MagneRide suspension, and 270-mi range.</p>
+                  <div class="v-card__specs">
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-zap"/></svg></span></span> Electric</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-settings"/></svg></span></span> Auto</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-user"/></svg></span></span> 5</span>
+                    <span class="v-card__spec"><span class="v-card__spec-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-gauge"/></svg></span></span> 4K mi</span>
+                  </div>
+                  <div class="v-card__features">
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> AC</span>
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> GPS</span>
+                    <span class="v-card__feature"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check"/></svg></span> BlueCruise</span>
+                  </div>
+                  <div class="v-card__footer">
+                    <div>
+                      <div class="v-card__price">$60<span class="v-card__price-unit">/hr</span></div>
+                      <div class="v-card__price-daily">$380/day</div>
+                    </div>
+                    <div class="v-card__rating"><span class="v-card__rating-star"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span></span> 4.7 <span class="v-card__rating-count">(45)</span></div>
+                  </div>
+                  <div class="v-card__cta">
+                    <a href="car-details.html?id=12" class="btn btn--outline btn--sm">Details</a>
+                    <a href="booking.html" class="btn btn--primary btn--sm">Rent Now</a>
+                  </div>
+                </div>
+              </div>
+
+            </div><!-- /vehicle-grid -->
+
+            <!-- ===== PAGINATION ===== -->
+            <nav class="pagination scroll-reveal" aria-label="Pagination">
+              <a href="#" class="pagination__btn disabled" aria-label="Previous page">‹</a>
+              <a href="#" class="pagination__btn active">1</a>
+              <a href="#" class="pagination__btn">2</a>
+              <a href="#" class="pagination__btn">3</a>
+              <a href="#" class="pagination__btn" aria-label="Next page">›</a>
+            </nav>
+
+          </div><!-- /main content area -->
+        </div><!-- /cars-layout -->
+      </div>
+    </section>
+
+    <!-- ============================================================
+         WHY RENT FROM US
+         ============================================================ -->
+    <section class="section" id="why-rent">
+      <div class="container">
+        <div class="section-header scroll-reveal">
+          <div class="section-header__badge">Why JET CABS</div>
+          <h2 class="section-header__title">Why Rent From Us</h2>
+          <p class="section-header__subtitle">Experience the JET CABS difference with our commitment to quality, transparency, and service.</p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card scroll-reveal">
+            <div class="feature-card__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-dollar"/></svg></span></div>
+            <h3 class="feature-card__title">Affordable Pricing</h3>
+            <p class="feature-card__text">Competitive rates with no hidden fees or surprise charges.</p>
+          </div>
+          <div class="feature-card scroll-reveal" style="--delay:.1s">
+            <div class="feature-card__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-check-circle"/></svg></span></div>
+            <h3 class="feature-card__title">Verified Vehicles</h3>
+            <p class="feature-card__text">Every car is inspected and certified for safety and quality.</p>
+          </div>
+          <div class="feature-card scroll-reveal" style="--delay:.2s">
+            <div class="feature-card__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-clock"/></svg></span></div>
+            <h3 class="feature-card__title">24/7 Support</h3>
+            <p class="feature-card__text">Round-the-clock customer support whenever you need us.</p>
+          </div>
+          <div class="feature-card scroll-reveal" style="--delay:.3s">
+            <div class="feature-card__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-shield-check"/></svg></span></div>
+            <h3 class="feature-card__title">Roadside Assist</h3>
+            <p class="feature-card__text">Comprehensive roadside assistance for complete peace of mind.</p>
+          </div>
+          <div class="feature-card scroll-reveal">
+            <div class="feature-card__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-calendar"/></svg></span></div>
+            <h3 class="feature-card__title">Flexible Duration</h3>
+            <p class="feature-card__text">Hourly, daily, or long-term rentals to match your schedule.</p>
+          </div>
+          <div class="feature-card scroll-reveal" style="--delay:.1s">
+            <div class="feature-card__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-zap"/></svg></span></div>
+            <h3 class="feature-card__title">Instant Booking</h3>
+            <p class="feature-card__text">Quick and hassle-free booking in just a few clicks.</p>
+          </div>
+          <div class="feature-card scroll-reveal" style="--delay:.2s">
+            <div class="feature-card__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-wrench"/></svg></span></div>
+            <h3 class="feature-card__title">Pro Maintenance</h3>
+            <p class="feature-card__text">Regular professional servicing for peak performance.</p>
+          </div>
+          <div class="feature-card scroll-reveal" style="--delay:.3s">
+            <div class="feature-card__icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span></div>
+            <h3 class="feature-card__title">Transparent Pricing</h3>
+            <p class="feature-card__text">What you see is what you pay. Zero hidden charges.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CUSTOMER REVIEWS
+         ============================================================ -->
+    <section class="section" id="reviews">
+      <div class="container">
+        <div class="section-header scroll-reveal">
+          <div class="section-header__badge">Reviews</div>
+          <h2 class="section-header__title">What Our Renters Say</h2>
+          <p class="section-header__subtitle">Real experiences from real customers who chose JET CABS.</p>
+        </div>
+        <div class="mini-reviews">
+          <div class="mini-review scroll-reveal">
+            <div class="mini-review__header">
+              <div class="mini-review__avatar"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-user"/></svg></span></div>
+              <div>
+                <div class="mini-review__name">Michael Thompson</div>
+                <div class="mini-review__stars"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span></div>
+              </div>
+            </div>
+            <p class="mini-review__text">"The BMW X7 was in pristine condition. Seamless pickup and drop-off. JET CABS has set a new standard for car rentals."</p>
+          </div>
+          <div class="mini-review scroll-reveal" style="--delay:.1s">
+            <div class="mini-review__header">
+              <div class="mini-review__avatar"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-user"/></svg></span></div>
+              <div>
+                <div class="mini-review__name">Emily Rodriguez</div>
+                <div class="mini-review__stars"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span></div>
+              </div>
+            </div>
+            <p class="mini-review__text">"Rented a Tesla Model S for a week. Amazing experience — the car was spotless and customer service was exceptional throughout."</p>
+          </div>
+          <div class="mini-review scroll-reveal" style="--delay:.2s">
+            <div class="mini-review__header">
+              <div class="mini-review__avatar"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-user"/></svg></span></div>
+              <div>
+                <div class="mini-review__name">David Park</div>
+                <div class="mini-review__stars"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-star"/></svg></span></div>
+              </div>
+            </div>
+            <p class="mini-review__text">"Best prices I've found for luxury cars. The Porsche 911 was a dream to drive. Will definitely book again for my next trip."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CALL TO ACTION
+         ============================================================ -->
+    <section class="cars-cta" id="cars-cta">
+      <div class="cars-cta__pattern"></div>
+      <div class="container">
+        <h2 class="cars-cta__title scroll-reveal">Can't Find What You're Looking For?</h2>
+        <p class="cars-cta__text scroll-reveal">Our fleet is constantly growing. Contact our team for personalized assistance or browse our premium collection.</p>
+        <div class="cars-cta__actions scroll-reveal">
+          <a href="index.html#categories" class="btn btn--accent btn--lg">Browse Premium Fleet</a>
+          <a href="contact.html" class="btn btn--ghost btn--lg">Contact Support</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+    <!-- FOOTER -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <!-- COLUMN 1 -->
+        <div class="footer__brand">
+          <a href="index.html" class="footer__logo">
+            <div class="footer__logo-text"><span>JET</span> CABS</div>
+          </a>
+          <p class="footer__description">Your premier destination for luxury car rentals. We deliver top-tier vehicles with white-glove service for an unforgettable driving experience.</p>
+                    <div class="footer__socials">
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="Visit JET CABS on Facebook">
+              <svg class="footer__social-icon--facebook" viewBox="0 0 320 512" aria-hidden="true" focusable="false"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/></svg>
+            </a>
+            <a href="https://www.pinterest.com/" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="Visit JET CABS on Pinterest">
+              <svg class="footer__social-icon--pinterest" viewBox="-1.5 -1.5 27 27" aria-hidden="true" focusable="false"><path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/></svg>
+            </a>
+            <a href="https://x.com/" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="Visit JET CABS on X">
+              <svg class="footer__social-icon--x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="Visit JET CABS on LinkedIn">
+              <svg class="footer__social-icon--linkedin" viewBox="-1.5 -1.5 27 27" aria-hidden="true" focusable="false"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="Visit JET CABS on YouTube">
+              <svg class="footer__social-icon--youtube" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.518 3.545 12 3.545 12 3.545s-7.518 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.87.508 9.388.508 9.388.508s7.518 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- COLUMN 2 -->
+        <div>
+          <h4 class="footer__heading">Company</h4>
+          <ul class="footer__list">
+            <li><a href="index.html" class="footer__link">Home</a></li>
+            <li><a href="about.html" class="footer__link">About</a></li>
+            <li><a href="cars.html" class="footer__link">Cars</a></li>
+            <li><a href="services.html" class="footer__link">Services</a></li>
+            <li><a href="contact.html" class="footer__link">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- COLUMN 3 -->
+        <div>
+          <h4 class="footer__heading">Contact</h4>
+          <div class="footer__contact-item">
+            <div class="footer__contact-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-map-pin"/></svg></span></div>
+            <div><div class="footer__contact-label">Address</div><div class="footer__contact-value">123 Luxury Drive, Suite 100<br>New York, NY 10001</div></div>
+          </div>
+          <div class="footer__contact-item">
+            <div class="footer__contact-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-phone"/></svg></span></div>
+            <div><div class="footer__contact-label">Phone</div><div class="footer__contact-value">+1 (555) 123-4567</div></div>
+          </div>
+          <div class="footer__contact-item">
+            <div class="footer__contact-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-mail"/></svg></span></div>
+            <div><div class="footer__contact-label">Email</div><div class="footer__contact-value">hello@jetcabs.com</div></div>
+          </div>
+          <div class="footer__contact-item">
+            <div class="footer__contact-icon"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-clock"/></svg></span></div>
+            <div><div class="footer__contact-label">Business Hours</div><div class="footer__contact-value">Mon–Sat: 8AM – 8PM</div></div>
+          </div>
+        </div>
+
+        <!-- COLUMN 4 -->
+        <div class="footer__newsletter-column">
+          <h4 class="footer__heading">Stay in the Fast Lane</h4>
+          <p class="footer__description">Subscribe for exclusive deals, new arrivals, and luxury driving tips.</p>
+          <form class="footer__newsletter-form" id="newsletter-form">
+            <input type="email" class="footer__newsletter-input" placeholder="Enter your email address" aria-label="Newsletter email" required>
+            <button type="submit" class="btn btn--primary btn--sm">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <div class="footer__bottom-brand"><p>&copy; 2026 JET CABS. Crafted with <span class="footer__heart"><span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-heart"/></svg></span></span> for luxury driving.</p></div>
+        <div class="footer__bottom-links">
+          <a href="privacy-policy.html" class="footer__bottom-link">Privacy Policy</a>
+          <a href="terms-and-conditions.html" class="footer__bottom-link">Terms & Conditions</a>
+          <a href="faq.html" class="footer__bottom-link">FAQ</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+  <div class="toast-container" id="toast-container"></div>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/validation.js"></script>
+  <script src="assets/js/animation.js"></script>
+
+  <!-- Cars page interactions -->
+  <!-- Cars page interactions -->
+  <script>
+  (function() {
+    'use strict';
+
+    // --- 1. Vehicle Data Source ---
+    // We parse all 12 cards directly from the DOM on load
+    const gridContainer = document.getElementById('vehicle-grid');
+    if (!gridContainer) return;
+
+    const cardElements = Array.from(gridContainer.querySelectorAll('.v-card'));
+    
+    const vehicles = cardElements.map((el, index) => {
+      const brand = el.querySelector('.v-card__brand').textContent.trim();
+      const name = el.querySelector('.v-card__name').textContent.trim();
+      const desc = el.querySelector('.v-card__desc').textContent.trim();
+      
+      // Parse specs
+      const specs = Array.from(el.querySelectorAll('.v-card__spec')).map(spec => spec.textContent.trim());
+      const fuel = specs[0] || '';
+      const transmission = specs[1] || '';
+      const seats = parseInt(specs[2]) || 5;
+      
+      // Parse features
+      const features = Array.from(el.querySelectorAll('.v-card__feature')).map(f => f.textContent.trim().toLowerCase());
+      
+      // Parse price
+      const priceText = el.querySelector('.v-card__price').textContent;
+      const priceHourly = parseFloat(priceText.replace(/[^0-9.]/g, '')) || 0;
+      
+      const priceDailyText = el.querySelector('.v-card__price-daily').textContent;
+      const priceDaily = parseFloat(priceDailyText.replace(/[^0-9.]/g, '')) || 0;
+      
+      // Parse rating
+      const ratingText = el.querySelector('.v-card__rating').textContent;
+      const rating = parseFloat(ratingText) || 4.5;
+      
+      // Check if available
+      const isAvailable = el.querySelector('.badge--available') !== null;
+      const isFeatured = el.querySelector('.badge--popular') !== null;
+
+      // Category
+      let category = 'Luxury';
+      const nameLower = name.toLowerCase();
+      const brandLower = brand.toLowerCase();
+      
+      if (el.querySelector('.badge--suv') || nameLower.includes('x7') || nameLower.includes('cr-v') || nameLower.includes('tucson') || brandLower.includes('rover')) {
+        category = 'SUV';
+      } else if (el.querySelector('.badge--electric') || nameLower.includes('plaid') || nameLower.includes('mach-e')) {
+        category = 'Electric';
+      } else if (el.querySelector('.badge--luxury') || nameLower.includes('911') || nameLower.includes('r8') || nameLower.includes('gt 63') || nameLower.includes('sports')) {
+        category = 'Sports';
+      } else if (el.querySelector('.badge--sedan') || nameLower.includes('camry') || nameLower.includes('a8 l')) {
+        category = 'Sedan';
+      } else if (el.querySelector('.badge--premium') || nameLower.includes('s580') || nameLower.includes('s-class')) {
+        category = 'Luxury';
+      }
+      
+      el.setAttribute('data-index', index);
+      
+      return {
+        index,
+        brand,
+        name,
+        desc,
+        category,
+        fuel,
+        transmission,
+        seats,
+        features,
+        priceHourly,
+        priceDaily,
+        rating,
+        isAvailable,
+        isFeatured,
+        element: el
+      };
+    });
+
+    // Set Rent Now links dynamically based on the parsed indexes
+    cardElements.forEach((el, index) => {
+      const rentBtn = el.querySelector('.v-card__cta a.btn--primary');
+      if (rentBtn) {
+        rentBtn.setAttribute('href', `booking.html?flow=prebooking&car=${index + 1}`);
+      }
+    });
+
+    const promoBanner = gridContainer.querySelector('.promo-banner');
+
+    // --- 2. State Management ---
+    const state = {
+      search: '',
+      brand: '',
+      category: '',
+      selectedCategories: [],
+      selectedBrands: [],
+      selectedFuels: [],
+      selectedTransmissions: [],
+      selectedSeats: [],
+      selectedFeatures: [],
+      priceMin: 0,
+      priceMax: 500,
+      availability: null,
+      rating: 0,
+      sortBy: 'Newest',
+      viewMode: localStorage.getItem('viewMode') || 'grid',
+      currentPage: 1,
+      itemsPerPage: 4
+    };
+
+    // --- 3. DOM Elements Cache ---
+    const searchInput = document.getElementById('search-keyword');
+    const brandSelect = document.getElementById('search-brand');
+    const categorySelect = document.getElementById('search-category');
+    const sortSelect = document.getElementById('sort-by');
+    const filterSidebar = document.getElementById('filter-sidebar');
+    const filterToggleBtn = document.getElementById('filter-toggle');
+    const emptyState = document.getElementById('cars-empty');
+    const resultCounter = document.querySelector('.cars-toolbar__count');
+    const gridViewBtn = document.querySelector('.view-btn[aria-label="Grid view"]');
+    const listViewBtn = document.querySelector('.view-btn[aria-label="List view"]');
+    const paginationContainer = document.querySelector('.pagination');
+
+    // --- 4. Filtering & Sorting Logic ---
+    let renderTimeout = null;
+    function applyFilterAndSort() {
+      // Show loading skeletons
+      const skeletonGrid = document.getElementById('loading-skeleton');
+      if (skeletonGrid && gridContainer) {
+        skeletonGrid.style.display = 'grid';
+        gridContainer.style.display = 'none';
+        if (paginationContainer) paginationContainer.style.display = 'none';
+      }
+
+      if (renderTimeout) clearTimeout(renderTimeout);
+
+      renderTimeout = setTimeout(() => {
+        if (skeletonGrid && gridContainer) {
+          skeletonGrid.style.display = 'none';
+          gridContainer.style.display = 'grid';
+        }
+
+        let results = [...vehicles];
+
+        // Text search
+        if (state.search) {
+          const q = state.search.toLowerCase();
+          results = results.filter(v => 
+            v.name.toLowerCase().includes(q) || 
+            v.brand.toLowerCase().includes(q) || 
+            v.category.toLowerCase().includes(q) || 
+            v.fuel.toLowerCase().includes(q) || 
+            v.transmission.toLowerCase().includes(q) || 
+            v.desc.toLowerCase().includes(q)
+          );
+        }
+
+        // Top Brand dropdown
+        if (state.brand) {
+          results = results.filter(v => v.brand.toLowerCase() === state.brand.toLowerCase());
+        }
+
+        // Top Category dropdown
+        if (state.category) {
+          results = results.filter(v => v.category.toLowerCase() === state.category.toLowerCase());
+        }
+
+        // Sidebar Categories
+        if (state.selectedCategories.length > 0) {
+          results = results.filter(v => state.selectedCategories.some(c => v.category.toLowerCase() === c.toLowerCase()));
+        }
+
+        // Sidebar Brands
+        if (state.selectedBrands.length > 0) {
+          results = results.filter(v => state.selectedBrands.some(b => {
+            if (b.toLowerCase() === 'mercedes') return v.brand.toLowerCase().includes('mercedes');
+            return v.brand.toLowerCase() === b.toLowerCase();
+          }));
+        }
+
+        // Sidebar Fuels
+        if (state.selectedFuels.length > 0) {
+          results = results.filter(v => state.selectedFuels.some(f => v.fuel.toLowerCase() === f.toLowerCase()));
+        }
+
+        // Sidebar Transmissions
+        if (state.selectedTransmissions.length > 0) {
+          results = results.filter(v => state.selectedTransmissions.some(t => {
+            if (t.toLowerCase() === 'automatic') return v.transmission.toLowerCase().includes('auto');
+            if (t.toLowerCase() === 'manual') return v.transmission.toLowerCase().includes('manual');
+            return v.transmission.toLowerCase() === t.toLowerCase();
+          }));
+        }
+
+        // Sidebar Seats
+        if (state.selectedSeats.length > 0) {
+          results = results.filter(v => state.selectedSeats.some(s => v.seats === parseInt(s)));
+        }
+
+        // Sidebar Features
+        if (state.selectedFeatures.length > 0) {
+          results = results.filter(v => state.selectedFeatures.every(f => v.features.includes(f.toLowerCase())));
+        }
+
+        // Price Range (Min & Max)
+        results = results.filter(v => v.priceHourly >= state.priceMin && v.priceHourly <= state.priceMax);
+
+        // Sidebar Availability
+        if (state.availability) {
+          if (state.availability === 'available') {
+            results = results.filter(v => v.isAvailable);
+          } else if (state.availability === 'featured') {
+            results = results.filter(v => v.isFeatured);
+          }
+        }
+
+        // Sidebar Ratings
+        if (state.rating > 0) {
+          results = results.filter(v => v.rating >= state.rating);
+        }
+
+        // Sorting
+        if (state.sortBy === 'Price Low → High') {
+          results.sort((a, b) => a.priceHourly - b.priceHourly);
+        } else if (state.sortBy === 'Price High → Low') {
+          results.sort((a, b) => b.priceHourly - a.priceHourly);
+        } else if (state.sortBy === 'Highest Rated') {
+          results.sort((a, b) => b.rating - a.rating);
+        } else if (state.sortBy === 'Most Popular') {
+          results.sort((a, b) => b.rating - a.rating);
+        } else if (state.sortBy === 'Alphabetical') {
+          results.sort((a, b) => a.name.localeCompare(b.name));
+        } else {
+          results.sort((a, b) => a.index - b.index);
+        }
+
+        render(results);
+      }, 250);
+    }
+
+    // --- 5. Render Logic ---
+    function render(filteredVehicles) {
+      const totalCount = vehicles.length;
+      const filteredCount = filteredVehicles.length;
+
+      // Update Result Counter
+      if (resultCounter) {
+        resultCounter.innerHTML = `Showing <span>${filteredCount}</span> of ${totalCount} vehicles`;
+      }
+
+      // Handle Empty State
+      if (filteredCount === 0) {
+        if (emptyState) emptyState.classList.add('visible');
+        gridContainer.innerHTML = '';
+        if (paginationContainer) paginationContainer.style.display = 'none';
+        return;
+      } else {
+        if (emptyState) emptyState.classList.remove('visible');
+        if (paginationContainer) paginationContainer.style.display = 'flex';
+      }
+
+      const totalPages = Math.ceil(filteredCount / state.itemsPerPage);
+      if (state.currentPage > totalPages) state.currentPage = totalPages || 1;
+
+      const startIndex = (state.currentPage - 1) * state.itemsPerPage;
+      const endIndex = Math.min(startIndex + state.itemsPerPage, filteredCount);
+      const paginatedVehicles = filteredVehicles.slice(startIndex, endIndex);
+
+      gridContainer.innerHTML = '';
+
+      if (state.viewMode === 'list') {
+        gridContainer.classList.add('vehicle-grid--list');
+      } else {
+        gridContainer.classList.remove('vehicle-grid--list');
+      }
+
+      paginatedVehicles.forEach(v => {
+        gridContainer.appendChild(v.element);
+      });
+
+      // Inject Promo Banner on Page 1 after first 4 cards
+      if (state.viewMode === 'grid' && state.currentPage === 1 && promoBanner && filteredCount >= 4) {
+        gridContainer.appendChild(promoBanner);
+      }
+
+      renderPagination(totalPages);
+    }
+
+    function renderPagination(totalPages) {
+      if (!paginationContainer) return;
+      
+      if (totalPages <= 1) {
+        paginationContainer.style.display = 'none';
+        return;
+      }
+      paginationContainer.style.display = 'flex';
+      paginationContainer.innerHTML = '';
+
+      const prevBtn = document.createElement('a');
+      prevBtn.href = '#';
+      prevBtn.className = `pagination__btn ${state.currentPage === 1 ? 'disabled' : ''}`;
+      prevBtn.innerHTML = '‹';
+      prevBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (state.currentPage > 1) {
+          state.currentPage--;
+          applyFilterAndSort();
+          window.scrollTo({ top: 400, behavior: 'smooth' });
+        }
+      });
+      paginationContainer.appendChild(prevBtn);
+
+      for (let i = 1; i <= totalPages; i++) {
+        const pageBtn = document.createElement('a');
+        pageBtn.href = '#';
+        pageBtn.className = `pagination__btn ${state.currentPage === i ? 'active' : ''}`;
+        pageBtn.textContent = i;
+        pageBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          state.currentPage = i;
+          applyFilterAndSort();
+          window.scrollTo({ top: 400, behavior: 'smooth' });
+        });
+        paginationContainer.appendChild(pageBtn);
+      }
+
+      const nextBtn = document.createElement('a');
+      nextBtn.href = '#';
+      nextBtn.className = `pagination__btn ${state.currentPage === totalPages ? 'disabled' : ''}`;
+      nextBtn.innerHTML = '›';
+      nextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (state.currentPage < totalPages) {
+          state.currentPage++;
+          applyFilterAndSort();
+          window.scrollTo({ top: 400, behavior: 'smooth' });
+        }
+      });
+      paginationContainer.appendChild(nextBtn);
+    }
+
+    // --- 6. Event Listeners ---
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        state.search = e.target.value;
+        state.currentPage = 1;
+        applyFilterAndSort();
+      });
+    }
+
+    if (brandSelect) {
+      brandSelect.addEventListener('change', (e) => {
+        state.brand = e.target.value;
+        state.currentPage = 1;
+        applyFilterAndSort();
+      });
+    }
+
+    if (categorySelect) {
+      categorySelect.addEventListener('change', (e) => {
+        state.category = e.target.value;
+        state.currentPage = 1;
+        applyFilterAndSort();
+      });
+    }
+
+    if (sortSelect) {
+      sortSelect.addEventListener('change', (e) => {
+        state.sortBy = e.target.value;
+        applyFilterAndSort();
+      });
+    }
+
+    if (gridViewBtn && listViewBtn) {
+      gridViewBtn.addEventListener('click', () => {
+        gridViewBtn.classList.add('active');
+        listViewBtn.classList.remove('active');
+        state.viewMode = 'grid';
+        localStorage.setItem('viewMode', 'grid');
+        applyFilterAndSort();
+      });
+
+      listViewBtn.addEventListener('click', () => {
+        listViewBtn.classList.add('active');
+        gridViewBtn.classList.remove('active');
+        state.viewMode = 'list';
+        localStorage.setItem('viewMode', 'list');
+        applyFilterAndSort();
+      });
+
+      if (state.viewMode === 'list') {
+        listViewBtn.classList.add('active');
+        gridViewBtn.classList.remove('active');
+      } else {
+        gridViewBtn.classList.add('active');
+        listViewBtn.classList.remove('active');
+      }
+    }
+
+    if (filterToggleBtn && filterSidebar) {
+      filterToggleBtn.addEventListener('click', () => {
+        const isShown = filterSidebar.classList.toggle('show');
+        filterToggleBtn.innerHTML = isShown ? 
+          '<span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-close"/></svg></span> Hide Filters' : 
+          '<span class="icon icon--sm"><svg><use href="assets/icons/sprite.svg#icon-wrench"/></svg></span> Show Filters';
+      });
+    }
+
+    document.querySelectorAll('.filter-group__title').forEach(title => {
+      title.addEventListener('click', () => {
+        title.closest('.filter-group').classList.toggle('collapsed');
+      });
+    });
+
+    const clearFiltersBtn = document.querySelector('.filter-sidebar__clear');
+    const resetBtn = document.querySelector('.cars-search__actions .btn--ghost');
+    const emptyResetBtn = document.querySelector('.cars-empty .btn');
+
+    function resetAllFilters() {
+      state.search = '';
+      state.brand = '';
+      state.category = '';
+      state.selectedCategories = [];
+      state.selectedBrands = [];
+      state.selectedFuels = [];
+      state.selectedTransmissions = [];
+      state.selectedSeats = [];
+      state.selectedFeatures = [];
+      state.priceMin = 0;
+      state.priceMax = 500;
+      state.availability = null;
+      state.rating = 0;
+      state.sortBy = 'Newest';
+      state.currentPage = 1;
+
+      if (searchInput) searchInput.value = '';
+      if (brandSelect) brandSelect.value = '';
+      if (categorySelect) categorySelect.value = '';
+      if (sortSelect) sortSelect.value = 'Newest';
+      
+      document.querySelectorAll('.filter-sidebar input[type="checkbox"]').forEach(cb => {
+        cb.checked = false;
+      });
+
+      document.querySelectorAll('.filter-sidebar input[type="radio"]').forEach(rad => {
+        rad.checked = false;
+      });
+
+      const slider = document.querySelector('.filter-range__slider');
+      const minInput = document.querySelector('.filter-range__inputs div:nth-child(1) input');
+      const maxInput = document.querySelector('.filter-range__inputs div:nth-child(2) input');
+      if (slider) slider.value = 500;
+      if (minInput) minInput.value = 0;
+      if (maxInput) maxInput.value = 500;
+
+      applyFilterAndSort();
+    }
+
+    if (clearFiltersBtn) clearFiltersBtn.addEventListener('click', (e) => { e.preventDefault(); resetAllFilters(); });
+    if (resetBtn) resetBtn.addEventListener('click', (e) => { e.preventDefault(); resetAllFilters(); });
+    if (emptyResetBtn) emptyResetBtn.addEventListener('click', (e) => { e.preventDefault(); resetAllFilters(); });
+
+    filterSidebar.addEventListener('change', (e) => {
+      const target = e.target;
+      if (target.type === 'checkbox') {
+        const label = target.closest('.filter-checkbox');
+        if (!label) return;
+        const text = label.childNodes[1]?.textContent.trim() || label.textContent.trim();
+        const groupTitle = target.closest('.filter-group').querySelector('.filter-group__title').textContent.trim();
+
+        if (groupTitle.includes('Category') || groupTitle.includes('Explore')) {
+          updateFilterList(state.selectedCategories, text, target.checked);
+        } else if (groupTitle.includes('Brand')) {
+          updateFilterList(state.selectedBrands, text, target.checked);
+        } else if (groupTitle.includes('Fuel')) {
+          updateFilterList(state.selectedFuels, text, target.checked);
+        } else if (groupTitle.includes('Transmission')) {
+          updateFilterList(state.selectedTransmissions, text, target.checked);
+        } else if (groupTitle.includes('Seats')) {
+          updateFilterList(state.selectedSeats, text, target.checked);
+        } else if (groupTitle.includes('Availability')) {
+          if (text.includes('Available')) {
+            state.availability = target.checked ? 'available' : null;
+          } else if (text.includes('Featured')) {
+            state.availability = target.checked ? 'featured' : null;
+          }
+        } else if (groupTitle.includes('Features') || groupTitle.includes('Luxury')) {
+          const val = target.value;
+          updateFilterList(state.selectedFeatures, val, target.checked);
+        }
+      } else if (target.type === 'radio') {
+        const label = target.closest('.filter-rating__option');
+        if (!label) return;
+        const ratingText = label.querySelector('.filter-rating__text').textContent.trim();
+        state.rating = parseFloat(ratingText) || 0;
+      }
+      
+      state.currentPage = 1;
+      applyFilterAndSort();
+    });
+
+    function updateFilterList(list, value, isChecked) {
+      const cleanValue = value.replace(/\s*\d+\s*$/, '').trim();
+      const idx = list.indexOf(cleanValue);
+      if (isChecked) {
+        if (idx === -1) list.push(cleanValue);
+      } else {
+        if (idx > -1) list.splice(idx, 1);
+      }
+    }
+
+    const slider = document.querySelector('.filter-range__slider');
+    const minInput = document.querySelector('.filter-range__inputs div:nth-child(1) input');
+    const maxInput = document.querySelector('.filter-range__inputs div:nth-child(2) input');
+    if (slider && minInput && maxInput) {
+      slider.addEventListener('input', (e) => {
+        maxInput.value = e.target.value;
+        state.priceMax = parseFloat(e.target.value) || 500;
+        state.currentPage = 1;
+        applyFilterAndSort();
+      });
+      minInput.addEventListener('input', (e) => {
+        state.priceMin = parseFloat(e.target.value) || 0;
+        state.currentPage = 1;
+        applyFilterAndSort();
+      });
+      maxInput.addEventListener('input', (e) => {
+        slider.value = e.target.value;
+        state.priceMax = parseFloat(e.target.value) || 500;
+        state.currentPage = 1;
+        applyFilterAndSort();
+      });
+    }
+
+    // Image fallback handling for Cars page cards
+    const VEHICLE_PLACEHOLDER_SVG = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%239CA3AF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="background:%23F3F4F6;width:100%;height:100%;padding:20px;"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 1 13v3c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>`;
+    document.querySelectorAll('.v-card__car-img').forEach(img => {
+      img.addEventListener('error', function() {
+        this.src = VEHICLE_PLACEHOLDER_SVG;
+      });
+      if (img.complete && img.naturalWidth === 0) {
+        img.src = VEHICLE_PLACEHOLDER_SVG;
+      }
+    });
+
+    // --- NEW FIX FOR VERIFICATION ---
+    // Hide cars that are currently marked as "Unavailable (Rented)" in dummy localStorage
+    try {
+      const rentedCars = JSON.parse(localStorage.getItem('rentedCars') || '[]');
+      document.querySelectorAll('.v-card').forEach(card => {
+        const name = card.querySelector('.v-card__name')?.textContent.trim();
+        if (name && rentedCars.includes(name)) {
+          card.style.display = 'none';
+          card.remove(); // Remove to prevent affecting pagination counts
+        }
+      });
+    } catch (e) {}
+    // --------------------------------
+
+    applyFilterAndSort();
+
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1526 @@
+/* ============================================================
+   JET CABS — ADMIN DASHBOARD
+   Extends user-dashboard.css with admin-specific styles
+   ============================================================ */
+
+/* ============================================================
+   1. ADMIN-SPECIFIC SIDEBAR ACCENTS
+   ============================================================ */
+.db-sidebar--admin {
+  border-right-color: rgba(27,59,95,0.15);
+}
+
+.db-sidebar--admin .db-sidebar__header {
+  border-bottom-color: rgba(27,59,95,0.1);
+}
+
+/* Admin role indicator */
+.db-sidebar__role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px var(--space-2);
+  background: rgba(198,169,98,0.15);
+  color: var(--color-secondary);
+  font-size: 0.625rem;
+  font-weight: var(--fw-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: var(--radius-full);
+  margin-left: var(--space-2);
+  flex-shrink: 0;
+}
+
+.db-sidebar.collapsed .db-sidebar__role-badge {
+  display: none;
+}
+
+
+/* ============================================================
+   2. LUCIDE ICON SIZING SYSTEM
+   ============================================================ */
+
+/* Lucide icons rendered via <i data-lucide="..."> */
+.db-layout [data-lucide] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+/* Sidebar icons: 20px */
+.lucide-sidebar,
+.db-sidebar [data-lucide] {
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.75;
+}
+
+/* Card/stat icons: 18px */
+.lucide-card {
+  width: 18px;
+  height: 18px;
+  stroke-width: 1.75;
+}
+
+/* Button icons: 16px */
+.lucide-btn {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2;
+}
+
+/* Input icons: 18px */
+.lucide-input {
+  width: 18px;
+  height: 18px;
+  stroke-width: 1.75;
+}
+
+/* Stat card icon containers */
+.db-stat-card__icon [data-lucide] {
+  width: 22px;
+  height: 22px;
+  stroke-width: 1.75;
+}
+
+
+/* ============================================================
+   3. ADMIN STAT CARDS
+   ============================================================ */
+.db-stats-grid--admin {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+
+/* ============================================================
+   4. ADMIN QUICK ACTIONS BAR
+   ============================================================ */
+.db-quick-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-card);
+  border-radius: var(--db-card-radius);
+  border: var(--db-card-border);
+  box-shadow: var(--db-card-shadow);
+  margin-bottom: var(--db-section-gap);
+  flex-wrap: wrap;
+}
+
+.db-quick-actions__label {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-light-text);
+  flex-shrink: 0;
+}
+
+
+/* ============================================================
+   5. ADMIN DATA CARDS
+   ============================================================ */
+.db-data-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  background: var(--color-card);
+  border-radius: var(--db-card-radius);
+  border: var(--db-card-border);
+  transition: all var(--transition-smooth);
+  box-shadow: var(--db-card-shadow);
+}
+
+.db-data-card:hover {
+  box-shadow: var(--db-card-shadow-hover);
+  transform: translateY(-2px);
+}
+
+.db-data-card__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.db-data-card__icon [data-lucide],
+.db-data-card__icon .icon {
+  width: 22px;
+  height: 22px;
+}
+
+.db-data-card__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.db-data-card__label {
+  font-size: var(--fs-xs);
+  color: var(--color-light-text);
+  margin-bottom: 2px;
+}
+
+.db-data-card__value {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: var(--fw-bold);
+  color: var(--color-dark-text);
+}
+
+
+/* ============================================================
+   6. ADMIN SYSTEM STATUS INDICATOR
+   ============================================================ */
+.db-status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+}
+
+.db-status-indicator__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.db-status-indicator--online .db-status-indicator__dot {
+  background: var(--color-success);
+  box-shadow: 0 0 8px rgba(34,197,94,0.4);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+.db-status-indicator--offline .db-status-indicator__dot {
+  background: var(--color-danger);
+}
+
+.db-status-indicator--maintenance .db-status-indicator__dot {
+  background: var(--color-warning);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+
+/* ============================================================
+   7. RANGE INPUT STYLING (cross-browser)
+   ============================================================ */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: var(--color-border-light);
+  border-radius: var(--radius-full);
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-secondary);
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-secondary);
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: var(--radius-full);
+}
+
+input[type="range"]::-moz-range-track {
+  height: 6px;
+  background: var(--color-border-light);
+  border-radius: var(--radius-full);
+}
+
+
+/* ============================================================
+   8. SVG CHART PATHS & STYLES
+   ============================================================ */
+svg line {
+  stroke: var(--color-border-light);
+}
+
+svg text {
+  font-family: var(--font-body);
+}
+
+svg path {
+  transition: stroke-width 0.2s ease;
+}
+
+svg path:hover {
+  stroke-width: 4px;
+}
+
+svg circle {
+  transition: r 0.2s ease, fill 0.2s ease;
+}
+
+svg circle:hover {
+  r: 6px;
+}
+
+
+/* ============================================================
+   9. WIZARD MODAL & PHOTO UPLOADS
+   ============================================================ */
+.wiz-indicator {
+  transition: all var(--transition-base);
+}
+
+.wiz-indicator:hover .wiz-circle {
+  border-color: var(--color-secondary) !important;
+  box-shadow: 0 0 8px rgba(198,169,98,0.25);
+}
+
+.wiz-step-content {
+  animation: fadeIn 0.35s ease;
+}
+
+.wiz-uploaded-photo {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition-base), transform var(--transition-base);
+}
+
+.wiz-uploaded-photo:hover {
+  border-color: var(--color-secondary);
+  transform: scale(1.02);
+}
+
+.wiz-uploaded-photo button {
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.wiz-uploaded-photo button:hover {
+  background: var(--color-danger) !important;
+  transform: scale(1.1);
+}
+
+
+/* ============================================================
+   10. BOOKINGS & SUGGESTIONS
+   ============================================================ */
+.db-pb-card__alt-vehicle {
+  transition: border-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-base);
+}
+
+.db-pb-card__alt-vehicle:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-secondary) !important;
+  box-shadow: var(--shadow-sm);
+}
+
+.sug-step-content {
+  animation: fadeIn 0.35s ease;
+}
+
+
+/* ============================================================
+   11. SETTINGS & NOTIFICATIONS
+   ============================================================ */
+.settings-form-section {
+  animation: fadeIn 0.3s ease;
+}
+
+/* Toggle Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 22px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-border-light);
+  transition: .3s;
+  border-radius: 22px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .3s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: var(--color-secondary);
+}
+
+input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+/* Notification items */
+.db-notification-panel__item {
+  transition: background var(--transition-base), border-color var(--transition-base);
+}
+
+.db-notification-panel__item.unread {
+  background: rgba(27,59,95,0.03);
+  border-left: 3px solid var(--color-secondary) !important;
+}
+
+.db-notification-panel__item:hover {
+  background: var(--color-surface);
+  border-color: var(--color-secondary);
+}
+
+.db-notification-panel__item-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.db-notification-panel__item-icon--success { background: rgba(16,185,129,0.1); color: #10B981; }
+.db-notification-panel__item-icon--warning { background: rgba(245,158,11,0.1); color: #F59E0B; }
+.db-notification-panel__item-icon--danger { background: rgba(239,68,68,0.1); color: #EF4444; }
+.db-notification-panel__item-icon--info { background: rgba(59,130,246,0.1); color: #3B82F6; }
+
+
+/* ============================================================
+   12. EMPTY STATE
+   ============================================================ */
+.db-empty-state {
+  text-align: center;
+  padding: var(--space-12) var(--space-8);
+  color: var(--color-light-text);
+}
+
+.db-empty-state > .icon,
+.db-empty-state > [data-lucide] {
+  font-size: 3rem;
+  margin-bottom: var(--space-3);
+  color: var(--color-border-light);
+}
+
+.db-empty-state__icon {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto var(--space-5);
+  border-radius: var(--radius-full);
+  background: var(--color-accent-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-secondary);
+}
+
+.db-empty-state__icon svg,
+.db-empty-state__icon [data-lucide] {
+  width: 32px !important;
+  height: 32px !important;
+  color: var(--color-secondary) !important;
+  stroke: var(--color-secondary) !important;
+  opacity: 1 !important;
+  margin: 0 !important;
+}
+
+.db-empty-state__title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-semibold);
+  color: var(--color-dark-text);
+  margin-bottom: var(--space-2);
+}
+
+
+/* ============================================================
+   13. VEHICLE IMAGES (Global Consistency)
+   ============================================================ */
+.db-layout img[src*="car"],
+.db-layout img[src*="vehicle"],
+.db-layout img[src*="fleet"] {
+  object-fit: cover;
+  object-position: center;
+}
+
+
+/* ============================================================
+   14. ACCESSIBILITY
+   ============================================================ */
+.db-layout :focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 2px;
+}
+
+.db-filter-bar__search-input:focus,
+.db-filter-bar__select:focus,
+.db-table select:focus,
+.db-modal select:focus {
+  border-color: var(--color-secondary) !important;
+}
+
+.skip-link:focus-visible {
+  top: 0;
+  outline: none;
+  background: var(--color-primary);
+  border-bottom: 2px solid var(--color-secondary);
+}
+
+
+/* ============================================================
+   15. RESPONSIVE OVERRIDES
+   ============================================================ */
+@media (max-width: 1200px) {
+  .db-stats-grid--admin {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .db-stats-grid--admin {
+    grid-template-columns: 1fr;
+  }
+
+  .db-quick-actions {
+    padding: var(--space-3) var(--space-4);
+  }
+}
+
+@media (max-width: 576px) {
+  .db-quick-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .db-quick-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ==========================================
+   ADMIN DASHBOARD UI/UX REFINEMENT OVERRIDES
+   ========================================== */
+
+/* 1. Responsive Stats Cards Grid */
+.db-layout .db-stats-grid,
+.db-layout .db-stats-grid--admin {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important;
+  gap: var(--space-4) !important;
+  margin-bottom: var(--space-6) !important;
+}
+
+.db-layout .db-stat-card {
+  min-height: 84px !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: var(--space-4) !important;
+  box-sizing: border-box !important;
+}
+
+.db-layout .db-stat-card__icon {
+  margin-right: var(--space-3) !important;
+  flex-shrink: 0 !important;
+  width: 44px !important;
+  height: 44px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.db-layout .db-stat-card__content {
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+/* 2. Responsive Table Spacing & Prevent Cell Wraps */
+.db-layout .db-table-wrapper {
+  width: 100% !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  margin-bottom: 0 !important;
+}
+
+.db-layout .db-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+}
+
+.db-layout .db-table th,
+.db-layout .db-table td {
+  white-space: nowrap !important;
+  padding: var(--space-3) var(--space-4) !important;
+  vertical-align: middle !important;
+}
+
+.db-layout .db-table td:first-child {
+  white-space: normal !important; /* Allow first column (e.g. Vehicle/Customer name) to wrap slightly if needed */
+}
+
+/* 3. Image Sizing */
+.db-layout .db-table img {
+  width: 50px !important;
+  height: 35px !important;
+  object-fit: cover !important;
+  border-radius: var(--radius-md) !important;
+  background: var(--color-surface) !important;
+  flex-shrink: 0 !important;
+}
+
+/* 4. Import/Export & Action buttons row wrap safety */
+.db-page-header__actions {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  gap: var(--space-2) !important;
+}
+
+.db-page-header__actions .btn {
+  height: 36px !important;
+  font-size: var(--fs-xs) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.db-filter-bar {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: var(--space-2) !important;
+  align-items: center !important;
+}
+
+.db-filter-bar__actions {
+  display: inline-flex !important;
+  gap: 4px !important;
+}
+
+/* 5. Pagination Clean Flex Wrap Alignment */
+.db-section-card__footer {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: var(--space-3) !important;
+}
+
+/* 6. Settings Transitions */
+#settings-form-container {
+  transition: opacity 0.2s ease-in-out !important;
+}
+
+/* 7. Reusable Search Input Overlap Fix (Global consistency) */
+.db-layout .db-filter-bar__search,
+.db-layout .db-header__search {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+.db-layout .db-filter-bar__search-icon,
+.db-layout .db-header__search-icon {
+  position: absolute !important;
+  left: 16px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 16px !important;
+  height: 16px !important;
+  color: var(--color-light-text) !important;
+  pointer-events: none !important;
+  z-index: 5 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+}
+
+.db-layout .db-filter-bar__search-icon i,
+.db-layout .db-header__search-icon i,
+.db-layout .db-filter-bar__search-icon svg,
+.db-layout .db-header__search-icon svg {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+}
+
+.db-layout .db-filter-bar__search-input,
+.db-layout .db-header__search-input {
+  padding-left: 48px !important;
+  text-indent: 0 !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+
+/* 8. Fleet Card Image Ratio containment (Prevents cropped/stretched car profile photos) */
+.db-layout .db-rental-card__image-wrap {
+  height: 130px !important;
+  padding: var(--space-3) !important;
+  background: var(--color-surface) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important;
+}
+
+.db-layout .db-rental-card__image {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  background: transparent !important;
+}
+
+/* 9. Card Overflow & Table Width protection */
+.db-layout .db-section-card {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+.db-layout .db-table-wrapper {
+  max-width: 100% !important;
+  width: 100% !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+/* 10. Search Input Icon Removal Padding Reset */
+#fleet-search,
+#bookings-search,
+#users-search,
+#pb-search,
+#notif-search {
+  padding-left: var(--space-4) !important;
+}
+
+/* 11. Bookings Page Container Width Containment & Scroll Fix */
+#dashboard-content,
+#bookings-active-tab-container {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.db-section-card__body,
+.db-section-card__body--flush,
+#bookings-table-container,
+#prebookings-table-container {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.db-layout ::-webkit-scrollbar {
+  height: 8px !important;
+}
+
+@media (min-width: 993px) {
+  .db-main-wrapper {
+    max-width: calc(100vw - var(--db-sidebar-width)) !important;
+    min-width: 0 !important;
+  }
+  .db-sidebar.collapsed ~ .db-main-wrapper {
+    max-width: calc(100vw - var(--db-sidebar-collapsed)) !important;
+    min-width: 0 !important;
+  }
+}
+@media (max-width: 992px) {
+  .db-main-wrapper {
+    max-width: 100vw !important;
+    min-width: 0 !important;
+  }
+}
+
+.db-main {
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+/* 12. Inactive Stat Card Icon Color */
+.db-layout .db-stat-card__icon--inactive {
+  background: rgba(156, 163, 175, 0.1) !important;
+  color: var(--color-light-text) !important;
+}
+
+/* 13. Customers Page Internal Spacing & Padding Fix */
+#customers-card-container {
+  padding: var(--space-6) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: var(--space-5) !important;
+}
+
+#customers-card-container .db-filter-bar {
+  padding: 0 !important;
+  border-bottom: none !important;
+}
+
+#customers-card-container .db-table-wrapper {
+  margin: 0 !important;
+}
+
+#customers-card-container #users-pagination {
+  padding: 0 !important;
+  margin: 0 !important;
+  border-top: none !important;
+}
+
+/* 14. Rental Extensions Page Internal Spacing & Padding Fix */
+#extensions-card-container {
+  padding: var(--space-6) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: var(--space-5) !important;
+}
+
+#extensions-card-container .db-filter-bar {
+  padding: 0 !important;
+  border-bottom: none !important;
+}
+
+#extensions-card-container .db-table-wrapper {
+  margin: 0 !important;
+}
+
+#extensions-card-container #extensions-pagination {
+  padding: 0 !important;
+  margin: 0 !important;
+  border-top: none !important;
+}
+
+/* 15. Notifications Page Internal Spacing & Padding Fix */
+#notifications-card-container {
+  padding: var(--space-6) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: var(--space-5) !important;
+}
+
+#notifications-card-container .db-filter-bar {
+  padding: 0 !important;
+  border-bottom: none !important;
+  margin: 0 !important;
+}
+
+#notifications-card-container #notifications-list-container {
+  margin: 0 !important;
+}
+
+#notifications-card-container #notifications-pagination {
+  padding: 0 !important;
+  margin: 0 !important;
+  border-top: none !important;
+}
+
+/* ============================================================
+   ADDITIONAL RESPONSIVE REFINEMENTS — ADMIN DASHBOARD
+   ============================================================ */
+
+/* ---- Tablet (≤ 992px) ---- */
+@media (max-width: 992px) {
+  .db-stats-grid--admin {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .db-quick-actions {
+    flex-wrap: wrap;
+  }
+}
+
+/* ---- Mobile Landscape (≤ 767px) ---- */
+@media (max-width: 767px) {
+  .db-stats-grid--admin {
+    grid-template-columns: 1fr;
+  }
+
+  .db-quick-actions {
+    padding: var(--space-3) var(--space-4);
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  /* Admin page header actions */
+  .db-page-header__actions {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .db-page-header__actions .btn {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Filter bars stack */
+  .db-filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .db-filter-bar__search {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+/* ---- Mobile (≤ 576px) ---- */
+@media (max-width: 576px) {
+  .db-quick-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .db-quick-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Table cells more compact */
+  .db-layout .db-table th,
+  .db-layout .db-table td {
+    padding: var(--space-2) var(--space-3) !important;
+    font-size: var(--fs-xs) !important;
+  }
+
+  /* Notification spacing */
+  .db-notification-panel__item {
+    padding: var(--space-3);
+  }
+
+  /* Section card compact */
+  .db-section-card__header {
+    padding: var(--space-4);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+
+  .db-section-card__body {
+    padding: var(--space-3);
+  }
+
+  /* Admin customers and extensions containers */
+  #customers-card-container,
+  #extensions-card-container,
+  #notifications-card-container {
+    padding: var(--space-4) !important;
+  }
+}
+
+/* ---- Small Phones (≤ 480px) ---- */
+@media (max-width: 480px) {
+  /* Admin role badge hidden in header */
+  .db-sidebar__role-badge {
+    display: none;
+  }
+
+  /* Even more compact table */
+  .db-layout .db-table th,
+  .db-layout .db-table td {
+    padding: var(--space-2) !important;
+    font-size: 0.6875rem !important;
+  }
+
+  .db-layout .db-table img {
+    width: 40px !important;
+    height: 28px !important;
+  }
+}
+
+/* ============================================================
+   ADMIN DASHBOARD RESPONSIVE ALIGNMENTS & WRAPPER SCROLL OVERRIDES
+   ============================================================ */
+
+/* Global container constraints to prevent layout blowout */
+.db-main-wrapper {
+  min-width: 0 !important;
+}
+
+.db-main {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+
+.db-section-card {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+/* Base scrollable table wrapper rules */
+.db-layout .db-table-wrapper {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch !important;
+  margin: 0 !important;
+}
+
+/* Laptop breakpoint overrides */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .db-layout .db-table {
+    min-width: 1200px !important;
+    table-layout: auto !important;
+  }
+  .db-layout .db-table th,
+  .db-layout .db-table td {
+    padding: var(--space-4) var(--space-5) !important;
+    white-space: nowrap !important;
+  }
+}
+
+/* Tablet breakpoint overrides */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .db-layout .db-table {
+    min-width: 1200px !important;
+    table-layout: auto !important;
+  }
+  .db-layout .db-table th,
+  .db-layout .db-table td {
+    padding: var(--space-4) var(--space-5) !important;
+    white-space: nowrap !important;
+  }
+
+  /* Stack dashboard widgets vertically */
+  .db-section-grid {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-4) !important;
+  }
+
+  /* Wrap select controls cleanly in rows of two */
+  .db-filter-bar {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: var(--space-3) !important;
+    padding: var(--space-4) !important;
+  }
+
+  .db-filter-bar__search {
+    flex: 1 1 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .db-filter-bar__select {
+    flex: 1 1 calc(50% - var(--space-2)) !important;
+    min-width: 140px !important;
+    height: 40px !important;
+  }
+
+  .db-filter-bar__actions {
+    width: 100% !important;
+    margin-left: 0 !important;
+    justify-content: flex-end !important;
+  }
+
+  /* Fleet Management page specific tablet filter overrides */
+  #fleet-category-filter,
+  #fleet-status-filter,
+  #fleet-fuel-filter {
+    flex: 1 1 calc(33.333% - var(--space-2)) !important;
+    min-width: 140px !important;
+  }
+
+  #fleet-trans-filter,
+  #fleet-seats-filter,
+  #fleet-sort {
+    flex: 1 1 calc(22% - var(--space-2)) !important;
+    min-width: 120px !important;
+  }
+
+  .db-layout .db-filter-bar #fleet-sort ~ .db-filter-bar__actions {
+    flex: 1 1 calc(34% - var(--space-2)) !important;
+    width: auto !important;
+    margin-left: 0 !important;
+    justify-content: flex-end !important;
+    display: inline-flex !important;
+  }
+
+  /* Customers page specific tablet filter overrides */
+  #users-status-filter,
+  #users-membership-filter {
+    flex: 1 1 calc(50% - var(--space-2)) !important;
+    min-width: 140px !important;
+  }
+
+  #users-verification-filter {
+    flex: 1 1 100% !important;
+    min-width: 140px !important;
+  }
+
+  /* Prevent Dashboard tables from compressing */
+  .db-section-card__body .db-table {
+    min-width: 800px !important;
+  }
+
+  /* Force bookings page quick filter buttons to wrap to a new line and center-align */
+  .db-quick-filter-buttons {
+    flex: 1 1 100% !important;
+    margin-left: 0 !important;
+    margin-top: var(--space-2) !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: var(--space-2) !important;
+    justify-content: center !important;
+    width: 100% !important;
+  }
+}
+
+/* Mobile breakpoint overrides */
+@media (max-width: 767px) {
+  .db-layout .db-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: var(--space-2) !important;
+    padding: 0 var(--space-3) !important;
+    height: 60px !important;
+    min-width: 0 !important;
+  }
+
+  .db-header__search-input,
+  .db-header__search-results {
+    display: none !important;
+  }
+
+  .db-header__search {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    border-radius: var(--radius-full) !important;
+    border: 1px solid var(--color-border) !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    position: relative !important;
+    flex-shrink: 0 !important;
+    cursor: pointer !important;
+  }
+
+  .db-layout .db-header__search-icon {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 20px !important;
+    height: 20px !important;
+    color: var(--color-light-text) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    pointer-events: none !important;
+    z-index: 1 !important;
+    box-sizing: border-box !important;
+  }
+
+  .db-layout .db-header__search-icon svg,
+  .db-layout .db-header__search-icon i {
+    width: 20px !important;
+    height: 20px !important;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .db-layout .db-table {
+    min-width: 1100px !important;
+    table-layout: auto !important;
+  }
+  .db-layout .db-table th,
+  .db-layout .db-table td {
+    padding: var(--space-3) var(--space-4) !important;
+    white-space: nowrap !important;
+  }
+
+  /* Stack dashboard widgets vertically */
+  .db-section-grid {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-4) !important;
+  }
+
+  /* Wrap select controls cleanly in rows of two */
+  .db-filter-bar {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: var(--space-3) !important;
+    padding: var(--space-4) !important;
+  }
+
+  .db-filter-bar__search {
+    flex: 1 1 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .db-filter-bar__select {
+    flex: 1 1 calc(50% - var(--space-2)) !important;
+    min-width: 140px !important;
+    height: 40px !important;
+  }
+
+  .db-filter-bar__actions {
+    width: 100% !important;
+    margin-left: 0 !important;
+    justify-content: flex-end !important;
+  }
+
+  /* Force bookings page quick filter buttons to wrap to a new line and center-align */
+  .db-quick-filter-buttons {
+    flex: 1 1 100% !important;
+    margin-left: 0 !important;
+    margin-top: var(--space-2) !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: var(--space-2) !important;
+    justify-content: center !important;
+    width: 100% !important;
+  }
+
+  /* Prevent Dashboard tables from compressing */
+  .db-section-card__body .db-table {
+    min-width: 800px !important;
+  }
+
+  /* Prevent buttons text from clipping and wrap them cleanly */
+  .db-page-header__actions {
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    gap: var(--space-2) !important;
+  }
+
+  .db-page-header__actions .btn {
+    flex: 1 1 auto !important;
+    min-width: max-content !important;
+    white-space: nowrap !important;
+    padding: 0 var(--space-3) !important;
+  }
+
+  /* Stack recent customers card content cleanly to avoid alignment breakage */
+  #recent-customers-list .db-rental-card {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: var(--space-3) !important;
+  }
+
+  #recent-customers-list .db-rental-card .btn {
+    width: 100% !important;
+    text-align: center !important;
+  }
+}
+
+/* Stacking select dropdowns in single column on small screen phones */
+@media (max-width: 480px) {
+  .db-filter-bar__select {
+    flex: 1 1 100% !important;
+    width: 100% !important;
+  }
+}
+
+/* Mobile-only additional alignments and stacking rules */
+@media (max-width: 767px) {
+  /* 1. Center pagination sections */
+  #users-pagination,
+  #extensions-pagination {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    gap: var(--space-2) !important;
+    padding: var(--space-4) !important;
+  }
+
+  #users-pagination .db-pagination-controls,
+  #extensions-pagination .db-pagination-controls {
+    justify-content: center !important;
+    width: 100% !important;
+  }
+
+  /* 2. Notifications Page Mobile styling */
+  /* Categories panel grid stack & flex row wrapping buttons */
+  .db-layout div[style*="grid-template-columns: 200px 1fr"] {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-4) !important;
+  }
+
+  .db-layout div[style*="grid-template-columns: 200px 1fr"] > div:first-child > div:last-child {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)) !important;
+    gap: var(--space-2) !important;
+    width: 100% !important;
+  }
+
+  .db-layout div[style*="grid-template-columns: 200px 1fr"] > div:first-child > div:last-child .btn {
+    width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+    font-size: 11px !important;
+    padding: var(--space-2) var(--space-1) !important;
+    white-space: nowrap !important;
+  }
+
+  /* Notifications Card Filters block stack */
+  #notifications-card-container .db-filter-bar {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: var(--space-2) !important;
+    align-items: center !important;
+  }
+
+  #notifications-card-container .db-filter-bar__search {
+    flex: 0 1 auto !important;
+    min-width: 200px !important;
+  }
+
+  #notifications-card-container .db-filter-bar > div:last-child {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: var(--space-2) !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+
+  #notifications-card-container #notif-status-filter {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 40px !important;
+    box-sizing: border-box !important;
+    flex: 1 1 100% !important;
+  }
+
+  #notifications-card-container .db-filter-bar > div:last-child button {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 40px !important;
+    box-sizing: border-box !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex: 1 1 100% !important;
+    margin-left: 0 !important;
+  }
+
+  /* 3. Reports Page Mobile refinements */
+  /* Period buttons and Date inputs container stacking */
+  .db-layout .db-section-card div[style*="justify-content:space-between; align-items:center; flex-wrap:wrap"] {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: var(--space-4) !important;
+  }
+
+  .db-layout .db-section-card div[style*="justify-content:space-between; align-items:center; flex-wrap:wrap"] > div {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: var(--space-2) !important;
+    width: 100% !important;
+  }
+
+  .db-layout .db-section-card div[style*="justify-content:space-between; align-items:center; flex-wrap:wrap"] button,
+  .db-layout .db-section-card div[style*="justify-content:space-between; align-items:center; flex-wrap:wrap"] input {
+    width: 100% !important;
+    max-width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* Period selection buttons group wrap and grow */
+  .db-layout .db-section-card div[style*="justify-content:space-between; align-items:center; flex-wrap:wrap"] > div > div[style*="display:flex; gap:4px;"],
+  .db-layout .db-section-card div[style*="justify-content:space-between; align-items:center; flex-wrap:wrap"] > div > div[style*="display:flex; gap:4px"] {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: var(--space-2) !important;
+    width: 100% !important;
+  }
+  
+  .db-layout .db-section-card div[style*="justify-content:space-between; align-items:center; flex-wrap:wrap"] > div > div[style*="display:flex; gap:4px;"] .btn,
+  .db-layout .db-section-card div[style*="justify-content:space-between; align-items:center; flex-wrap:wrap"] > div > div[style*="display:flex; gap:4px"] .btn {
+    flex: 1 1 calc(50% - var(--space-1)) !important;
+    min-width: max-content !important;
+    white-space: nowrap !important;
+    justify-content: center !important;
+    height: 36px !important;
+    font-size: 11px !important;
+  }
+
+  /* Custom Range date inputs wrapping and styling */
+  .db-layout .db-section-card div[style*="justify-content:space-between; align-items:center; flex-wrap:wrap"] > div:last-child {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    gap: var(--space-2) !important;
+    width: 100% !important;
+  }
+
+  .db-layout .db-section-card div[style*="justify-content:space-between; align-items:center; flex-wrap:wrap"] > div:last-child > span {
+    display: none !important; /* Hide the word 'to' for compact layout */
+  }
+
+  .db-layout .db-section-card div[style*="justify-content:space-between; align-items:center; flex-wrap:wrap"] > div:last-child input {
+    flex: 1 1 calc(50% - var(--space-1)) !important;
+    width: auto !important;
+    height: 38px !important;
+    box-sizing: border-box !important;
+  }
+
+  .db-layout .db-section-card div[style*="justify-content:space-between; align-items:center; flex-wrap:wrap"] > div:last-child button {
+    flex: 1 1 100% !important;
+    width: 100% !important;
+    height: 38px !important;
+    margin-top: var(--space-1) !important;
+  }
+
+  /* Enforce canvas responsive scaling */
+  .db-layout canvas {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Force report tables to maintain layout and enable scroll */
+  .db-layout .db-section-card .db-table {
+    min-width: 600px !important;
+  }
+
+  /* 4. Settings Page Mobile refinements */
+  /* Stack Settings layout grid */
+  .db-layout div[style*="grid-template-columns: 240px 1fr"] {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-4) !important;
+  }
+
+  /* Convert settings vertical menu to horizontal wrapping layout */
+  .db-layout div[style*="grid-template-columns: 240px 1fr"] > div:first-child {
+    position: static !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: var(--space-2) !important;
+    width: 100% !important;
+  }
+
+  .db-layout div[style*="grid-template-columns: 240px 1fr"] > div:first-child .btn {
+    flex: 1 1 auto !important;
+    justify-content: center !important;
+    font-size: 10px !important;
+    padding: var(--space-2) var(--space-3) !important;
+  }
+
+  /* Stack Settings form fields */
+  .db-layout div[id^="settings-section-"] div[style*="grid-template-columns: 1fr 1fr"],
+  .db-layout div[id^="settings-section-"] div[style*="grid-template-columns: 1fr 1fr;"] {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-3) !important;
+  }
+
+  .db-layout div[id^="settings-section-"] div[style*="grid-column: span 2"] {
+    grid-column: span 1 !important;
+  }
+}
+
+/* Stacks alert panel items on small screens */
+@media (max-width: 576px) {
+  .db-layout #notifications-list-container .db-notification-panel__item {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: var(--space-3) !important;
+    padding: var(--space-3) var(--space-4) !important;
+  }
+
+  .db-layout #notifications-list-container .db-notification-panel__item > div:first-child {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: var(--space-3) !important;
+  }
+
+  .db-layout #notifications-list-container .db-notification-panel__item > div:last-child {
+    margin-left: 0 !important;
+    justify-content: flex-end !important;
+    display: flex !important;
+    gap: var(--space-2) !important;
+  }
+  
+  .db-layout #notifications-list-container .db-notification-panel__item .btn {
+    padding: var(--space-2) var(--space-4) !important;
+    min-width: 40px !important;
+    height: 36px !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+}
+
+/* Stacks Save/Cancel actions row buttons on small phones */
+@media (max-width: 480px) {
+  .db-layout div[style*="justify-content:flex-end; gap:var(--space-3)"] {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: var(--space-2) !important;
+    margin-top: var(--space-3) !important;
+  }
+
+  .db-layout div[style*="justify-content:flex-end; gap:var(--space-3)"] .btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
+

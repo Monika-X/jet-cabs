@@ -1,0 +1,383 @@
+/* ============================================================
+   JET CABS — FORGOT PASSWORD PAGE SPECIFIC STYLES
+   All rules scoped strictly under .forgot-page to prevent pollution.
+   ============================================================ */
+
+.forgot-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: var(--color-bg);
+  position: relative;
+  overflow-y: auto;
+  box-sizing: border-box;
+  font-family: var(--font-body);
+}
+
+/* 1. Subtle Accent Background Tints - matches finalized login.css */
+.forgot-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 95% 5%, rgba(198, 169, 98, 0.05) 0%, transparent 28%),
+              radial-gradient(circle at 5% 95%, rgba(198, 169, 98, 0.05) 0%, transparent 28%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 2. Vertically Centered Wrapper Shell */
+.forgot-page .auth-shell {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
+}
+
+/* 3. Brand Area */
+.forgot-page .login-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: var(--fw-bold);
+  color: var(--color-dark-text);
+  text-decoration: none;
+  transition: transform var(--transition-base);
+  margin-top: 0;
+  margin-bottom: 18px;
+}
+
+.forgot-page .login-logo:hover {
+  transform: translateY(-1px);
+}
+
+.forgot-page .login-logo-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-logo-img {
+  position: absolute;
+  width: 135px;
+  height: 90px;
+  max-width: none;
+  left: -50px;
+  top: -25px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.forgot-page .login-logo span {
+  color: var(--color-primary);
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+/* 4. Heading & Subtitle */
+.forgot-page .login-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 430px;
+  margin-bottom: 28px;
+}
+
+.forgot-page .login-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 2.5rem);
+  font-weight: var(--fw-regular);
+  color: var(--color-dark-text);
+  line-height: var(--lh-tight);
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.forgot-page .login-title .highlight {
+  background: linear-gradient(135deg, var(--color-secondary), var(--color-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.forgot-page .login-subtitle {
+  font-size: var(--fs-small);
+  color: var(--color-light-text);
+  line-height: var(--lh-normal);
+  margin: 0;
+  max-width: 380px;
+}
+
+/* 5. Forgot Password Card */
+.forgot-page .forgot-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  padding: 32px 32px 30px;
+  width: min(calc(100vw - 32px), 430px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+  box-sizing: border-box;
+}
+
+/* 6. Form Field Elements */
+.forgot-page .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.forgot-page .form-group label {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--color-light-text);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+  padding: 0;
+  display: block;
+  text-align: left;
+  position: static;
+  transform: none;
+}
+
+.forgot-page .form-group label .required {
+  color: var(--color-danger);
+}
+
+.forgot-page .input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.forgot-page .form-input {
+  width: 100%;
+  height: 52px;
+  box-sizing: border-box;
+  padding: 0 16px 0 48px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  background: var(--color-bg);
+  color: var(--color-dark-text);
+  transition: all var(--transition-base);
+}
+
+.forgot-page .form-input:focus {
+  outline: none;
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 3px var(--color-accent-100);
+  background: var(--color-card);
+}
+
+.forgot-page .input-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-light-text);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.forgot-page .input-icon svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+/* Validation Styling */
+.forgot-page .form-input.error {
+  border-color: var(--color-danger) !important;
+  background: rgba(220, 38, 38, 0.01);
+}
+
+.forgot-page .form-error {
+  color: var(--color-danger);
+  font-size: var(--fs-xs);
+  margin-top: 4px;
+  display: none;
+}
+
+.forgot-page .form-error.visible {
+  display: block;
+}
+
+/* Information / Security Note */
+.forgot-page .security-note {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  margin-bottom: var(--space-5);
+  font-size: var(--fs-xs);
+  color: var(--color-light-text);
+  line-height: var(--lh-normal);
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.forgot-page .security-note svg {
+  width: 16px;
+  height: 16px;
+  color: var(--color-secondary);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.forgot-page .security-note strong {
+  color: var(--color-dark-text);
+}
+
+/* 7. Send Reset Link Button */
+.forgot-page .submit-btn {
+  width: 100%;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-weight: var(--fw-semibold);
+  margin-top: 22px;
+  margin-bottom: 0;
+  box-sizing: border-box;
+}
+
+/* 8. Success Recovery State */
+.forgot-page .success-state {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.forgot-page .success-icon-wrap {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-full);
+  background: var(--color-accent-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  margin-bottom: var(--space-3);
+}
+
+.forgot-page .success-icon-wrap svg {
+  width: 28px;
+  height: 28px;
+  display: block;
+}
+
+.forgot-page .success-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-bold);
+  color: var(--color-dark-text);
+  margin-top: 0;
+  margin-bottom: var(--space-2);
+}
+
+.forgot-page .success-desc {
+  font-size: var(--fs-small);
+  color: var(--color-light-text);
+  line-height: var(--lh-normal);
+  margin: 0;
+}
+
+.forgot-page .success-desc strong {
+  color: var(--color-dark-text);
+}
+
+.forgot-page .success-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  margin-top: var(--space-6);
+  box-sizing: border-box;
+}
+
+.forgot-page .success-actions .btn {
+  width: 100%;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* 9. Bottom Back Link Footer */
+.forgot-page .login-footer {
+  text-align: center;
+  font-size: var(--fs-small);
+  color: var(--color-light-text);
+  margin-top: 24px;
+  margin-bottom: 0;
+}
+
+.forgot-page .login-footer a {
+  color: var(--color-primary);
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+  transition: color var(--transition-base);
+}
+
+.forgot-page .login-footer a:hover {
+  color: var(--color-secondary);
+  text-decoration: underline;
+}
+
+/* ============================================================
+   10. RESPONSIVE MEDIA QUERIES
+   ============================================================ */
+@media (max-width: 480px) {
+  .forgot-page .auth-shell {
+    padding: 32px 12px;
+  }
+  .forgot-page .forgot-card {
+    width: calc(100% - 24px);
+    padding: 24px 20px;
+  }
+  .forgot-page .login-title {
+    font-size: 1.875rem;
+  }
+}
+
+@media (max-height: 600px) {
+  .forgot-page .auth-shell {
+    justify-content: flex-start;
+    padding: var(--space-8) 16px;
+  }
+}
