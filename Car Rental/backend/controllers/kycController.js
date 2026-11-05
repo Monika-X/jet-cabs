@@ -1,7 +1,8 @@
 const KycSubmission = require('../models/KycSubmission');
+const { uploadToCloudinary } = require('../utils/uploadToCloudinary');
 
 /**
- * @desc    Submit a KYC verification record
+ * @desc    Submit a KYC verification record with document uploads to Cloudinary
  * @route   POST /api/kyc
  * @access  Private
  */
@@ -24,6 +25,20 @@ const submitKyc = async (req, res, next) => {
       return next(new Error('Full name, email, phone, document type and document number are required.'));
     }
 
+    // Upload document images to Cloudinary
+    const uploadFields = async (file) => {
+      if (!file) return '';
+      const result = await uploadToCloudinary(file.buffer, 'car-rental/kyc');
+      return result.secure_url;
+    };
+
+    const [idFrontUrl, idBackUrl, licenseFrontUrl, licenseBackUrl] = await Promise.all([
+      uploadFields(req.files && req.files['idFront'] ? req.files['idFront'][0] : null),
+      uploadFields(req.files && req.files['idBack'] ? req.files['idBack'][0] : null),
+      uploadFields(req.files && req.files['licenseFront'] ? req.files['licenseFront'][0] : null),
+      uploadFields(req.files && req.files['licenseBack'] ? req.files['licenseBack'][0] : null)
+    ]);
+
     const submission = await KycSubmission.create({
       customer: req.user._id,
       fullName,
@@ -31,10 +46,10 @@ const submitKyc = async (req, res, next) => {
       phone,
       documentType,
       documentNumber,
-      idFrontName: idFrontName || '',
-      idBackName: idBackName || '',
-      licenseFrontName: licenseFrontName || '',
-      licenseBackName: licenseBackName || ''
+      idFrontName: idFrontName || idFrontUrl || '',
+      idBackName: idBackName || idBackUrl || '',
+      licenseFrontName: licenseFrontName || licenseFrontUrl || '',
+      licenseBackName: licenseBackName || licenseBackUrl || ''
     });
 
     res.status(201).json({
