@@ -987,6 +987,11 @@
         `;
         grid.appendChild(card);
       });
+
+      // Re-initialize scroll reveal for newly added featured car cards
+      if (typeof Anim !== 'undefined' && Anim.initScrollReveal) {
+        setTimeout(() => Anim.initScrollReveal(), 50);
+      }
     }
 
     async function loadFeaturedCars() {
