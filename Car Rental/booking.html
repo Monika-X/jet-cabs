@@ -1829,7 +1829,7 @@
           returnDateTime: (bookingState.rentalDetails.returnDate && bookingState.rentalDetails.returnTime) 
             ? `${bookingState.rentalDetails.returnDate}T${bookingState.rentalDetails.returnTime}` : "",
           pickupLocation: bookingState.rentalDetails.pickupLoc || "",
-          returnLocation: bookingState.rentalDetails.returnLoc || "",
+          returnLocation: bookingState.rentalDetails.returnLoc || bookingState.rentalDetails.pickupLoc || "",
           rentalPurpose: bookingState.rentalDetails.rentalPurpose || "",
           specialRequests: bookingState.rentalDetails.specialRequests || ""
         },
