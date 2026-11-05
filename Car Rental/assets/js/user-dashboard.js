@@ -3588,6 +3588,51 @@ const UserDashboard = (() => {
       console.error('Failed to fetch support tickets:', err);
     }
 
+    // Load KYC verification status from the backend
+    try {
+      const kycRes = await fetch('http://localhost:5000/api/kyc/mine', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const kycJson = await kycRes.json();
+      if (kycJson.success) {
+        const kycStatus = kycJson.data.status;
+        const v = DashboardState.verificationData;
+        if (kycStatus === 'VERIFIED') {
+          v.progressStep = 3;
+          Object.values(v.photos).forEach(p => { p.status = 'verified'; });
+        } else if (kycStatus === 'REJECTED') {
+          v.progressStep = 2;
+          Object.values(v.photos).forEach(p => { p.status = 'rejected'; });
+        } else if (kycStatus === 'PENDING') {
+          v.progressStep = 1;
+        }
+      }
+    } catch (err) {
+      console.error('Failed to fetch KYC status:', err);
+    }
+
+    // Load payment orders from the backend
+    try {
+      const payRes = await fetch('http://localhost:5000/api/payments/orders', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const payJson = await payRes.json();
+      if (payJson.success && Array.isArray(payJson.data)) {
+        const p = DashboardState.paymentsData;
+        p.transactions = payJson.data.map(order => ({
+          id: order.orderId,
+          date: order.createdAt ? new Date(order.createdAt).toISOString().split('T')[0] : '',
+          bookingId: 'BK-' + order._id.slice(-8).toUpperCase(),
+          type: 'Rental Charge',
+          method: order.method ? order.method.charAt(0).toUpperCase() + order.method.slice(1) : 'Card',
+          amount: order.amount,
+          status: order.status === 'SUCCESS' ? 'processed' : order.status === 'FAILED' ? 'failed' : 'pending'
+        }));
+      }
+    } catch (err) {
+      console.error('Failed to fetch payments:', err);
+    }
+
     restoreUiState();
     SidebarController.init();
     HeaderController.init();

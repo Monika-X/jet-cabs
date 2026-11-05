@@ -28,6 +28,11 @@ const {
   getAllTickets,
   updateTicketStatus
 } = require('../controllers/ticketController');
+const {
+  getAllKycSubmissions,
+  approveKyc,
+  rejectKyc
+} = require('../controllers/kycController');
 
 router.post('/login', validateLogin, loginAdmin);
 router.get('/profile', protect, authorize('admin'), getAdminProfile);
@@ -56,5 +61,10 @@ router.put('/bookings/:id/extensions/:extensionId/reject', protect, authorize('a
 // Support tickets
 router.get('/support/tickets', protect, authorize('admin'), getAllTickets);
 router.put('/support/tickets/:id', protect, authorize('admin'), updateTicketStatus);
+
+// KYC management
+router.get('/kyc', protect, authorize('admin'), getAllKycSubmissions);
+router.put('/kyc/:id/approve', protect, authorize('admin'), approveKyc);
+router.put('/kyc/:id/reject', protect, authorize('admin'), rejectKyc);
 
 module.exports = router;

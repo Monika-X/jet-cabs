@@ -24,6 +24,20 @@ const kycSubmissionSchema = new mongoose.Schema(
       type: String,
       enum: ['PENDING', 'VERIFIED', 'REJECTED'],
       default: 'PENDING'
+    },
+    rejectionReason: {
+      type: String,
+      trim: true,
+      default: ''
+    },
+    reviewedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      default: null
+    },
+    reviewedAt: {
+      type: Date,
+      default: null
     }
   },
   { timestamps: true }
