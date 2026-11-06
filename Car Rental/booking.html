@@ -1167,8 +1167,7 @@
                 </div>
 
                 <div class="confirmation-card__actions" style="display: flex; gap: var(--space-3);">
-                  <button type="button" class="btn btn--primary btn--lg" id="btn-view-booking-details" onclick="viewBookingDetails()">View Booking Details</button>
-                  <a href="cars.html" class="btn btn--outline btn--lg">Browse Cars</a>
+                  <a href="cars.html" class="btn btn--primary btn--lg">Back to Cars</a>
                 </div>
               </div>
             </div>
@@ -4100,53 +4099,6 @@
         return validateDirectBookingStep(stepNum);
       }
       return true;
-    }
-
-    // View Booking Details modal handler (standalone function for onclick attribute)
-    function viewBookingDetails() {
-      const detailsModal = document.getElementById('booking-details-modal');
-      if (!detailsModal) return;
-
-      // Populate receipt modal fields
-      const refEl = document.getElementById('modal-ref-id');
-      if (refEl) refEl.textContent = bookingState.bookingReference || '-';
-
-      const carEl = document.getElementById('modal-car-name');
-      if (carEl && bookingState.selectedVehicle) {
-        carEl.textContent = `${bookingState.selectedVehicle.brand} ${bookingState.selectedVehicle.name}`;
-      }
-
-      const rTypeEl = document.getElementById('modal-rental-type');
-      if (rTypeEl) rTypeEl.textContent = bookingState.pricing?.rentalType === 'hourly' ? 'Hourly Rental' : 'Daily Rental';
-
-      const durEl = document.getElementById('modal-duration');
-      if (durEl) durEl.textContent = bookingState.pricing?.durationText || '-';
-
-      const pLocEl = document.getElementById('modal-pickup-loc');
-      if (pLocEl) pLocEl.textContent = document.getElementById('pickup-loc')?.value || '-';
-
-      const rLocEl = document.getElementById('modal-return-loc');
-      if (rLocEl) rLocEl.textContent = document.getElementById('return-loc')?.value || 'Same as Pickup';
-
-      const pDtEl = document.getElementById('modal-pickup-datetime');
-      if (pDtEl) pDtEl.textContent = `${document.getElementById('pickup-date')?.value || ''} ${document.getElementById('pickup-time')?.value || ''}`;
-
-      const rDtEl = document.getElementById('modal-return-datetime');
-      if (rDtEl) rDtEl.textContent = `${document.getElementById('return-date')?.value || ''} ${document.getElementById('return-time')?.value || ''}`;
-
-      const custNameEl = document.getElementById('modal-cust-name');
-      if (custNameEl) custNameEl.textContent = document.getElementById('direct-full-name')?.value || '';
-
-      const custEmailEl = document.getElementById('modal-cust-email');
-      if (custEmailEl) custEmailEl.textContent = document.getElementById('direct-email')?.value || '';
-
-      const payRefEl = document.getElementById('modal-payment-ref');
-      if (payRefEl) payRefEl.textContent = bookingState.paymentDetails?.transactionId || '-';
-
-      const totalPaidEl = document.getElementById('modal-total-paid');
-      if (totalPaidEl) totalPaidEl.textContent = `$${(bookingState.pricing?.grandTotal || 0).toFixed(2)}`;
-
-      detailsModal.style.display = 'flex';
     }
 
     // --- 14. Next/Back Event Bindings ---
