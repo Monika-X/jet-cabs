@@ -5605,3 +5605,11 @@ input.db-filter-bar__search-input {
   }
 }
 
+ 
+ / *   F o r c e   d a s h b o a r d   i c o n s   t o   d i s p l a y   * /  
+ . d b - l a y o u t   . i c o n   s v g   {  
+     w i d t h :   2 0 p x   ! i m p o r t a n t ;  
+     h e i g h t :   2 0 p x   ! i m p o r t a n t ;  
+     d i s p l a y :   b l o c k   ! i m p o r t a n t ;  
+ }  
+ 
