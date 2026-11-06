@@ -1029,7 +1029,8 @@ const UserDashboard = (() => {
   function RenderOverview() {
     const s = DashboardState.statsData;
     const u = DashboardState.userData;
-    const activeRental = DashboardState.rentalsData.find(r => r.status === 'active');
+    const activeRental = DashboardState.rentalsData.find(r => r.status === 'active') ||
+                         DashboardState.rentalsData.find(r => r.status === 'upcoming');
 
     DashboardRenderer.contentArea.innerHTML = `
       <!-- HERO SECTION -->
@@ -1055,7 +1056,7 @@ const UserDashboard = (() => {
 
       <!-- STATISTICS -->
       <div class="db-stats-grid db-animate-stagger">
-        ${_statCard('icon-car', 'primary', 'Active Rentals', s.activeRentals, 'Currently active', 'rentals')}
+        ${_statCard('icon-car', 'primary', 'Active Rentals', s.activeRentals, 'Active & Upcoming', 'rentals')}
         ${_statCard('icon-clipboard', 'gold', 'Pending Pre-Bookings', s.pendingPreBookings, 'Awaiting review', 'prebookings')}
         ${_statCard('icon-clock', 'warning', 'Upcoming Returns', s.upcomingReturns, activeRental ? Utils.getRemainingDays(activeRental.returnDate) : 'None', 'rentals')}
         ${_statCard('icon-check-circle', 'success', 'Completed Rentals', s.completedRentals, 'Lifetime', 'history')}
@@ -3552,7 +3553,7 @@ const UserDashboard = (() => {
 
         // Compute stats dynamically
         DashboardState.statsData = {
-          activeRentals: DashboardState.rentalsData.filter(r => r.status === 'active').length,
+          activeRentals: DashboardState.rentalsData.filter(r => r.status === 'active' || r.status === 'upcoming').length,
           pendingPreBookings: DashboardState.preBookingsData.filter(p => p.status === 'pending').length,
           upcomingReturns: DashboardState.rentalsData.filter(r => r.status === 'active' || r.status === 'upcoming').length,
           completedRentals: DashboardState.rentalsData.filter(r => r.status === 'completed').length,
