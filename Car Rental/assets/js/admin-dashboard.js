@@ -1458,8 +1458,8 @@ const AdminDashboard = (() => {
       <div class="db-stats-grid db-animate-stagger" style="grid-template-columns: repeat(4, 1fr); gap:var(--space-4); margin-bottom:var(--space-6);">
         ${_statCard('icon-car', 'primary', 'Total Fleet', AdminState.fleetData.length, 'Units in database')}
         ${_statCard('icon-check-circle', 'success', 'Available Vehicles', AdminState.fleetData.filter(v => v.status === 'available').length, 'Idle on lots')}
-        ${_statCard('icon-clock', 'warning', 'Reserved Vehicles', AdminState.fleetData.filter(v => v.status === 'reserved').length, 'Booked ahead')}
-        ${_statCard('icon-steering', 'info', 'Currently Rented', AdminState.fleetData.filter(v => v.status === 'rented').length, 'On active hire')}
+        ${_statCard('icon-clock', 'warning', 'Reserved Vehicles', AdminState.fleetData.filter(v => v.bookingState === 'reserved').length, 'Booked ahead')}
+        ${_statCard('icon-steering', 'info', 'Currently Rented', AdminState.fleetData.filter(v => v.bookingState === 'rented').length, 'On active hire')}
         ${_statCard('icon-wrench', 'danger', 'Maintenance Status', AdminState.fleetData.filter(v => v.status === 'maintenance').length, 'Awaiting workshop')}
         ${_statCard('icon-archive', 'inactive', 'Inactive / Archived', AdminState.fleetData.filter(v => v.status === 'inactive' || v.status === 'archived').length, 'Decommissioned')}
         ${_statCard('icon-dollar', 'gold', 'Avg Daily Rate', Utils.formatCurrency(rates.avgDaily), 'Calculation matrix')}
@@ -5258,6 +5258,10 @@ const AdminDashboard = (() => {
             ? car.carName.slice(brandPrefix.length)
             : car.carName;
           const carBookings = bookings.filter(b => b.car && String(b.car._id) === String(car._id));
+          // The booking flow does not write back to car.status, so derive the
+          // effective fleet status from active bookings as well.
+          const hasPendingPickup = carBookings.some(b => b.bookingStatus === 'Pending Pickup');
+          const hasActiveRental = carBookings.some(b => ['Active', 'Extended'].includes(b.bookingStatus));
           return {
             id: String(car._id),
             apiPublicIds: (car.images || []).map(img => img.public_id),
@@ -5268,10 +5272,11 @@ const AdminDashboard = (() => {
             plate: 'DB-' + String(car._id).slice(-6).toUpperCase(),
             vin: '',
             color: '',
-            status: car.status === 'Available' ? 'available'
-              : car.status === 'Reserved' ? 'rented'
-              : car.status === 'Maintenance' ? 'maintenance'
+            status: car.status === 'Maintenance' ? 'maintenance'
+              : (car.status === 'Reserved' || hasPendingPickup || hasActiveRental) ? 'rented'
+              : car.status === 'Available' ? 'available'
               : 'inactive',
+            bookingState: hasActiveRental ? 'rented' : hasPendingPickup ? 'reserved' : null,
             mileage: 5000,
             condition: 'excellent',
             featured: false,
@@ -5299,6 +5304,22 @@ const AdminDashboard = (() => {
             bookingCount: carBookings.length
           };
         });
+
+        // ---- Build the Fleet Classification Summary (grouped by category) ----
+        const categoryMap = new Map();
+        AdminState.fleetData.forEach(v => {
+          const name = v.category || 'Uncategorized';
+          if (!categoryMap.has(name)) {
+            categoryMap.set(name, { name, total: 0, available: 0, booked: 0, maintenance: 0 });
+          }
+          const cat = categoryMap.get(name);
+          cat.total += 1;
+          if (v.status === 'maintenance') cat.maintenance += 1;
+          else if (v.status === 'rented') cat.booked += 1;
+          else if (v.status === 'available') cat.available += 1;
+        });
+        AdminState.fleetSummaryCategories = Array.from(categoryMap.values())
+          .sort((a, b) => a.name.localeCompare(b.name));
 
         // ---- Hydrate userData (Users module + Recent Registrations) ----
         AdminState.userData = users.map(u => ({
