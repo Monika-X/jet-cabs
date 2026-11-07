@@ -256,6 +256,69 @@ const getUsers = async (req, res, next) => {
 };
 
 /**
+ * @desc    Update a customer's supported profile fields
+ * @route   PUT /api/admin/users/:id
+ * @access  Private/Admin
+ */
+const updateUser = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      res.status(404);
+      return next(new Error('User not found'));
+    }
+
+    const { fullName, email, phone } = req.body;
+
+    if (fullName !== undefined) {
+      const trimmedName = String(fullName).trim();
+      if (!trimmedName) {
+        res.status(400);
+        return next(new Error('Full name cannot be empty.'));
+      }
+      user.fullName = trimmedName;
+    }
+
+    if (email !== undefined) {
+      const trimmedEmail = String(email).trim().toLowerCase();
+      if (!trimmedEmail) {
+        res.status(400);
+        return next(new Error('Email cannot be empty.'));
+      }
+      const duplicateEmail = await User.findOne({ email: trimmedEmail, _id: { $ne: user._id } });
+      if (duplicateEmail) {
+        res.status(400);
+        return next(new Error('Another account already uses this email.'));
+      }
+      user.email = trimmedEmail;
+    }
+
+    if (phone !== undefined) {
+      const trimmedPhone = String(phone).trim();
+      if (trimmedPhone) {
+        const duplicatePhone = await User.findOne({ phone: trimmedPhone, _id: { $ne: user._id } });
+        if (duplicatePhone) {
+          res.status(400);
+          return next(new Error('Another account already uses this phone number.'));
+        }
+      }
+      user.phone = trimmedPhone;
+    }
+
+    await user.save();
+
+    const updated = await User.findById(user._id).select('-password');
+    res.status(200).json({
+      success: true,
+      message: 'Customer updated successfully.',
+      data: updated
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
  * @desc    Suspend or activate a customer account
  * @route   PUT /api/admin/users/:id/suspend | /activate
  * @access  Private/Admin
@@ -297,5 +360,6 @@ module.exports = {
   getAnalyticsSummary,
   getBookingAnalytics,
   getUsers,
+  updateUser,
   setUserSuspension
 };

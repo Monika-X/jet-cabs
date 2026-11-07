@@ -35,6 +35,7 @@ const AdminDashboard = (() => {
     fleetSummaryCategories: [],
     recentActivity: [],
     upcomingEvents: [],
+    dataError: '',
     
     settingsData: {
       business: {
@@ -926,8 +927,12 @@ const AdminDashboard = (() => {
     const s = AdminState.statsData;
     const dateToday = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
     const timeNow = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    const recentBookings = AdminState.bookingData
+      .filter(b => ['active', 'extended', 'pending'].includes(b.status))
+      .slice(0, 5);
 
     DashboardRenderer.contentArea.innerHTML = `
+      ${_renderAdminErrorBanner()}
       <!-- Hero Admin Section -->
       <div class="db-hero db-animate-in">
         <div class="db-hero__content">
@@ -958,7 +963,7 @@ const AdminDashboard = (() => {
         ${_statCard('icon-check-circle', 'success', 'Available Cars', AdminState.fleetData.filter(v => v.status === 'available').length, 'Ready for rental', 'fleet')}
         ${_statCard('icon-clock', 'warning', 'Reserved Cars', AdminState.fleetData.filter(v => v.status === 'rented').length, 'Booked units', 'bookings')}
         ${_statCard('icon-tool', 'danger', 'Maintenance', AdminState.fleetData.filter(v => v.status === 'maintenance').length, 'In workshop', 'fleet')}
-        ${_statCard('icon-credit-card', 'success', 'Revenue', Utils.formatCurrency(s.monthlyRevenue), 'Billing ledger', 'reports')}
+        ${_statCard('icon-credit-card', 'success', 'Recognized Revenue', Utils.formatCurrency(s.monthlyRevenue), 'Completed / Active / Extended', 'reports')}
         ${_statCard('icon-clipboard', 'gold', 'Pending Requests', s.pendingPrebookings + s.pendingBookings, 'Action required', 'bookings')}
         ${_statCard('icon-arrow-up-right', 'primary', 'Today\'s Pickups', s.todayPickups, 'Dispatches today', 'bookings')}
         ${_statCard('icon-rotate-ccw', 'info', 'Today\'s Returns', s.todayReturns, 'Dropoffs today', 'bookings')}
@@ -1046,9 +1051,15 @@ const AdminDashboard = (() => {
                   </tr>
                 </thead>
                 <tbody>
-                  ${AdminState.bookingData.map(b => `
-                    <tr>
-                      <td><code style="font-family:var(--font-mono); font-size:var(--fs-xs);">${b.id}</code></td>
+                  ${recentBookings.length === 0 ? `
+                    <tr><td colspan="6" style="text-align:center; padding:var(--space-6); color:var(--color-light-text); font-size:var(--fs-small);">No active or pending bookings right now.</td></tr>
+                  ` : recentBookings.map(b => {
+                    const badgeClass = ['active', 'extended'].includes(b.status) ? 'approved'
+                      : b.status === 'pending' ? 'pending'
+                      : b.status === 'completed' ? 'completed'
+                      : 'cancelled';
+                    return `<tr>
+                      <td><code style="font-family:var(--font-mono); font-size:var(--fs-xs);">${b.reference || b.id}</code></td>
                       <td>
                         <div style="font-weight:var(--fw-medium); color:var(--color-dark-text);">${Utils.escapeHtml(b.user)}</div>
                         <div style="font-size:10px; color:var(--color-light-text);">${Utils.escapeHtml(b.email)}</div>
@@ -1056,9 +1067,9 @@ const AdminDashboard = (() => {
                       <td style="font-size:var(--fs-xs);">${Utils.escapeHtml(b.vehicle)}</td>
                       <td style="font-size:var(--fs-xs);">${b.pickup} – ${b.returnDate}</td>
                       <td><strong>${Utils.formatCurrency(b.total)}</strong></td>
-                      <td><span class="db-badge db-badge--${b.status==='active'?'approved':b.status==='confirmed'?'pending':b.status==='completed'?'completed':'cancelled'}">${Utils.statusLabel(b.status)}</span></td>
-                    </tr>
-                  `).join('')}
+                      <td><span class="db-badge db-badge--${badgeClass}">${Utils.statusLabel(b.status)}</span></td>
+                    </tr>`;
+                  }).join('')}
                 </tbody>
               </table>
             </div>
@@ -1086,7 +1097,7 @@ const AdminDashboard = (() => {
                   </div>
                 </div>
                 <div>
-                  <button class="btn btn--ghost btn--sm" style="font-size:9px; padding:2px 6px;" onclick="AdminDashboard.toast.show({title:'Customer Details',message:'Profile audits are coming in the next update.',type:'info'})">View Profile</button>
+                  <button class="btn btn--ghost btn--sm" style="font-size:9px; padding:2px 6px;" onclick="AdminDashboard.showCustomerDetails('${usr.id}')">View Profile</button>
                 </div>
               </div>
             `).join('')}
@@ -1183,25 +1194,42 @@ const AdminDashboard = (() => {
     </div>`;
   }
 
+  function _renderAdminErrorBanner() {
+    if (!AdminState.dataError) return '';
+    return `<div class="db-section-card db-animate-in" style="margin-bottom: var(--space-5); border-color: rgba(220,38,38,0.3);">
+      <div class="db-section-card__body" style="display:flex; align-items:flex-start; gap:var(--space-3); padding:var(--space-4);">
+        <span style="color:var(--color-danger); flex-shrink:0;">${Utils.icon('icon-alert-triangle')}</span>
+        <div>
+          <div style="font-weight:var(--fw-semibold); color:var(--color-dark-text);">Live data could not be loaded</div>
+          <div style="font-size:var(--fs-small); color:var(--color-light-text);">${Utils.escapeHtml(AdminState.dataError)}</div>
+        </div>
+        <button class="btn btn--outline btn--sm" style="margin-left:auto;" onclick="window.location.reload()">Retry</button>
+      </div>
+    </div>`;
+  }
+
 
   /* ============================================================
      12. RENDER: ADMIN ANALYTICS PAGE
      ============================================================ */
   function RenderAnalytics() {
+    const s = AdminState.statsData;
+    const occupancyPct = s.totalFleet > 0 ? (((s.currentlyRented || 0) / s.totalFleet) * 100).toFixed(1) : '0.0';
+
     DashboardRenderer.contentArea.innerHTML = `
       <div class="db-page-header db-animate-in">
         <div class="db-page-header__left">
           <h2 class="db-page-header__title">Analytics & Business Logs</h2>
-          <p class="db-page-header__subtitle">Real-time revenue forecast, category metrics, dispatches occupancy and performance diagrams</p>
+          <p class="db-page-header__subtitle">Live revenue summary and fleet dispatch metrics from the booking ledger</p>
         </div>
       </div>
 
       <!-- Overview Cards -->
       <div class="db-stats-grid db-animate-stagger" style="grid-template-columns: repeat(4, 1fr); gap:var(--space-4); margin-bottom:var(--space-6);">
-        ${_statCard('icon-dollar', 'gold', 'Gross Revenue Forecast', '$284,500', 'Annual performance billing')}
-        ${_statCard('icon-car', 'primary', 'Active Fleet Occupancy', '82.4%', 'Rentals dispatches ratio')}
-        ${_statCard('icon-user', 'info', 'Customer Retention', '94.2%', 'Gold/Gold+ status renewals')}
-        ${_statCard('icon-check-circle', 'success', 'Average Lead Time', '28 hrs', 'Pre-booking to pickup dispatches')}
+        ${_statCard('icon-dollar', 'gold', 'Recognized Revenue', Utils.formatCurrency(s.monthlyRevenue || 0), 'Completed / Active / Extended bookings')}
+        ${_statCard('icon-car', 'primary', 'Active Fleet Occupancy', occupancyPct + '%', 'Active units on road')}
+        ${_statCard('icon-user', 'info', 'Completed Rentals', String(s.completedBookings || 0), 'Fulfilled bookings')}
+        ${_statCard('icon-check-circle', 'success', 'Pending Pickups', String(s.pendingBookings || 0), 'Awaiting vehicle dispatch')}
       </div>
 
       <!-- Charts grid -->
@@ -2495,12 +2523,15 @@ const AdminDashboard = (() => {
     const state = AdminState.uiState;
     const bookings = AdminState.bookingData;
 
+    const todayStr = new Date().toISOString().split('T')[0];
+    const upcomingPickupsCount = bookings.filter(b => b.status === 'pending' && b.pickup && b.pickup >= todayStr).length;
+
     container.innerHTML = `
       <!-- Stats Summary -->
       <div class="db-stats-grid db-animate-stagger" style="grid-template-columns: repeat(4, 1fr); gap:var(--space-4); margin-bottom:var(--space-6);">
         ${_statCard('icon-clipboard', 'primary', 'Total Bookings', bookings.length, 'Cumulative orders')}
         ${_statCard('icon-check-circle', 'success', 'Ongoing Leases', bookings.filter(b=>b.status==='active').length, 'Active keys on road')}
-        ${_statCard('icon-clock', 'warning', 'Upcoming Pickups', bookings.filter(b=>b.status==='confirmed').length, 'Pre-approved rentals')}
+        ${_statCard('icon-clock', 'warning', 'Upcoming Pickups', upcomingPickupsCount, 'Pending pickups today & ahead')}
         ${_statCard('icon-close', 'danger', 'Cancelled Bookings', bookings.filter(b=>b.status==='cancelled').length, 'Failed authorizations')}
       </div>
 
@@ -2513,8 +2544,7 @@ const AdminDashboard = (() => {
 
           <select class="db-filter-bar__select" id="bookings-status-filter">
             <option value="all" ${state.bookingsStatusFilter === 'all' ? 'selected' : ''}>All</option>
-            <option value="pending" ${state.bookingsStatusFilter === 'pending' ? 'selected' : ''}>Pending</option>
-            <option value="confirmed" ${state.bookingsStatusFilter === 'confirmed' ? 'selected' : ''}>Upcoming</option>
+            <option value="pending" ${state.bookingsStatusFilter === 'pending' ? 'selected' : ''}>Pending Pickup</option>
             <option value="active" ${state.bookingsStatusFilter === 'active' ? 'selected' : ''}>Active</option>
             <option value="extended" ${state.bookingsStatusFilter === 'extended' ? 'selected' : ''}>Extended</option>
             <option value="completed" ${state.bookingsStatusFilter === 'completed' ? 'selected' : ''}>Completed</option>
@@ -2572,6 +2602,7 @@ const AdminDashboard = (() => {
     if (!tableContainer || !pagination) return;
 
     const state = AdminState.uiState;
+    const todayStr = new Date().toISOString().split('T')[0];
     let data = [...AdminState.bookingData];
 
     // Filter Search (Booking ID, Customer Name, Car Name)
@@ -2586,8 +2617,8 @@ const AdminDashboard = (() => {
     if (state.bookingsQuickFilter === 'pending') {
       data = data.filter(b => b.status === 'pending');
     } else if (state.bookingsQuickFilter === 'pickups') {
-      // Stub match for pickups today
-      data = data.filter(b => b.status === 'confirmed' || b.status === 'pending');
+      // Today's Pickups: pickups scheduled for today (regardless of booking status)
+      data = data.filter(b => b.pickup === todayStr && b.status !== 'cancelled');
     }
 
     if (data.length === 0) {
@@ -3925,16 +3956,15 @@ const AdminDashboard = (() => {
      ============================================================ */
   function RenderCustomers() {
     const state = AdminState.uiState;
+    const now = new Date();
+    const monthPrefix = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+    const newThisMonth = AdminState.userData.filter(u => u.joined && String(u.joined).startsWith(monthPrefix)).length;
+
     DashboardRenderer.contentArea.innerHTML = `
       <div class="db-page-header db-animate-in">
         <div class="db-page-header__left">
           <h2 class="db-page-header__title">Customer Accounts Management</h2>
-          <p class="db-page-header__subtitle">Manage driving licenses, KYC state files, rental history, and subscription tiers</p>
-        </div>
-        <div class="db-page-header__actions">
-          <button class="btn btn--primary btn--sm" onclick="AdminDashboard.toast.show({title:'New Account Registration',message:'Customer registration modal placeholder launched.',type:'info'})">
-            ${Utils.icon('icon-plus','icon--xs')} Add Customer
-          </button>
+          <p class="db-page-header__subtitle">Manage customer profiles, KYC state, rental history, and account status</p>
         </div>
       </div>
 
@@ -3942,8 +3972,8 @@ const AdminDashboard = (() => {
       <div class="db-stats-grid db-animate-stagger" style="grid-template-columns: repeat(6, 1fr); gap:var(--space-3); margin-bottom:var(--space-6);">
         ${_statCard('icon-users', 'primary', 'Total Users', AdminState.userData.length, 'Registered profiles')}
         ${_statCard('icon-check-circle', 'success', 'Active Users', AdminState.userData.filter(u=>u.status==='active').length, 'Active accounts')}
-        ${_statCard('icon-award', 'gold', 'Premium Tiers', AdminState.userData.filter(u=>u.membership==='Gold'||u.membership==='Platinum').length, 'Gold & Platinum')}
-        ${_statCard('icon-plus', 'info', 'New Registrations', AdminState.userData.filter(u=>u.joined.startsWith('2026')||u.joined.includes('-07-')).length, 'This month')}
+        ${_statCard('icon-award', 'gold', 'Staff Accounts', AdminState.userData.filter(u=>u.membership==='Staff').length, 'Administrator accounts')}
+        ${_statCard('icon-plus', 'info', 'New Registrations', newThisMonth, 'This month')}
         ${_statCard('icon-x-circle', 'danger', 'Blocked Users', AdminState.userData.filter(u=>u.status==='blocked').length, 'Suspended access')}
         ${_statCard('icon-alert-triangle', 'warning', 'Pending KYC', AdminState.userData.filter(u=>u.verificationStatus==='pending').length, 'Verification queue')}
       </div>
@@ -3975,6 +4005,7 @@ const AdminDashboard = (() => {
             <option value="verified" ${state.usersVerificationFilter === 'verified' ? 'selected' : ''}>Verified KYC</option>
             <option value="pending" ${state.usersVerificationFilter === 'pending' ? 'selected' : ''}>Pending Review</option>
             <option value="rejected" ${state.usersVerificationFilter === 'rejected' ? 'selected' : ''}>Rejected</option>
+            <option value="not_submitted" ${state.usersVerificationFilter === 'not_submitted' ? 'selected' : ''}>Not Submitted</option>
           </select>
         </div>
 
@@ -4091,7 +4122,8 @@ const AdminDashboard = (() => {
       let vBadge = '';
       if (u.verificationStatus === 'verified') vBadge = `<span class="badge badge--success">${Utils.icon('icon-check-circle', 'icon--xs')} Verified</span>`;
       else if (u.verificationStatus === 'pending') vBadge = `<span class="badge badge--warning">Pending</span>`;
-      else vBadge = `<span class="badge badge--danger">Rejected</span>`;
+      else if (u.verificationStatus === 'rejected') vBadge = `<span class="badge badge--danger">Rejected</span>`;
+      else vBadge = `<span class="badge badge--neutral">Not Submitted</span>`;
 
       let sBadge = '';
       if (u.status === 'active') sBadge = `<span class="badge badge--success">Active</span>`;
@@ -4114,7 +4146,7 @@ const AdminDashboard = (() => {
               <div style="width:32px; height:32px; border-radius:50%; background:var(--color-primary); color:#FFF; display:flex; align-items:center; justify-content:center; font-size:var(--fs-xs); font-weight:var(--fw-bold); border: 1.5px solid var(--color-secondary); flex-shrink:0;">${initial}</div>
               <div>
                 <div style="font-weight:var(--fw-semibold); color:var(--color-dark-text);">${Utils.escapeHtml(u.name)}</div>
-                <span class="badge badge--gold" style="font-size:8px; padding:1px 4px; margin-top:2px;">${u.membership}</span>
+                ${u.membership === 'Staff' ? `<span class="badge badge--gold" style="font-size:8px; padding:1px 4px; margin-top:2px;">Staff</span>` : `<span class="badge badge--neutral" style="font-size:8px; padding:1px 4px; margin-top:2px;">Standard</span>`}
               </div>
             </div>
           </td>
@@ -4205,29 +4237,31 @@ const AdminDashboard = (() => {
     const u = AdminState.userData.find(x => x.id === userId);
     if (!u) return;
 
-    let initial = u.name.split(' ').map(x=>x[0]).join('');
+    let initial = (u.name || '').split(' ').filter(Boolean).map(x=>x[0]).join('') || '?';
+    const bookingHistory = u.bookingHistory || [];
+    const notifications = u.notifications || [];
 
-    const historyHtml = u.bookingHistory.length === 0 
+    const historyHtml = bookingHistory.length === 0 
       ? `<div style="text-align:center; font-size:var(--fs-xs); color:var(--color-light-text); padding:var(--space-4);">No rental ledger logs.</div>`
-      : u.bookingHistory.map(b => `
+      : bookingHistory.map(b => `
         <div style="display:flex; justify-content:space-between; align-items:center; padding:var(--space-2) 0; border-bottom:1px solid var(--color-border-light);">
           <div>
-            <div style="font-weight:var(--fw-medium); font-size:var(--fs-xs); color:var(--color-dark-text);">${b.vehicle}</div>
+            <div style="font-weight:var(--fw-medium); font-size:var(--fs-xs); color:var(--color-dark-text);">${Utils.escapeHtml(b.vehicle)}</div>
             <div style="font-size:10px; color:var(--color-light-text);">ID: ${b.id} · ${Utils.formatDate(b.date)}</div>
           </div>
           <div style="text-align:right;">
             <div style="font-weight:var(--fw-bold); font-size:var(--fs-xs);">${Utils.formatCurrency(b.amount)}</div>
-            <span class="badge badge--${b.status==='active'?'success':'neutral'}" style="font-size:8px; padding:1px 3px;">${b.status}</span>
+            <span class="badge badge--${b.status==='active'||b.status==='extended'?'success':b.status==='completed'?'completed':b.status==='cancelled'?'cancelled':'neutral'}" style="font-size:8px; padding:1px 3px;">${b.status}</span>
           </div>
         </div>
       `).join('');
 
-    const notifyHtml = u.notifications.length === 0
+    const notifyHtml = notifications.length === 0
       ? `<div style="text-align:center; font-size:var(--fs-xs); color:var(--color-light-text); padding:var(--space-4);">No notification history.</div>`
-      : u.notifications.map(n => `
+      : notifications.map(n => `
         <div style="padding:var(--space-2) 0; border-bottom:1px solid var(--color-border-light);">
-          <div style="font-size:var(--fs-xs); color:var(--color-dark-text);">${Utils.escapeHtml(n.text)}</div>
-          <div style="font-size:9px; color:var(--color-light-text); margin-top:2px;">Sent: ${Utils.formatDate(n.date)}</div>
+          <div style="font-size:var(--fs-xs); color:var(--color-dark-text);">${Utils.escapeHtml(n.text || '')}</div>
+          <div style="font-size:9px; color:var(--color-light-text); margin-top:2px;">Sent: ${Utils.formatDate(n.date || '')}</div>
         </div>
       `).join('');
 
@@ -4263,10 +4297,10 @@ const AdminDashboard = (() => {
             <h4 style="font-weight:var(--fw-semibold); font-size:var(--fs-small); color:var(--color-primary); border-bottom:1px solid var(--color-border-light); padding-bottom:var(--space-2); margin-bottom:var(--space-2);">${Utils.icon('icon-shield-check','icon--xs')} KYC & Credentials</h4>
             <div style="font-size:var(--fs-xs); display:flex; flex-direction:column; gap:6px;">
               <div><strong>Driving License:</strong> <code>${u.license}</code></div>
-              <div><strong>KYC Status:</strong> <span class="badge badge--${u.verificationStatus==='verified'?'success':(u.verificationStatus==='pending'?'warning':'danger')}">${u.verificationStatus}</span></div>
+              <div><strong>KYC Status:</strong> <span class="badge badge--${u.verificationStatus==='verified'?'success':(u.verificationStatus==='pending'?'warning':u.verificationStatus==='not_submitted'?'neutral':'danger')}">${u.verificationStatus.replace(/_/g,' ')}</span></div>
               <div><strong>Current Lease:</strong> <span style="font-weight:var(--fw-medium); color:var(--color-secondary);">${Utils.escapeHtml(u.currentRental)}</span></div>
               <div style="border-top:1px solid var(--color-border-light); margin-top:4px; padding-top:4px;"><strong>Emergency Contact:</strong></div>
-              <div>${Utils.escapeHtml(u.emergencyContact.name)} (${u.emergencyContact.relation}) · ${u.emergencyContact.phone}</div>
+              <div style="color:var(--color-light-text);">Emergency contact storage is not available yet.</div>
             </div>
           </div>
         </div>
@@ -4297,7 +4331,7 @@ const AdminDashboard = (() => {
     ModalController.openDynamic(content, '780px');
   }
 
-  function editCustomerModal(userId) {
+  async function editCustomerModal(userId) {
     const u = AdminState.userData.find(x => x.id === userId);
     if (!u) return;
 
@@ -4307,6 +4341,9 @@ const AdminDashboard = (() => {
         <button class="db-modal__close" data-action="close-modal" aria-label="Close">${Utils.icon('icon-close')}</button>
       </div>
       <div class="db-modal__body">
+        <div style="margin-bottom:var(--space-3); font-size:var(--fs-xs); color:var(--color-light-text);">
+          Only name, email, and phone can be persisted through the customer API. License and address are sourced from booking records and are read-only here.
+        </div>
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:var(--space-4); margin-bottom:var(--space-4);">
           <div class="db-rental-detail__item" style="background:none; padding:0;">
             <label class="db-rental-detail__label" style="margin-bottom:4px;">Full Name</label>
@@ -4320,57 +4357,68 @@ const AdminDashboard = (() => {
             <label class="db-rental-detail__label" style="margin-bottom:4px;">Phone Number</label>
             <input type="text" class="db-filter-bar__search-input" style="width:100%; height:40px;" id="edit-user-phone" name="phone" value="${Utils.escapeHtml(u.phone)}">
           </div>
-          <div class="db-rental-detail__item" style="background:none; padding:0;">
-            <label class="db-rental-detail__label" style="margin-bottom:4px;">Driving License Code</label>
-            <input type="text" class="db-filter-bar__search-input" style="width:100%; height:40px;" id="edit-user-license" name="driving_license" value="${Utils.escapeHtml(u.license)}">
+          <div class="db-rental-detail__item" style="background:none; padding:0; grid-column: span 2;">
+            <label class="db-rental-detail__label" style="margin-bottom:4px;">Driving License (read-only)</label>
+            <input type="text" class="db-filter-bar__search-input" style="width:100%; height:40px; opacity:0.7;" id="edit-user-license" name="driving_license" value="${Utils.escapeHtml(u.license || 'N/A')}" disabled>
           </div>
           <div class="db-rental-detail__item" style="background:none; padding:0; grid-column: span 2;">
-            <label class="db-rental-detail__label" style="margin-bottom:4px;">Billing Street Address</label>
-            <input type="text" class="db-filter-bar__search-input" style="width:100%; height:40px;" id="edit-user-address" name="billing_address" value="${Utils.escapeHtml(u.address)}">
-          </div>
-          <div class="db-rental-detail__item" style="background:none; padding:0;">
-            <label class="db-rental-detail__label" style="margin-bottom:4px;">Membership Tier</label>
-            <select class="db-filter-bar__select" id="edit-user-membership" name="membership_tier" style="width:100%;">
-              <option value="Bronze" ${u.membership==='Bronze'?'selected':''}>Bronze</option>
-              <option value="Silver" ${u.membership==='Silver'?'selected':''}>Silver</option>
-              <option value="Gold" ${u.membership==='Gold'?'selected':''}>Gold</option>
-              <option value="Platinum" ${u.membership==='Platinum'?'selected':''}>Platinum</option>
-            </select>
-          </div>
-          <div class="db-rental-detail__item" style="background:none; padding:0;">
-            <label class="db-rental-detail__label" style="margin-bottom:4px;">KYC Status Check</label>
-            <select class="db-filter-bar__select" id="edit-user-kyc" name="kyc_status" style="width:100%;">
-              <option value="verified" ${u.verificationStatus==='verified'?'selected':''}>Verified</option>
-              <option value="pending" ${u.verificationStatus==='pending'?'selected':''}>Pending</option>
-              <option value="rejected" ${u.verificationStatus==='rejected'?'selected':''}>Rejected</option>
-            </select>
+            <label class="db-rental-detail__label" style="margin-bottom:4px;">Address (read-only)</label>
+            <input type="text" class="db-filter-bar__search-input" style="width:100%; height:40px; opacity:0.7;" id="edit-user-address" name="billing_address" value="${Utils.escapeHtml(u.address || 'N/A')}" disabled>
           </div>
         </div>
       </div>
       <div class="db-modal__footer">
         <button class="btn btn--ghost btn--sm" data-action="close-modal">Cancel</button>
-        <button class="btn btn--primary btn--sm" onclick="AdminDashboard.saveCustomerEdit('${userId}')">Save Account Changes</button>
+        <button class="btn btn--primary btn--sm" id="edit-user-save" onclick="AdminDashboard.saveCustomerEdit('${userId}')">Save Account Changes</button>
       </div>
     `;
 
     ModalController.openDynamic(content, '540px');
   }
 
-  function saveCustomerEdit(userId) {
+  async function saveCustomerEdit(userId) {
     const u = AdminState.userData.find(x => x.id === userId);
     if (!u) return;
 
-    u.name = document.getElementById('edit-user-name').value;
-    u.email = document.getElementById('edit-user-email').value;
-    u.phone = document.getElementById('edit-user-phone').value;
-    u.license = document.getElementById('edit-user-license').value;
-    u.address = document.getElementById('edit-user-address').value;
-    u.membership = document.getElementById('edit-user-membership').value;
-    u.verificationStatus = document.getElementById('edit-user-kyc').value;
+    const name = document.getElementById('edit-user-name').value.trim();
+    const email = document.getElementById('edit-user-email').value.trim();
+    const phone = document.getElementById('edit-user-phone').value.trim();
 
-    ModalController.close();
-    ToastController.show({ title: 'Customer Updated', message: `Customer details for ${u.name} updated in memory.`, type: 'success' });
-    _renderCustomersList();
+    if (!name || !email) {
+      ToastController.show({ title: 'Missing Fields', message: 'Full name and email are required.', type: 'error' });
+      return;
+    }
+
+    const btn = document.getElementById('edit-user-save');
+    if (btn) { btn.disabled = true; btn.textContent = 'Saving...'; }
+
+    const token = localStorage.getItem('token');
+    try {
+      const res = await fetch(`http://localhost:5000/api/admin/users/${userId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ fullName: name, email, phone })
+      });
+      const json = await res.json();
+      if (!res.ok || !json.success) throw new Error(json.message || 'Customer update failed');
+
+      u.name = name;
+      u.email = email;
+      u.phone = phone;
+
+      // Keep booking/pre-booking rows in sync with the updated contact info.
+      const customerId = String(userId);
+      AdminState.bookingData.forEach(b => { if (b.customerId === customerId) { b.user = name; b.email = email; b.phone = phone; } });
+      AdminState.preBookingsData.forEach(b => { if (b.customerId === customerId) { b.user = name; b.email = email; b.phone = phone; } });
+
+      ModalController.close();
+      ToastController.show({ title: 'Customer Updated', message: `Account details for ${name} saved successfully.`, type: 'success' });
+      _renderCustomersList();
+    } catch (err) {
+      ToastController.show({ title: 'Update Failed', message: err.message || 'Could not update the customer account.', type: 'error' });
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = 'Save Account Changes'; }
+    }
   }
 
 
@@ -5212,15 +5260,36 @@ const AdminDashboard = (() => {
   }
 
 
-  /* ---- Auth Guard: require a valid admin session ---- */
+  /* ---- Sync the real admin identity into the static shell ---- */
+  function syncAdminIdentityUI() {
+    const admin = AdminState.adminData;
+    const fullName = `${admin.firstName || ''} ${admin.lastName || ''}`.trim() || 'Administrator';
+    const shortName = `${admin.firstName || ''}${admin.lastName ? ' ' + admin.lastName.charAt(0) + '.' : ''}`.trim() || 'Administrator';
+
+    document.querySelectorAll('.db-sidebar__profile-avatar').forEach(el => el.textContent = admin.initials || 'AD');
+    document.querySelectorAll('.db-sidebar__profile-name').forEach(el => {
+      el.innerHTML = `${Utils.escapeHtml(fullName)} <span class="db-sidebar__role-badge">Admin</span>`;
+    });
+    document.querySelectorAll('.db-sidebar__profile-role').forEach(el => el.textContent = admin.role || 'Administrator');
+    document.querySelectorAll('.db-header__profile-avatar').forEach(el => el.textContent = admin.initials || 'AD');
+    document.querySelectorAll('.db-header__profile-name').forEach(el => el.textContent = shortName);
+    document.querySelectorAll('.db-header__profile-role').forEach(el => el.textContent = admin.role || 'Administrator');
+    document.querySelectorAll('.db-header__dropdown-avatar').forEach(el => el.textContent = admin.initials || 'AD');
+    document.querySelectorAll('.db-header__dropdown-name').forEach(el => el.textContent = fullName);
+    document.querySelectorAll('.db-header__dropdown-email').forEach(el => el.textContent = admin.email || '');
+    const greeting = document.getElementById('db-header-greeting');
+    if (greeting) greeting.textContent = `${Utils.getTimeGreeting()}, ${admin.firstName || 'Administrator'}`;
+  }
+
+  /* ---- Auth Guard: require a valid admin session and hydrate identity ---- */
   function initAuthGuard() {
     const token = localStorage.getItem('token');
     if (!token) {
       window.location.replace('login.html');
-      return;
+      return Promise.resolve(false);
     }
 
-    fetch('http://localhost:5000/api/admin/profile', {
+    return fetch('http://localhost:5000/api/admin/profile', {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -5229,12 +5298,30 @@ const AdminDashboard = (() => {
           localStorage.removeItem('token');
           localStorage.removeItem('userRole');
           window.location.replace('login.html');
+          return false;
         }
+
+        const admin = data.data;
+        const nameParts = String(admin.fullName || '').trim().split(/\s+/).filter(Boolean);
+        AdminState.adminData = {
+          id: String(admin._id || ''),
+          firstName: nameParts[0] || 'Administrator',
+          lastName: nameParts.slice(1).join(' '),
+          email: admin.email || '',
+          phone: admin.phone || '',
+          avatar: admin.profileImage || null,
+          initials: ((nameParts[0] || '')[0] || '').toUpperCase() + ((nameParts[1] || '')[0] || '').toUpperCase() || 'AD',
+          role: 'Administrator',
+          department: 'Operations'
+        };
+        syncAdminIdentityUI();
+        return true;
       })
       .catch(() => {
         localStorage.removeItem('token');
         localStorage.removeItem('userRole');
         window.location.replace('login.html');
+        return false;
       });
   }
 
@@ -5243,14 +5330,40 @@ const AdminDashboard = (() => {
     const token = localStorage.getItem('token');
     if (!token) return Promise.resolve(false);
 
-    return fetch('http://localhost:5000/api/admin/dashboard', {
-      headers: { 'Authorization': `Bearer ${token}` }
-    })
-      .then(res => res.json())
-      .then(data => {
+    return Promise.all([
+      fetch('http://localhost:5000/api/admin/dashboard', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      }).then(res => res.json()),
+      fetch('http://localhost:5000/api/admin/kyc?limit=100', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      }).then(res => res.json()).catch(() => ({ success: false, data: [] }))
+    ])
+      .then(([data, kycJson]) => {
         if (!data.success || !data.data) return false;
 
         const { cars = [], users = [], bookings = [] } = data.data;
+
+        // Build a latest-KYC-by-customer lookup so the Customers page can show
+        // real verification state instead of a hardcoded "verified" badge.
+        const kycByUser = new Map();
+        const kycSubmissions = kycJson && kycJson.success && Array.isArray(kycJson.data) ? kycJson.data : [];
+        kycSubmissions.forEach(sub => {
+          const customerId = sub.customer && (sub.customer._id || sub.customer);
+          if (!customerId) return;
+          const key = String(customerId);
+          const submittedAt = new Date(sub.createdAt || 0).getTime();
+          const existing = kycByUser.get(key);
+          if (!existing || submittedAt > existing.submittedAt) {
+            kycByUser.set(key, { submittedAt, submission: sub });
+          }
+        });
+
+        const vehicleNameFor = (booking) => {
+          const brand = booking.car ? (booking.car.brand || '') : '';
+          const rawName = booking.car ? (booking.car.carName || '') : '';
+          const model = rawName.startsWith(brand) ? rawName.slice(brand.length) : rawName;
+          return `${brand} ${model}`.replace(/\s+/g, ' ').trim() || 'Unknown Vehicle';
+        };
 
         AdminState.fleetData = cars.map(car => {
           const brandPrefix = car.brand ? `${car.brand} ` : '';
@@ -5322,19 +5435,65 @@ const AdminDashboard = (() => {
           .sort((a, b) => a.name.localeCompare(b.name));
 
         // ---- Hydrate userData (Users module + Recent Registrations) ----
-        AdminState.userData = users.map(u => ({
-          id: String(u._id),
-          name: u.fullName || 'Unknown',
-          email: u.email || '',
-          phone: u.phone || 'N/A',
-          license: 'N/A',
-          status: u.role === 'admin' ? 'active' : 'active',
-          membership: u.role === 'admin' ? 'Staff' : 'Silver',
-          verificationStatus: 'verified',
-          bookings: bookings.filter(b => b.customer && String(b.customer._id) === String(u._id)).length,
-          currentRental: '—',
-          joined: u.createdAt
-        }));
+        AdminState.userData = users.map(u => {
+          const userBookings = bookings
+            .filter(b => b.customer && String(b.customer._id) === String(u._id))
+            .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+          const activeBooking = userBookings.find(b => ['Active', 'Extended'].includes(b.bookingStatus)) ||
+            userBookings.find(b => b.bookingStatus === 'Pending Pickup');
+          const latestBooking = userBookings[0];
+          const customerDetails = latestBooking && latestBooking.customerDetails ? latestBooking.customerDetails : null;
+          const kycEntry = kycByUser.get(String(u._id));
+          const kycRawStatus = kycEntry ? kycEntry.submission.status : 'NOT_SUBMITTED';
+          const verificationStatus = kycRawStatus === 'VERIFIED' ? 'verified'
+            : kycRawStatus === 'PENDING' ? 'pending'
+            : kycRawStatus === 'REJECTED' ? 'rejected'
+            : 'not_submitted';
+          const addressParts = customerDetails ? [
+            customerDetails.address,
+            customerDetails.city,
+            customerDetails.state,
+            customerDetails.postal,
+            customerDetails.country
+          ].filter(Boolean) : [];
+          const currentRental = activeBooking
+            ? `${vehicleNameFor(activeBooking)} · ${activeBooking.bookingStatus === 'Pending Pickup' ? 'Upcoming' : 'Active'}`
+            : '—';
+          const bookingHistory = userBookings.map(b => {
+            const total = b.totalAmount != null ? b.totalAmount : (b.estimatedPricing ? b.estimatedPricing.estimatedTotal : 0);
+            const historyStatus = ['Active', 'Extended'].includes(b.bookingStatus) ? 'active'
+              : b.bookingStatus === 'Completed' ? 'completed'
+              : b.bookingStatus === 'Cancelled' ? 'cancelled'
+              : 'pending';
+            return {
+              id: 'BK-' + String(b._id).slice(-6).toUpperCase(),
+              vehicle: vehicleNameFor(b),
+              date: b.createdAt || '',
+              amount: Number(total) || 0,
+              status: historyStatus
+            };
+          });
+
+          return {
+            id: String(u._id),
+            name: u.fullName || 'Unknown',
+            email: u.email || '',
+            phone: u.phone || 'N/A',
+            license: customerDetails && customerDetails.license ? customerDetails.license : 'N/A',
+            dob: customerDetails && customerDetails.dob ? customerDetails.dob : '',
+            address: addressParts.join(', '),
+            emergencyContact: null,
+            status: u.isSuspended ? 'blocked' : 'active',
+            membership: u.role === 'admin' ? 'Staff' : 'Standard',
+            verificationStatus,
+            kycRawStatus,
+            bookings: userBookings.length,
+            currentRental,
+            bookingHistory,
+            notifications: [],
+            joined: u.createdAt || ''
+          };
+        });
 
         // ---- Hydrate bookings / pre-bookings / extensions ----
         AdminState.bookingData = [];
@@ -5363,6 +5522,7 @@ const AdminDashboard = (() => {
           if (b.bookingStatus === 'Pending Pickup' && b.bookingType === 'PRE_BOOKING') {
             AdminState.preBookingsData.push({
               id: String(b._id),
+              customerId: b.customer ? String(b.customer._id) : null,
               reference: 'PRE-' + String(b._id).slice(-6).toUpperCase(),
               user: customerName,
               email: customerEmail,
@@ -5387,6 +5547,7 @@ const AdminDashboard = (() => {
           AdminState.bookingData.push({
             id: String(b._id),
             reference: 'BK-' + String(b._id).slice(-6).toUpperCase(),
+            customerId: b.customer ? String(b.customer._id) : null,
             user: customerName,
             email: customerEmail,
             phone: customerPhone,
@@ -5409,15 +5570,23 @@ const AdminDashboard = (() => {
             pickupTime: pickupISO ? new Date(pickupISO).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '',
             returnDate: returnDateStr,
             returnTime: returnISO ? new Date(returnISO).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '',
+            customerDetails: b.customerDetails || null,
             status: status,
-            timeline: [{ label: 'Booked', time: 'Just now', active: true }]
+            timeline: [{
+              label: 'Booked',
+              time: b.createdAt ? new Date(b.createdAt).toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '--',
+              active: true
+            }]
           });
 
-          if (status === 'completed' || status === 'active') {
+          // Revenue is recognized for Completed / Active / Extended bookings.
+          // Pending Pickup is intentionally excluded because payment orders are
+          // not linked to bookings yet.
+          if (status === 'completed' || status === 'active' || status === 'extended') {
             totalRevenue += totalAmt;
           }
-          if (pickupDateStr === todayDateStr) todayPickups++;
-          if (returnDateStr === todayDateStr) todayReturns++;
+          if (b.bookingStatus !== 'Cancelled' && pickupDateStr === todayDateStr) todayPickups++;
+          if (b.bookingStatus !== 'Cancelled' && returnDateStr === todayDateStr) todayReturns++;
 
           if (b.extensionHistory && b.extensionHistory.length > 0 && (status === 'extended' || status === 'completed')) {
             b.extensionHistory.forEach((ext, i) => {
@@ -5468,7 +5637,7 @@ const AdminDashboard = (() => {
           .map(b => {
             const isPickup = new Date(b.rentalDetails.pickupDateTime) >= new Date();
             return {
-              title: `${isPickup ? 'Pickup' : 'Return'} · ${b.car ? (b.car.brand + ' ' + b.car.carName) : 'Vehicle'} · ${b.customer ? b.customer.fullName : 'Customer'}`,
+              title: `${isPickup ? 'Pickup' : 'Return'} · ${vehicleNameFor(b)} · ${b.customer ? b.customer.fullName : 'Customer'}`,
               time: new Date(b.rentalDetails.pickupDateTime).toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
               info: isPickup ? b.rentalDetails.pickupLocation || '' : (b.rentalDetails.returnLocation || ''),
               type: isPickup ? 'pickup' : 'return'
@@ -5532,14 +5701,11 @@ const AdminDashboard = (() => {
   /* ============================================================
      19. INITIALIZATION
      ============================================================ */
-  function init() {
-    initAuthGuard();
+  async function init() {
+    const authOk = await initAuthGuard();
+    if (!authOk) return;
+
     try { syncFleetWithCentralData(); } catch(e) { console.error("syncFleetWithCentralData error:", e); }
-    fetchDashboardData().then(loaded => {
-      if (loaded) {
-        try { DashboardRenderer.navigate(AdminState.uiState.currentModule || 'overview'); } catch(e) { console.error("navigate-after-fetch error:", e); }
-      }
-    });
     try { restoreUiState(); } catch(e) { console.error("restoreUiState error:", e); }
     try { SidebarController.init(); } catch(e) { console.error("SidebarController.init error:", e); }
     try { HeaderController.init(); } catch(e) { console.error("HeaderController.init error:", e); }
@@ -5547,14 +5713,24 @@ const AdminDashboard = (() => {
     try { ModalController.init(); } catch(e) { console.error("ModalController.init error:", e); }
     try { TabController.init(); } catch(e) { console.error("TabController.init error:", e); }
     try { DashboardRenderer.init(); } catch(e) { console.error("DashboardRenderer.init error:", e); }
-    try { DropdownController.updateNotificationBadge(); } catch(e) { console.error("DropdownController.updateNotificationBadge error:", e); }
 
-    try {
-      const startModule = AdminState.uiState.currentModule || 'overview';
-      DashboardRenderer.navigate(startModule);
-    } catch(e) {
-      console.error("DashboardRenderer.navigate error during init:", e);
+    const startModule = AdminState.uiState.currentModule || 'overview';
+    if (DashboardRenderer.contentArea) {
+      DashboardRenderer.contentArea.innerHTML = `<div class="db-empty-state" style="min-height: 55vh;">
+        <div class="db-empty-state__icon">${Utils.icon('icon-car')}</div>
+        <h3 class="db-empty-state__title">Loading admin dashboard</h3>
+        <p class="db-empty-state__text">Fetching live fleet, bookings, customers, KYC, and revenue data...</p>
+      </div>`;
     }
+
+    AdminState.dataError = '';
+    const loaded = await fetchDashboardData();
+    if (!loaded) {
+      AdminState.dataError = 'Could not load live dashboard data. Please refresh to retry.';
+    }
+
+    try { DropdownController.updateNotificationBadge(); } catch(e) { console.error("DropdownController.updateNotificationBadge error:", e); }
+    try { DashboardRenderer.navigate(startModule); } catch(e) { console.error("DashboardRenderer.navigate error during init:", e); }
   }
 
   if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); }

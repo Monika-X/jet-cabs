@@ -76,8 +76,18 @@ const getMyKycStatus = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: 'KYC status fetched successfully.',
-      data: {
-        status: latest ? latest.status : 'NOT_SUBMITTED'
+      data: latest ? {
+        status: latest.status,
+        documentType: latest.documentType,
+        documentNumber: latest.documentNumber,
+        fullName: latest.fullName,
+        email: latest.email,
+        phone: latest.phone,
+        rejectionReason: latest.rejectionReason || '',
+        submittedAt: latest.createdAt,
+        reviewedAt: latest.reviewedAt || null
+      } : {
+        status: 'NOT_SUBMITTED'
       }
     });
   } catch (error) {

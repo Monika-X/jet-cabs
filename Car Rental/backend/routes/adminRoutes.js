@@ -11,6 +11,7 @@ const {
   getAnalyticsSummary,
   getBookingAnalytics,
   getUsers,
+  updateUser,
   setUserSuspension
 } = require('../controllers/adminController');
 const {
@@ -44,6 +45,7 @@ router.get('/analytics/bookings', protect, authorize('admin'), getBookingAnalyti
 
 // Users
 router.get('/users', protect, authorize('admin'), getUsers);
+router.put('/users/:id', protect, authorize('admin'), updateUser);
 router.put('/users/:id/suspend', protect, authorize('admin'), setUserSuspension);
 router.put('/users/:id/activate', protect, authorize('admin'), setUserSuspension);
 

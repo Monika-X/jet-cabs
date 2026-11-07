@@ -14,433 +14,63 @@ const UserDashboard = (() => {
      ============================================================ */
   const DashboardState = {
     userData: {
-      id: 'USR-001',
-      firstName: 'Alexander',
-      lastName: 'Mitchell',
-      email: 'alexander.mitchell@email.com',
-      phone: '+1 (555) 234-8901',
+      id: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
       avatar: null,
-      initials: 'AM',
-      membership: 'Gold',
-      memberSince: '2024-03-15',
-      verified: true,
-      dob: '1990-05-15',
-      gender: 'Male',
-      // License info
-      licenseNumber: 'DL-CA98765432',
-      licenseExpiry: '2029-05-15',
-      licenseAuthority: 'California DMV',
-      licenseStatus: 'verified', // verified, pending, rejected, missing
-      // Address info
-      country: 'United States',
-      state: 'California',
-      city: 'San Francisco',
-      postalCode: '94107',
-      streetAddress: '150 Minna St, Apt 3B',
-      // Emergency Contact
-      emergencyName: 'Sarah Mitchell',
-      emergencyRelationship: 'Spouse',
-      emergencyPhone: '+1 (555) 987-6543',
-      // Preferences
+      initials: '',
+      membership: '',
+      memberSince: '',
+      verified: false,
+      kycStatus: 'NOT_SUBMITTED',
+      dob: '',
+      gender: '',
+      // License info (hydrated from the latest real booking)
+      licenseNumber: '',
+      licenseExpiry: '',
+      licenseAuthority: '',
+      licenseCountry: '',
+      licenseStatus: 'missing',
+      // Address info (hydrated from the latest real booking)
+      country: '',
+      state: '',
+      city: '',
+      postalCode: '',
+      streetAddress: '',
+      // Emergency contact (not stored by the backend yet)
+      emergencyName: '',
+      emergencyRelationship: '',
+      emergencyPhone: '',
+      // Preferences (stored on this device)
       language: 'en',
       emailAlerts: true,
       pushNotifications: false,
     },
 
-    rentalsData: [
-      {
-        id: 'RNT-2401',
-        bookingId: 'BK-24071001',
-        brand: 'Mercedes-Benz',
-        model: 'AMG GT 63 S',
-        category: 'Luxury',
-        image: 'assets/images/cars/luxury.png',
-        rentalType: 'Daily',
-        pickupDate: '2026-07-05',
-        pickupTime: '10:00 AM',
-        pickupLocation: 'JET CABS Downtown Hub',
-        returnDate: '2026-07-12',
-        returnTime: '10:00 AM',
-        returnLocation: 'JET CABS Downtown Hub',
-        status: 'active',
-        dailyRate: 520,
-        totalDays: 7,
-        totalCost: 3640,
-        deposit: 1000,
-        insurance: 'Premium Coverage',
-        mileageLimit: 'Unlimited',
-        fuelPolicy: 'Full-to-Full',
-        specifications: { engine: '4.0L V8 Biturbo', hp: '630 HP', transmission: '9G-Tronic Auto', fuel: 'Petrol', seats: 4 },
-        timeline: [
-          { date: '2026-07-05', time: '09:30 AM', event: 'Booking Confirmed', type: 'success' },
-          { date: '2026-07-05', time: '09:45 AM', event: 'Payment Received — $3,640', type: 'success' },
-          { date: '2026-07-05', time: '10:00 AM', event: 'Vehicle Picked Up', type: 'success' },
-          { date: '2026-07-12', time: '10:00 AM', event: 'Scheduled Return', type: 'pending' },
-        ]
-      },
-      {
-        id: 'RNT-2398',
-        bookingId: 'BK-24070502',
-        brand: 'BMW',
-        model: 'X7 xDrive40i',
-        category: 'SUV',
-        image: 'assets/images/cars/suv.png',
-        rentalType: 'Daily',
-        pickupDate: '2026-07-15',
-        pickupTime: '09:00 AM',
-        pickupLocation: 'JET CABS Airport Lounge',
-        returnDate: '2026-07-18',
-        returnTime: '09:00 AM',
-        returnLocation: 'JET CABS Airport Lounge',
-        status: 'upcoming',
-        dailyRate: 420,
-        totalDays: 3,
-        totalCost: 1260,
-        deposit: 500,
-        insurance: 'Standard Coverage',
-        mileageLimit: '300 mi/day',
-        fuelPolicy: 'Full-to-Full',
-        specifications: { engine: '3.0L Turbo I6', hp: '375 HP', transmission: '8-Speed Auto', fuel: 'Petrol', seats: 7 },
-        timeline: [
-          { date: '2026-07-03', time: '02:15 PM', event: 'Booking Created', type: 'info' },
-          { date: '2026-07-04', time: '11:00 AM', event: 'Booking Confirmed', type: 'success' },
-          { date: '2026-07-05', time: '03:30 PM', event: 'Payment Received — $1,260', type: 'success' },
-          { date: '2026-07-15', time: '09:00 AM', event: 'Scheduled Pickup', type: 'pending' },
-        ]
-      },
-      {
-        id: 'RNT-2395',
-        bookingId: 'BK-24062803',
-        brand: 'Porsche',
-        model: '911 Turbo S',
-        category: 'Sports',
-        image: 'assets/images/cars/sports.png',
-        rentalType: 'Hourly',
-        pickupDate: '2026-06-28',
-        pickupTime: '02:00 PM',
-        pickupLocation: 'JET CABS Marina Point',
-        returnDate: '2026-06-28',
-        returnTime: '08:00 PM',
-        returnLocation: 'JET CABS Marina Point',
-        status: 'completed',
-        dailyRate: 120,
-        totalDays: 1,
-        totalCost: 720,
-        deposit: 500,
-        insurance: 'Premium Coverage',
-        mileageLimit: '100 mi',
-        fuelPolicy: 'Full-to-Full',
-        specifications: { engine: '3.7L Twin-Turbo Flat-6', hp: '640 HP', transmission: '8-Speed PDK', fuel: 'Petrol', seats: 2 },
-        timeline: [
-          { date: '2026-06-27', time: '10:00 AM', event: 'Booking Confirmed', type: 'success' },
-          { date: '2026-06-28', time: '02:00 PM', event: 'Vehicle Picked Up', type: 'success' },
-          { date: '2026-06-28', time: '07:45 PM', event: 'Vehicle Returned', type: 'success' },
-          { date: '2026-06-28', time: '08:00 PM', event: 'Rental Completed — Excellent', type: 'success' },
-        ]
-      },
-      {
-        id: 'RNT-2392',
-        bookingId: 'BK-24061504',
-        brand: 'Tesla',
-        model: 'Model S Plaid',
-        category: 'Electric',
-        image: 'assets/images/cars/electric.png',
-        rentalType: 'Daily',
-        pickupDate: '2026-06-15',
-        pickupTime: '11:00 AM',
-        pickupLocation: 'JET CABS City Center',
-        returnDate: '2026-06-20',
-        returnTime: '11:00 AM',
-        returnLocation: 'JET CABS City Center',
-        status: 'completed',
-        dailyRate: 480,
-        totalDays: 5,
-        totalCost: 2400,
-        deposit: 800,
-        insurance: 'Standard Coverage',
-        mileageLimit: 'Unlimited',
-        fuelPolicy: 'Charged-to-Charged',
-        specifications: { engine: 'Tri-Motor Electric', hp: '1020 HP', transmission: 'Single-Speed', fuel: 'Electric', seats: 5 },
-        timeline: [
-          { date: '2026-06-14', time: '05:00 PM', event: 'Booking Confirmed', type: 'success' },
-          { date: '2026-06-15', time: '11:00 AM', event: 'Vehicle Picked Up', type: 'success' },
-          { date: '2026-06-20', time: '10:30 AM', event: 'Vehicle Returned', type: 'success' },
-          { date: '2026-06-20', time: '11:00 AM', event: 'Rental Completed — Good', type: 'success' },
-        ]
-      },
-      {
-        id: 'RNT-2388',
-        bookingId: 'BK-24060105',
-        brand: 'Range Rover',
-        model: 'Sport SVR',
-        category: 'SUV',
-        image: 'assets/images/cars/suv.png',
-        rentalType: 'Daily',
-        pickupDate: '2026-06-01',
-        pickupTime: '09:00 AM',
-        pickupLocation: 'JET CABS Downtown Hub',
-        returnDate: '2026-06-04',
-        returnTime: '09:00 AM',
-        returnLocation: 'JET CABS Downtown Hub',
-        status: 'returned',
-        dailyRate: 580,
-        totalDays: 3,
-        totalCost: 1740,
-        deposit: 700,
-        insurance: 'Premium Coverage',
-        mileageLimit: '250 mi/day',
-        fuelPolicy: 'Full-to-Full',
-        specifications: { engine: '5.0L Supercharged V8', hp: '575 HP', transmission: '8-Speed Auto', fuel: 'Diesel', seats: 5 },
-        timeline: [
-          { date: '2026-05-30', time: '01:00 PM', event: 'Booking Confirmed', type: 'success' },
-          { date: '2026-06-01', time: '09:00 AM', event: 'Vehicle Picked Up', type: 'success' },
-          { date: '2026-06-04', time: '08:45 AM', event: 'Vehicle Returned', type: 'success' },
-          { date: '2026-06-04', time: '09:00 AM', event: 'Deposit Refunded — $700', type: 'success' },
-        ]
-      },
-      {
-        id: 'RNT-2385',
-        bookingId: 'BK-24052006',
-        brand: 'Audi',
-        model: 'A8 L Quattro',
-        category: 'Sedan',
-        image: 'assets/images/cars/sedan.png',
-        rentalType: 'Daily',
-        pickupDate: '2026-05-20',
-        pickupTime: '10:00 AM',
-        pickupLocation: 'JET CABS Airport Lounge',
-        returnDate: '2026-05-23',
-        returnTime: '10:00 AM',
-        returnLocation: 'JET CABS Airport Lounge',
-        status: 'cancelled',
-        dailyRate: 350,
-        totalDays: 3,
-        totalCost: 1050,
-        deposit: 400,
-        insurance: 'Standard Coverage',
-        mileageLimit: '300 mi/day',
-        fuelPolicy: 'Full-to-Full',
-        specifications: { engine: '3.0L Turbo V6', hp: '335 HP', transmission: '8-Speed Tiptronic', fuel: 'Petrol', seats: 5 },
-        timeline: [
-          { date: '2026-05-18', time: '03:00 PM', event: 'Booking Created', type: 'info' },
-          { date: '2026-05-19', time: '09:00 AM', event: 'Booking Confirmed', type: 'success' },
-          { date: '2026-05-19', time: '04:00 PM', event: 'Cancellation Requested', type: 'warning' },
-          { date: '2026-05-19', time: '04:30 PM', event: 'Booking Cancelled — Full Refund', type: 'danger' },
-        ]
-      },
-    ],
-
-    preBookingsData: [
-      {
-        id: 'PB-3001',
-        reference: 'PRE-20260720-001',
-        vehicleName: 'Mercedes-Benz AMG GT 63 S',
-        vehicleCategory: 'Luxury',
-        vehicleImage: 'assets/images/cars/luxury.png',
-        requestedDates: 'Jul 20 – Jul 25, 2026',
-        pickupDate: '2026-07-20',
-        returnDate: '2026-07-25',
-        pickupLocation: 'JET CABS Downtown Hub',
-        status: 'pending',
-        requestedOn: '2026-07-06',
-        estimatedCost: 2600,
-        notes: 'Anniversary trip. Prefer black or dark color.',
-      },
-      {
-        id: 'PB-3002',
-        reference: 'PRE-20260801-002',
-        vehicleName: 'Tesla Model S Plaid',
-        vehicleCategory: 'Electric',
-        vehicleImage: 'assets/images/cars/electric.png',
-        requestedDates: 'Aug 1 – Aug 5, 2026',
-        pickupDate: '2026-08-01',
-        returnDate: '2026-08-05',
-        pickupLocation: 'JET CABS City Center',
-        status: 'approved',
-        requestedOn: '2026-07-02',
-        estimatedCost: 1920,
-        notes: '',
-      },
-      {
-        id: 'PB-3003',
-        reference: 'PRE-20260810-003',
-        vehicleName: 'Porsche 911 Turbo S',
-        vehicleCategory: 'Sports',
-        vehicleImage: 'assets/images/cars/sports.png',
-        requestedDates: 'Aug 10 – Aug 12, 2026',
-        pickupDate: '2026-08-10',
-        returnDate: '2026-08-12',
-        pickupLocation: 'JET CABS Marina Point',
-        status: 'rejected',
-        requestedOn: '2026-06-28',
-        estimatedCost: 1500,
-        rejectionReason: 'Vehicle undergoing scheduled maintenance during requested dates. We apologize for the inconvenience.',
-        notes: 'Track day event.',
-      },
-      {
-        id: 'PB-3004',
-        reference: 'PRE-20260815-004',
-        vehicleName: 'BMW X7 xDrive40i',
-        vehicleCategory: 'SUV',
-        vehicleImage: 'assets/images/cars/suv.png',
-        requestedDates: 'Aug 15 – Aug 20, 2026',
-        pickupDate: '2026-08-15',
-        returnDate: '2026-08-20',
-        pickupLocation: 'JET CABS Airport Lounge',
-        status: 'alternative',
-        requestedOn: '2026-07-01',
-        estimatedCost: 2100,
-        notes: 'Family road trip. Need 7 seats.',
-        alternatives: {
-          reason: 'The BMW X7 xDrive40i is fully booked for your requested dates.',
-          suggestions: [
-            {
-              category: 'Similar Price Range',
-              vehicles: [
-                { name: 'Audi A8 L Quattro', category: 'Sedan', price: 350, image: 'assets/images/cars/sedan.png', specs: '335 HP · 5 Seats · AWD' },
-                { name: 'Tesla Model S Plaid', category: 'Electric', price: 480, image: 'assets/images/cars/electric.png', specs: '1020 HP · 5 Seats · AWD' },
-              ]
-            },
-            {
-              category: 'Similar Specifications',
-              vehicles: [
-                { name: 'Range Rover Sport SVR', category: 'SUV', price: 580, image: 'assets/images/cars/suv.png', specs: '575 HP · 5 Seats · 4WD' },
-                { name: 'Mercedes-Benz AMG GT 63 S', category: 'Luxury', price: 520, image: 'assets/images/cars/luxury.png', specs: '630 HP · 4 Seats · AWD' },
-              ]
-            }
-          ]
-        }
-      },
-      {
-        id: 'PB-3005',
-        reference: 'PRE-20260601-005',
-        vehicleName: 'Range Rover Sport SVR',
-        vehicleCategory: 'SUV',
-        vehicleImage: 'assets/images/cars/suv.png',
-        requestedDates: 'Jun 1 – Jun 5, 2026',
-        pickupDate: '2026-06-01',
-        returnDate: '2026-06-05',
-        pickupLocation: 'JET CABS Downtown Hub',
-        status: 'expired',
-        requestedOn: '2026-05-15',
-        estimatedCost: 2320,
-        notes: '',
-      },
-    ],
-
-    notificationData: [
-      { id: 'N-01', type: 'warning', category: 'Reminder', title: 'Rental Expires Soon', text: 'Rental expires in 1 hour.', time: '1 hr ago', read: false, priority: 'high' },
-      { id: 'N-02', type: 'warning', category: 'Reminder', title: 'Rental Expires Soon', text: 'Rental expires in 30 minutes.', time: '30 mins ago', read: false, priority: 'high' },
-      { id: 'N-03', type: 'danger', category: 'Reminder', title: 'Rental Expires Soon', text: 'Rental expires in 15 minutes.', time: '15 mins ago', read: false, priority: 'high' },
-      { id: 'N-04', type: 'success', category: 'Extension', title: 'Extension Approved', text: 'Rental extended successfully.', time: '2 hrs ago', read: true, priority: 'normal' },
-      { id: 'N-05', type: 'info', category: 'Reminder', title: 'Return Reminder', text: 'Return vehicle reminder.', time: '3 hrs ago', read: true, priority: 'normal' },
-      { id: 'N-06', type: 'success', category: 'Booking', title: 'Booking Confirmed', text: 'Booking confirmed.', time: '1 day ago', read: true, priority: 'normal' },
-    ],
-
-    extensionsData: [
-      {
-        id: 'EXT-101',
-        rentalId: 'RNT-2401',
-        brand: 'Mercedes-Benz',
-        model: 'AMG GT 63 S',
-        image: 'assets/images/cars/luxury.png',
-        currentReturnDate: '2026-07-12',
-        remainingDays: 4,
-        dailyRate: 520,
-        status: 'eligible',
-      },
-      {
-        id: 'EXT-102',
-        rentalId: 'RNT-2398',
-        brand: 'BMW',
-        model: 'X7 xDrive40i',
-        image: 'assets/images/cars/suv.png',
-        currentReturnDate: '2026-07-18',
-        remainingDays: 10,
-        dailyRate: 420,
-        status: 'pending',
-        requestedOn: '2026-07-07',
-        additionalTime: '2 Days',
-        reason: 'Business meeting extended.',
-        estimatedCost: 840,
-        updatedReturnDate: '2026-07-20',
-      }
-    ],
-
-    extensionHistory: [
-      {
-        id: 'EXTH-01',
-        bookingId: 'BK-24061504',
-        brand: 'Tesla',
-        model: 'Model S Plaid',
-        image: 'assets/images/cars/electric.png',
-        type: 'Daily',
-        duration: '2 Days',
-        originalReturn: '2026-06-18',
-        newReturn: '2026-06-20',
-        status: 'approved',
-        cost: 960,
-      },
-      {
-        id: 'EXTH-02',
-        bookingId: 'BK-24060105',
-        brand: 'Range Rover',
-        model: 'Sport SVR',
-        image: 'assets/images/cars/suv.png',
-        type: 'Hourly',
-        duration: '5 Hours',
-        originalReturn: '2026-06-04 09:00 AM',
-        newReturn: '2026-06-04 02:00 PM',
-        status: 'rejected',
-        cost: 450,
-        reason: 'Vehicle fully reserved for subsequent user.',
-      }
-    ],
-
-    verificationData: {
-      bookingId: 'BK-24071001',
-      vehicleName: 'Mercedes-Benz AMG GT 63 S',
-      pickupDate: '2026-07-05',
-      returnDate: '2026-07-12',
-      progressStep: 1, // 0: Waiting, 1: Upload Photos, 2: Admin Review, 3: Verified
-      photos: {
-        front: { label: 'Front View', status: 'verified', preview: 'assets/images/cars/luxury.png' },
-        rear: { label: 'Rear View', status: 'verified', preview: 'assets/images/cars/luxury.png' },
-        left: { label: 'Left Side', status: 'uploaded', preview: 'assets/images/cars/luxury.png' },
-        right: { label: 'Right Side', status: 'waiting', preview: null },
-        frontAngle: { label: 'Front Angle', status: 'waiting', preview: null },
-        rearAngle: { label: 'Rear Angle', status: 'waiting', preview: null },
-      }
-    },
-
+    rentalsData: [],
+    preBookingsData: [],
+    notificationData: [],
+    extensionsData: [],
+    extensionHistory: [],
+    verificationData: null,
+    kycData: null,
     paymentsData: {
-      balance: 1500,
-      heldDeposits: 1000,
-      methods: [
-        { id: 'PM-01', brand: 'visa', number: '•••• •••• •••• 4321', expiry: '12/28', isDefault: true },
-        { id: 'PM-02', brand: 'mastercard', number: '•••• •••• •••• 8765', expiry: '06/27', isDefault: false },
-      ],
-      transactions: [
-        { id: 'TXN-901', date: '2026-07-05', bookingId: 'BK-24071001', type: 'Rental Charge', method: 'Visa ending in 4321', amount: 3640, status: 'processed' },
-        { id: 'TXN-902', date: '2026-07-05', bookingId: 'BK-24071001', type: 'Security Deposit', method: 'Visa ending in 4321', amount: 1000, status: 'held' },
-        { id: 'TXN-903', date: '2026-06-28', bookingId: 'BK-24062803', type: 'Rental Charge', method: 'Visa ending in 4321', amount: 720, status: 'processed' },
-        { id: 'TXN-904', date: '2026-06-14', bookingId: 'BK-24061504', type: 'Rental Charge', method: 'Visa ending in 4321', amount: 2400, status: 'processed' },
-        { id: 'TXN-905', date: '2026-06-14', bookingId: 'BK-24061504', type: 'Security Deposit', method: 'Visa ending in 4321', amount: 800, status: 'refunded' },
-      ]
+      methods: [],
+      transactions: []
     },
-
     supportTicketsData: [],
-
     statsData: {
-      activeRentals: 1,
-      pendingPreBookings: 1,
-      upcomingReturns: 1,
-      completedRentals: 2,
-      extensionRequests: 1,
-      unreadNotifications: 3,
-      walletBalance: 1500,
-      totalRentals: 6,
+      activeRentals: 0,
+      pendingPreBookings: 0,
+      upcomingReturns: 0,
+      completedRentals: 0,
+      extensionRequests: 0,
+      unreadNotifications: 0,
+      totalRentals: 0,
     },
+    dataError: '',
 
     // UI State
     uiState: {
@@ -472,14 +102,22 @@ const UserDashboard = (() => {
      ============================================================ */
   const Utils = {
     formatCurrency(amount) {
-      return '$' + amount.toLocaleString('en-US');
+      const value = Number(amount);
+      return '$' + (Number.isFinite(value) ? value : 0).toLocaleString('en-US');
+    },
+    _toDate(dateStr) {
+      if (!dateStr) return null;
+      const d = String(dateStr).includes('T') ? new Date(dateStr) : new Date(dateStr + 'T00:00:00');
+      return Number.isNaN(d.getTime()) ? null : d;
     },
     formatDate(dateStr) {
-      const d = new Date(dateStr + 'T00:00:00');
+      const d = this._toDate(dateStr);
+      if (!d) return '—';
       return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     },
     formatDateShort(dateStr) {
-      const d = new Date(dateStr + 'T00:00:00');
+      const d = this._toDate(dateStr);
+      if (!d) return '—';
       return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
     },
     debounce(fn, delay = 300) {
@@ -1016,10 +654,12 @@ const UserDashboard = (() => {
   function RenderOverview() {
     const s = DashboardState.statsData;
     const u = DashboardState.userData;
-    const activeRental = DashboardState.rentalsData.find(r => r.status === 'active') ||
-                         DashboardState.rentalsData.find(r => r.status === 'upcoming');
+    const activeRental = DashboardState.rentalsData.find(r => r.status === 'active');
+    const upcomingRental = DashboardState.rentalsData.find(r => r.status === 'upcoming');
+    const displayRental = activeRental || upcomingRental;
 
     DashboardRenderer.contentArea.innerHTML = `
+      ${_renderErrorBanner()}
       <!-- HERO SECTION -->
       <div class="db-hero db-animate-in">
         <div class="db-hero__content">
@@ -1037,15 +677,15 @@ const UserDashboard = (() => {
         </div>
         <div class="db-hero__badge">
           <div class="db-hero__badge-icon">${Utils.icon('icon-star')}</div>
-          <div class="db-hero__badge-label">${u.membership} Member</div>
+          <div class="db-hero__badge-label">${u.membership ? Utils.escapeHtml(u.membership) + ' Member' : 'Customer Account'}</div>
         </div>
       </div>
 
       <!-- STATISTICS -->
       <div class="db-stats-grid db-animate-stagger">
-        ${_statCard('icon-car', 'primary', 'Active Rentals', s.activeRentals, 'Active & Upcoming', 'rentals')}
+        ${_statCard('icon-car', 'primary', 'Active Rentals', s.activeRentals, 'Currently on the road', 'rentals')}
         ${_statCard('icon-clipboard', 'gold', 'Pending Pre-Bookings', s.pendingPreBookings, 'Awaiting review', 'prebookings')}
-        ${_statCard('icon-clock', 'warning', 'Upcoming Returns', s.upcomingReturns, activeRental ? Utils.getRemainingDays(activeRental.returnDate) : 'None', 'rentals')}
+        ${_statCard('icon-clock', 'warning', 'Upcoming Returns', s.upcomingReturns, activeRental ? Utils.getRemainingDays(activeRental.returnDate) : 'No active return', 'rentals')}
         ${_statCard('icon-check-circle', 'success', 'Completed Rentals', s.completedRentals, 'Lifetime', 'history')}
         ${_statCard('icon-bell', 'danger', 'Notifications', s.unreadNotifications, 'Unread messages', 'notifications')}
       </div>
@@ -1056,12 +696,12 @@ const UserDashboard = (() => {
         <div class="db-section-card db-animate-in">
           <div class="db-section-card__header">
             <div>
-              <h3 class="db-section-card__title">Current Rental</h3>
-              <p class="db-section-card__subtitle">Your active vehicle</p>
+              <h3 class="db-section-card__title">${activeRental ? 'Current Rental' : (upcomingRental ? 'Upcoming Rental' : 'Current Rental')}</h3>
+              <p class="db-section-card__subtitle">${activeRental ? 'Your active vehicle' : (upcomingRental ? 'Your next confirmed pickup' : 'Your active vehicle')}</p>
             </div>
           </div>
           <div class="db-section-card__body">
-            ${activeRental ? _renderCurrentRental(activeRental) : _renderEmptyState('icon-car', 'No Active Rental', 'You don\'t have any active rentals right now. Browse our fleet to book your next luxury ride.', 'Browse Cars', 'cars.html')}
+            ${displayRental ? _renderCurrentRental(displayRental) : _renderEmptyState('icon-car', 'No Active Rental', 'You don\'t have any active rentals right now. Browse our fleet to book your next luxury ride.', 'Browse Cars', 'cars.html')}
           </div>
         </div>
 
@@ -1088,7 +728,7 @@ const UserDashboard = (() => {
                     title = 'Booking Created';
                     text = `Scheduled for ${r.brand} ${r.model} at ${r.pickupLocation}.`;
                     dot = 'db-timeline__dot--info';
-                    timeLabel = `${Utils.formatDateShort(r.pickupDate)}, ${r.pickupTime}`;
+                    timeLabel = r.createdAt ? Utils.formatDateShort(r.createdAt) : `${Utils.formatDateShort(r.pickupDate)}, ${r.pickupTime}`;
                   } else if (r.status === 'active') {
                     title = 'Rental Active';
                     text = `Currently renting ${r.brand} ${r.model}.`;
@@ -1100,15 +740,15 @@ const UserDashboard = (() => {
                     dot = 'db-timeline__dot--danger';
                     timeLabel = `${Utils.formatDateShort(r.pickupDate)}, ${r.pickupTime}`;
                   }
-                  if(title) activities.push({ title, text, dot, timeLabel, dateObj: new Date(r.pickupDate) });
+                  if(title) activities.push({ title, text, dot, timeLabel, dateObj: new Date(r.createdAt || r.pickupDate) });
                 });
                 
                 DashboardState.preBookingsData.forEach(p => {
                   let title = 'Pre-Booking ' + Utils.statusLabel(p.status);
                   let text = `Requested ${p.vehicleName} for ${p.requestedDates}.`;
                   let dot = p.status === 'approved' ? 'db-timeline__dot--success' : (p.status === 'rejected' ? 'db-timeline__dot--danger' : 'db-timeline__dot--warning');
-                  let timeLabel = `${Utils.formatDateShort(p.pickupDate)}`;
-                  activities.push({ title, text, dot, timeLabel, dateObj: new Date(p.pickupDate) });
+                  let timeLabel = p.requestedOn ? Utils.formatDateShort(p.requestedOn) : `${Utils.formatDateShort(p.pickupDate)}`;
+                  activities.push({ title, text, dot, timeLabel, dateObj: new Date(p.requestedOn || p.pickupDate) });
                 });
 
                 if (activities.length === 0) {
@@ -1139,14 +779,16 @@ const UserDashboard = (() => {
           <button class="btn btn--ghost btn--sm" onclick="UserDashboard.navigateTo('notifications')">View All</button>
         </div>
         <div class="db-section-card__body db-section-card__body--flush">
-          ${DashboardState.notificationData.slice(0, 4).map(n => {
-            const icons = { success:'icon-check-circle', info:'icon-info', warning:'icon-alert-triangle', danger:'icon-x-circle' };
-            return `<div class="db-notification-preview ${n.read ? '' : 'db-notification-preview--unread'}" onclick="UserDashboard.markNotificationRead('${n.id}')">
-              <div class="db-notification-preview__icon db-notification-preview__icon--${n.type}">${Utils.icon(icons[n.type]||'icon-info','icon--sm')}</div>
-              <div class="db-notification-preview__content"><div class="db-notification-preview__title">${Utils.escapeHtml(n.title)}</div><div class="db-notification-preview__text">${Utils.escapeHtml(n.text)}</div></div>
-              <span class="db-notification-preview__time">${n.time}</span>
-            </div>`;
-          }).join('')}
+          ${DashboardState.notificationData.length === 0
+            ? `<div style="padding: var(--space-6); text-align:center; color: var(--color-light-text); font-size: var(--fs-small);">No notifications yet. Booking updates will appear here.</div>`
+            : DashboardState.notificationData.slice(0, 4).map(n => {
+              const icons = { success:'icon-check-circle', info:'icon-info', warning:'icon-alert-triangle', danger:'icon-x-circle' };
+              return `<div class="db-notification-preview ${n.read ? '' : 'db-notification-preview--unread'}" onclick="UserDashboard.markNotificationRead('${n.id}')">
+                <div class="db-notification-preview__icon db-notification-preview__icon--${n.type}">${Utils.icon(icons[n.type]||'icon-info','icon--sm')}</div>
+                <div class="db-notification-preview__content"><div class="db-notification-preview__title">${Utils.escapeHtml(n.title)}</div><div class="db-notification-preview__text">${Utils.escapeHtml(n.text)}</div></div>
+                <span class="db-notification-preview__time">${n.time}</span>
+              </div>`;
+            }).join('')}
         </div>
       </div>
     `;
@@ -1189,9 +831,9 @@ const UserDashboard = (() => {
           </div>
         </div>
         <div class="db-current-rental__timeline">
-          ${r.timeline.map((t, i) => `<div class="db-current-rental__tl-step ${t.type === 'pending' ? 'db-current-rental__tl-step--pending' : 'db-current-rental__tl-step--done'}">
+          ${(r.timeline || []).map(t => `<div class="db-current-rental__tl-step ${t.type === 'pending' ? 'db-current-rental__tl-step--pending' : 'db-current-rental__tl-step--done'}">
             <div class="db-current-rental__tl-dot"></div>
-            <span class="db-current-rental__tl-text">${t.event}</span>
+            <span class="db-current-rental__tl-text">${Utils.escapeHtml(t.event)}</span>
           </div>`).join('')}
         </div>
         <div class="db-current-rental__actions">
@@ -1209,6 +851,20 @@ const UserDashboard = (() => {
       <h3 class="db-empty-state__title">${title}</h3>
       <p class="db-empty-state__text">${text}</p>
       ${btnText ? `<a href="${btnHref || '#'}" class="btn btn--primary btn--sm">${btnText}</a>` : ''}
+    </div>`;
+  }
+
+  function _renderErrorBanner() {
+    if (!DashboardState.dataError) return '';
+    return `<div class="db-section-card db-animate-in" style="margin-bottom: var(--space-5); border-color: rgba(220,38,38,0.3);">
+      <div class="db-section-card__body" style="display:flex; align-items:flex-start; gap:var(--space-3); padding:var(--space-4);">
+        <span style="color:var(--color-danger); flex-shrink:0;">${Utils.icon('icon-alert-triangle')}</span>
+        <div>
+          <div style="font-weight:var(--fw-semibold); color:var(--color-dark-text);">Some dashboard data could not be loaded</div>
+          <div style="font-size:var(--fs-small); color:var(--color-light-text);">${Utils.escapeHtml(DashboardState.dataError)}</div>
+        </div>
+        <button class="btn btn--outline btn--sm" style="margin-left:auto;" onclick="window.location.reload()">Retry</button>
+      </div>
     </div>`;
   }
 
@@ -1350,6 +1006,16 @@ const UserDashboard = (() => {
     const r = DashboardState.rentalsData.find(x => x.id === rentalId);
     if (!r) return;
     const statusMap = { active:'active', upcoming:'booked', completed:'completed', returned:'completed', cancelled:'cancelled' };
+    const specs = [
+      r.specifications.transmission,
+      r.specifications.fuel,
+      r.specifications.seats ? `${r.specifications.seats} Seats` : ''
+    ].filter(Boolean).join(' · ') || 'Vehicle specifications unavailable';
+    const durationLabel = `${r.totalDays} ${r.rentalType === 'Hourly' ? (r.totalDays === 1 ? 'hour' : 'hours') : (r.totalDays === 1 ? 'day' : 'days')}`;
+    const pricing = r.pricing || {};
+    const baseCharge = Number(pricing.baseCharge ?? r.totalCost) || 0;
+    const taxes = Number(pricing.taxes) || 0;
+    const timeline = r.timeline || [];
 
     const content = `
       <div class="db-modal__header">
@@ -1359,11 +1025,11 @@ const UserDashboard = (() => {
       <div class="db-modal__body db-rental-detail">
         <!-- Vehicle -->
         <div class="db-rental-detail__vehicle">
-          <img src="${r.image}" alt="${r.brand} ${r.model}" class="db-rental-detail__image" loading="lazy">
+          <img src="${r.image}" alt="${Utils.escapeHtml(r.brand)} ${Utils.escapeHtml(r.model)}" class="db-rental-detail__image" loading="lazy">
           <div class="db-rental-detail__vehicle-info">
-            <h4 class="db-rental-detail__vehicle-name">${r.brand} ${r.model}</h4>
+            <h4 class="db-rental-detail__vehicle-name">${Utils.escapeHtml(r.brand)} ${Utils.escapeHtml(r.model)}</h4>
             <span class="db-badge db-badge--${statusMap[r.status]||r.status}">${Utils.statusLabel(r.status)}</span>
-            <p class="db-rental-detail__vehicle-specs">${r.specifications.engine} · ${r.specifications.hp} · ${r.specifications.transmission}</p>
+            <p class="db-rental-detail__vehicle-specs">${Utils.escapeHtml(specs)}</p>
           </div>
         </div>
         <!-- Details Grid -->
@@ -1372,33 +1038,31 @@ const UserDashboard = (() => {
           <div class="db-rental-detail__item"><span class="db-rental-detail__label">Rental Type</span><span class="db-rental-detail__value">${r.rentalType}</span></div>
           <div class="db-rental-detail__item"><span class="db-rental-detail__label">Pickup Date & Time</span><span class="db-rental-detail__value">${Utils.formatDate(r.pickupDate)} · ${r.pickupTime}</span></div>
           <div class="db-rental-detail__item"><span class="db-rental-detail__label">Return Date & Time</span><span class="db-rental-detail__value">${Utils.formatDate(r.returnDate)} · ${r.returnTime}</span></div>
-          <div class="db-rental-detail__item"><span class="db-rental-detail__label">Pickup Location</span><span class="db-rental-detail__value">${r.pickupLocation}</span></div>
-          <div class="db-rental-detail__item"><span class="db-rental-detail__label">Rental Duration</span><span class="db-rental-detail__value">${r.totalDays} ${r.rentalType === 'Hourly' ? 'hours' : 'days'}</span></div>
+          <div class="db-rental-detail__item"><span class="db-rental-detail__label">Pickup Location</span><span class="db-rental-detail__value">${Utils.escapeHtml(r.pickupLocation)}</span></div>
+          <div class="db-rental-detail__item"><span class="db-rental-detail__label">Rental Duration</span><span class="db-rental-detail__value">${durationLabel}</span></div>
           <div class="db-rental-detail__item"><span class="db-rental-detail__label">Rate</span><span class="db-rental-detail__value">${Utils.formatCurrency(r.dailyRate)} / ${r.rentalType === 'Hourly' ? 'hr' : 'day'}</span></div>
-          <div class="db-rental-detail__item"><span class="db-rental-detail__label">Mileage Allocation</span><span class="db-rental-detail__value">${r.mileageLimit}</span></div>
-          <div class="db-rental-detail__item"><span class="db-rental-detail__label">Security Deposit</span><span class="db-rental-detail__value">${Utils.formatCurrency(r.deposit)}</span></div>
-          <div class="db-rental-detail__item"><span class="db-rental-detail__label">Insurance Coverage</span><span class="db-rental-detail__value">${r.insurance}</span></div>
+          ${r.paymentStatus ? `<div class="db-rental-detail__item"><span class="db-rental-detail__label">Payment Status</span><span class="db-rental-detail__value">${Utils.escapeHtml(r.paymentStatus)}</span></div>` : ''}
         </div>
         <!-- Timeline -->
         <h4 class="db-rental-detail__section-title">Rental Timeline Status</h4>
         <div class="db-timeline">
-          ${r.timeline.map(t => {
-            const dotCls = t.type === 'success' ? 'db-timeline__dot--success' : t.type === 'warning' ? 'db-timeline__dot--warning' : t.type === 'danger' ? 'db-timeline__dot--danger' : '';
-            return `<div class="db-timeline__item"><div class="db-timeline__dot ${dotCls}"></div><div class="db-timeline__time">${Utils.formatDate(t.date)}, ${t.time}</div><div class="db-timeline__title">${t.event}</div></div>`;
-          }).join('')}
+          ${timeline.length === 0
+            ? `<div class="db-timeline__item"><div class="db-timeline__text">No status events recorded for this booking yet.</div></div>`
+            : timeline.map(t => {
+              const dotCls = t.type === 'success' ? 'db-timeline__dot--success' : t.type === 'warning' ? 'db-timeline__dot--warning' : t.type === 'danger' ? 'db-timeline__dot--danger' : '';
+              return `<div class="db-timeline__item"><div class="db-timeline__dot ${dotCls}"></div><div class="db-timeline__time">${Utils.formatDate(t.date)}, ${t.time}</div><div class="db-timeline__title">${Utils.escapeHtml(t.event)}</div></div>`;
+            }).join('')}
         </div>
         <!-- Payment details -->
-        <h4 class="db-rental-detail__section-title">Billing & Invoice Summary</h4>
+        <h4 class="db-rental-detail__section-title">Billing Summary</h4>
         <div class="db-rental-detail__payment">
-          <div class="db-rental-detail__payment-row"><span>Daily rental rate × ${r.totalDays} days</span><span>${Utils.formatCurrency(r.totalCost)}</span></div>
-          <div class="db-rental-detail__payment-row"><span>Insurance package</span><span>Included</span></div>
-          <div class="db-rental-detail__payment-row"><span>Held Security Deposit</span><span>${Utils.formatCurrency(r.deposit)}</span></div>
-          <div class="db-rental-detail__payment-row db-rental-detail__payment-row--total"><span>Total Charged Amount</span><span>${Utils.formatCurrency(r.totalCost + r.deposit)}</span></div>
+          <div class="db-rental-detail__payment-row"><span>Base rental charge</span><span>${Utils.formatCurrency(baseCharge)}</span></div>
+          <div class="db-rental-detail__payment-row"><span>Taxes & fees</span><span>${Utils.formatCurrency(taxes)}</span></div>
+          <div class="db-rental-detail__payment-row db-rental-detail__payment-row--total"><span>Booking Total</span><span>${Utils.formatCurrency(r.totalCost)}</span></div>
         </div>
       </div>
       <div class="db-modal__footer">
         <button class="btn btn--outline btn--sm" data-action="close-modal">Close Window</button>
-        <button class="btn btn--primary btn--sm" onclick="UserDashboard.toast.show({title:'Invoice Downloaded',message:'Your booking invoice BK-${r.bookingId}.pdf was saved.',type:'success'})">${Utils.icon('icon-download','icon--sm')} Download Invoice PDF</button>
       </div>
     `;
     ModalController.openDynamic(content, '680px');
@@ -2129,40 +1793,81 @@ const UserDashboard = (() => {
      16. RENDER: VEHICLE VERIFICATION
      ============================================================ */
   function RenderVerification() {
-    const v = DashboardState.verificationData;
-    const uploadedCount = Object.values(v.photos).filter(p => p.status === 'uploaded' || p.status === 'verified').length;
-    const totalCount = Object.keys(v.photos).length;
-    
-    // Determine progress timeline step
-    let progressStep = 1; // Upload Photos
-    if (uploadedCount === totalCount) progressStep = 2; // Admin review
-    if (Object.values(v.photos).every(p => p.status === 'verified')) progressStep = 3; // Verified
+    const rental = DashboardState.rentalsData.find(r => r.status === 'active') ||
+                   DashboardState.rentalsData.find(r => r.status === 'upcoming');
+    const kyc = DashboardState.kycData || { status: 'NOT_SUBMITTED' };
+    const kycMeta = {
+      NOT_SUBMITTED: { label: 'Not Submitted', badge: 'waiting', step: 0 },
+      PENDING: { label: 'Pending Review', badge: 'pending', step: 2 },
+      VERIFIED: { label: 'Verified', badge: 'available', step: 3 },
+      REJECTED: { label: 'Rejected', badge: 'rejected', step: 1 }
+    }[kyc.status] || { label: 'Not Submitted', badge: 'waiting', step: 0 };
+    const progressStep = kycMeta.step;
+    const documentTypeLabels = {
+      drivers_license: "Driver's License",
+      national_id: 'National ID',
+      passport: 'Passport'
+    };
+    const maskedDocument = kyc.documentNumber
+      ? (kyc.documentNumber.length > 4 ? '••••' + kyc.documentNumber.slice(-4) : kyc.documentNumber)
+      : '—';
+    const conditionPhotos = [
+      rental && rental.pickupPhotoUrl ? { label: 'Pickup Condition Photo', url: rental.pickupPhotoUrl } : null,
+      rental && rental.returnPhotoUrl ? { label: 'Return Condition Photo', url: rental.returnPhotoUrl } : null
+    ].filter(Boolean);
+
+    if (!rental) {
+      DashboardRenderer.contentArea.innerHTML = `
+        <div class="db-page-header db-animate-in">
+          <div class="db-page-header__left">
+            <h2 class="db-page-header__title">Vehicle Verification</h2>
+            <p class="db-page-header__subtitle">Review your KYC status and rental condition records</p>
+          </div>
+        </div>
+        ${_renderErrorBanner()}
+        <div class="db-section-card db-animate-in" style="margin-bottom: var(--space-6);">
+          <div class="db-section-card__body" style="display:flex; justify-content:space-between; align-items:center; gap:var(--space-4); flex-wrap:wrap;">
+            <div>
+              <div style="font-size:var(--fs-xs); color:var(--color-light-text);">Account KYC Status</div>
+              <div style="font-weight:var(--fw-semibold); color:var(--color-dark-text);">${kycMeta.label}</div>
+            </div>
+            <span class="db-badge db-badge--${kycMeta.badge}">${kycMeta.label}</span>
+          </div>
+        </div>
+        <div class="db-section-card db-animate-in">
+          ${_renderEmptyState('icon-shield-check', 'No Rental to Verify', 'Vehicle verification becomes available once you have an active or upcoming booking. Browse the fleet to get started.', 'Browse Cars', 'cars.html')}
+        </div>
+      `;
+      return;
+    }
 
     DashboardRenderer.contentArea.innerHTML = `
       <div class="db-page-header db-animate-in">
         <div class="db-page-header__left">
           <h2 class="db-page-header__title">Vehicle Verification</h2>
-          <p class="db-page-header__subtitle">Complete condition photo uploads to verify the vehicle pre-rental condition</p>
+          <p class="db-page-header__subtitle">Review the real condition records and KYC status linked to your rental</p>
         </div>
       </div>
+
+      ${_renderErrorBanner()}
 
       <!-- Booking context banner -->
       <div class="db-section-card db-animate-in" style="margin-bottom: var(--space-6);">
         <div class="db-section-card__body" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap: var(--space-4); align-items:center; background: var(--color-surface); padding: var(--space-4) var(--space-6); border-radius: var(--radius-lg);">
           <div>
-            <div style="font-size: var(--fs-xs); color: var(--color-light-text);">Active Rental Vehicle</div>
-            <div style="font-weight: var(--fw-semibold); color: var(--color-dark-text); font-size:var(--fs-body);">${v.vehicleName}</div>
+            <div style="font-size: var(--fs-xs); color: var(--color-light-text);">${rental.status === 'active' ? 'Active Rental Vehicle' : 'Upcoming Rental Vehicle'}</div>
+            <div style="font-weight: var(--fw-semibold); color: var(--color-dark-text); font-size:var(--fs-body);">${Utils.escapeHtml(rental.brand)} ${Utils.escapeHtml(rental.model)}</div>
           </div>
           <div>
             <div style="font-size: var(--fs-xs); color: var(--color-light-text);">Booking Reference</div>
-            <code style="font-family: var(--font-mono); font-weight:var(--fw-medium);">${v.bookingId}</code>
+            <code style="font-family: var(--font-mono); font-weight:var(--fw-medium);">${rental.bookingId}</code>
           </div>
           <div>
             <div style="font-size: var(--fs-xs); color: var(--color-light-text);">Rental Period</div>
-            <div style="font-size:var(--fs-small); color: var(--color-dark-text);">${Utils.formatDateShort(v.pickupDate)} – ${Utils.formatDateShort(v.returnDate)}</div>
+            <div style="font-size:var(--fs-small); color: var(--color-dark-text);">${Utils.formatDateShort(rental.pickupDate)} – ${Utils.formatDateShort(rental.returnDate)}</div>
           </div>
           <div>
-            <span class="db-badge db-badge--processing">${uploadedCount} of ${totalCount} Uploaded</span>
+            <span class="db-badge db-badge--${kycMeta.badge}">KYC ${kycMeta.label}</span>
           </div>
         </div>
       </div>
@@ -2171,52 +1876,77 @@ const UserDashboard = (() => {
       <div class="db-section-card db-animate-in" style="margin-bottom: var(--space-6);">
         <div class="db-section-card__body">
           <div style="display:flex; justify-content:space-between; align-items:center; position:relative; max-width:800px; margin: 0 auto; padding: var(--space-4) 0;">
-            
-            <!-- Progress Line Bar -->
             <div style="position:absolute; top:50%; left:5%; right:5%; height:3px; background:var(--color-border-light); z-index:0; transform:translateY(-50%);"></div>
             <div id="verif-progress-bar" style="position:absolute; top:50%; left:5%; width:${(progressStep / 3) * 90}%; height:3px; background:var(--color-secondary); z-index:0; transform:translateY(-50%); transition: width 0.4s ease;"></div>
-            
             ${_renderTimelineStep(0, 'icon-clock', 'Waiting Approval', progressStep >= 0)}
-            ${_renderTimelineStep(1, 'icon-upload', 'Upload Photos', progressStep >= 1)}
+            ${_renderTimelineStep(1, 'icon-upload', 'KYC Submitted', progressStep >= 1)}
             ${_renderTimelineStep(2, 'icon-user', 'Admin Review', progressStep >= 2)}
             ${_renderTimelineStep(3, 'icon-shield-check', 'Verified Complete', progressStep >= 3)}
           </div>
         </div>
       </div>
 
-      <!-- 6 Photo Upload Cards -->
-      <div class="db-rentals-grid db-animate-in" style="grid-template-columns: repeat(3, 1fr); gap: var(--space-5); padding:0;">
-        ${Object.entries(v.photos).map(([key, photo]) => `
-          <div class="db-rental-card" style="display:flex; flex-direction:column; height: 100%;">
-            <div class="db-rental-card__image-wrap" style="height:150px; display:flex; align-items:center; justify-content:center; background: #000; position:relative;">
-              ${photo.preview ? `
-                <img src="${photo.preview}" alt="${photo.label}" style="width:100%; height:100%; object-fit:cover;">
-              ` : `
-                <div style="text-align:center; color:rgba(255,255,255,0.4);">
-                  ${Utils.icon('icon-camera', 'icon--lg')}
-                  <div style="font-size:10px; margin-top:4px;">No photo selected</div>
-                </div>
-              `}
-              <span class="db-badge db-badge--${photo.status==='verified'?'verified':photo.status==='uploaded'?'pending':photo.status==='rejected'?'rejected':'waiting'}" style="position:absolute; top:8px; left:8px;">
-                ${Utils.statusLabel(photo.status)}
-              </span>
+      <div class="db-section-grid" style="grid-template-columns: 1fr 1fr; gap: var(--space-6); align-items: start;">
+        <!-- Real KYC details -->
+        <div class="db-section-card db-animate-in">
+          <div class="db-section-card__header">
+            <div>
+              <h3 class="db-section-card__title">KYC Verification</h3>
+              <p class="db-section-card__subtitle">Identity documents submitted to JET CABS</p>
             </div>
-            
-            <div class="db-rental-card__body" style="padding:var(--space-4); flex:1; display:flex; flex-direction:column; justify-content:space-between; gap:var(--space-4);">
-              <div>
-                <h4 style="font-size:var(--fs-small); font-weight:var(--fw-semibold); color:var(--color-dark-text); margin-bottom:2px;">${photo.label}</h4>
-                <p style="font-size:10px; color:var(--color-light-text);">Upload a clear high-res photo of the vehicle side view.</p>
+            <span class="db-badge db-badge--${kycMeta.badge}">${kycMeta.label}</span>
+          </div>
+          <div class="db-section-card__body">
+            ${kyc.status === 'NOT_SUBMITTED' ? `
+              <div class="db-empty-state" style="padding: var(--space-5) var(--space-3);">
+                <div class="db-empty-state__icon">${Utils.icon('icon-shield-check')}</div>
+                <h3 class="db-empty-state__title">KYC Not Submitted</h3>
+                <p class="db-empty-state__text">Complete your identity verification during checkout to unlock all rental features.</p>
+                <a href="cars.html" class="btn btn--primary btn--sm">Browse Cars & Book</a>
               </div>
+            ` : `
+              <div class="db-rental-detail__grid" style="grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+                <div class="db-rental-detail__item"><span class="db-rental-detail__label">Document Type</span><span class="db-rental-detail__value">${documentTypeLabels[kyc.documentType] || '—'}</span></div>
+                <div class="db-rental-detail__item"><span class="db-rental-detail__label">Document Number</span><span class="db-rental-detail__value">${maskedDocument}</span></div>
+                <div class="db-rental-detail__item"><span class="db-rental-detail__label">Submitted On</span><span class="db-rental-detail__value">${Utils.formatDate(kyc.submittedAt)}</span></div>
+                <div class="db-rental-detail__item"><span class="db-rental-detail__label">Reviewed On</span><span class="db-rental-detail__value">${kyc.reviewedAt ? Utils.formatDate(kyc.reviewedAt) : 'Awaiting review'}</span></div>
+              </div>
+              ${kyc.status === 'REJECTED' && kyc.rejectionReason ? `
+                <div style="margin-top: var(--space-4); padding: var(--space-3); border-radius: var(--radius-md); background: rgba(220,38,38,0.06); border:1px solid rgba(220,38,38,0.2); font-size: var(--fs-small); color: var(--color-danger);">
+                  <strong>Rejection reason:</strong> ${Utils.escapeHtml(kyc.rejectionReason)}
+                </div>
+              ` : ''}
+            `}
+          </div>
+        </div>
 
-              <div>
-                <input type="file" id="file-input-${key}" accept="image/*" style="display:none;" onchange="UserDashboard.handleImageUpload(event, '${key}')">
-                <button class="btn btn--outline btn--sm" style="width:100%;" onclick="document.getElementById('file-input-${key}').click()">
-                  ${photo.preview ? `${Utils.icon('icon-edit','icon--sm')} Change Photo` : `${Utils.icon('icon-upload','icon--sm')} Select Image`}
-                </button>
-              </div>
+        <!-- Real condition photos -->
+        <div class="db-section-card db-animate-in">
+          <div class="db-section-card__header">
+            <div>
+              <h3 class="db-section-card__title">Vehicle Condition Photos</h3>
+              <p class="db-section-card__subtitle">Pickup and return photos recorded with this booking</p>
             </div>
           </div>
-        `).join('')}
+          <div class="db-section-card__body">
+            ${conditionPhotos.length === 0 ? `
+              <div class="db-empty-state" style="padding: var(--space-5) var(--space-3);">
+                <div class="db-empty-state__icon">${Utils.icon('icon-camera')}</div>
+                <h3 class="db-empty-state__title">No Condition Photos Yet</h3>
+                <p class="db-empty-state__text">Condition photos are captured during the pickup and return steps of your rental. They will appear here once uploaded.</p>
+              </div>
+            ` : `
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+                ${conditionPhotos.map(photo => `
+                  <div style="border:1px solid var(--color-border-light); border-radius:var(--radius-md); overflow:hidden; background:var(--color-surface);">
+                    <img src="${photo.url}" alt="${photo.label}" style="width:100%; height:150px; object-fit:cover; display:block;">
+                    <div style="padding: var(--space-2) var(--space-3); font-size: var(--fs-xs); font-weight: var(--fw-semibold); color: var(--color-dark-text);">${photo.label}</div>
+                  </div>
+                `).join('')}
+              </div>
+            `}
+          </div>
+        </div>
       </div>
     `;
   }
@@ -2237,37 +1967,12 @@ const UserDashboard = (() => {
     `;
   }
 
-  function handleImageUpload(e, key) {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const url = URL.createObjectURL(file);
-    const photo = DashboardState.verificationData.photos[key];
-    if (photo) {
-      photo.preview = url;
-      photo.status = 'uploaded'; // Set from waiting/rejected to uploaded
-      
-      ToastController.show({
-        title: 'Image Uploaded',
-        message: `${photo.label} has been stored in memory.`,
-        type: 'success'
-      });
-
-      // Update notifications
-      DashboardState.notificationData.unshift({
-        id: 'N-' + Date.now(),
-        type: 'success',
-        category: 'Vehicle',
-        title: 'Photo Uploaded',
-        text: `You uploaded a photo for the ${photo.label} verification slot.`,
-        time: 'Just now',
-        read: false,
-        priority: 'normal'
-      });
-
-      RenderVerification();
-      DropdownController.updateNotificationBadge();
-    }
+  function handleImageUpload() {
+    ToastController.show({
+      title: 'Use the Pickup / Return Flow',
+      message: 'Condition photos are uploaded from your rental card during pickup or return.',
+      type: 'info'
+    });
   }
 
 
@@ -2491,6 +2196,17 @@ const UserDashboard = (() => {
     saveUiState();
 
     const u = DashboardState.userData;
+    const kycMeta = {
+      NOT_SUBMITTED: { label: 'Not Submitted', badge: 'waiting' },
+      PENDING: { label: 'Pending Review', badge: 'pending' },
+      VERIFIED: { label: 'Verified', badge: 'available' },
+      REJECTED: { label: 'Rejected', badge: 'rejected' }
+    }[u.kycStatus] || { label: 'Not Submitted', badge: 'waiting' };
+    const referenceId = u.id ? String(u.id).slice(-8).toUpperCase() : '—';
+    const memberSince = u.memberSince ? Utils.formatDate(u.memberSince) : '—';
+    const membershipLabel = u.membership ? `${Utils.escapeHtml(u.membership)} Member` : 'Customer Account';
+    const licenseBadge = u.licenseNumber ? 'available' : 'waiting';
+    const licenseBadgeLabel = u.licenseNumber ? 'On File' : 'Not Provided';
     
     DashboardRenderer.contentArea.innerHTML = `
       <div class="db-page-header db-animate-in">
@@ -2508,13 +2224,13 @@ const UserDashboard = (() => {
             <div style="width: 90px; height: 90px; border-radius:50%; background:var(--color-primary); color:#FFF; display:flex; align-items:center; justify-content:center; font-size:2rem; font-weight:var(--fw-bold); margin: 0 auto var(--space-4) auto; border:3px solid var(--color-secondary);">
               ${u.initials}
             </div>
-            <h3 style="font-family:var(--font-heading); font-size:var(--fs-h4); font-weight:var(--fw-semibold); color:var(--color-dark-text); margin-bottom:2px;">${u.firstName} ${u.lastName}</h3>
-            <span class="db-badge db-badge--completed" style="margin-bottom:var(--space-5);">${u.membership} Member</span>
+            <h3 style="font-family:var(--font-heading); font-size:var(--fs-h4); font-weight:var(--fw-semibold); color:var(--color-dark-text); margin-bottom:2px;">${Utils.escapeHtml(u.firstName)} ${Utils.escapeHtml(u.lastName)}</h3>
+            <span class="db-badge db-badge--completed" style="margin-bottom:var(--space-5);">${membershipLabel}</span>
             
             <div style="text-align:left; border-top:1px solid var(--color-border-light); padding-top:var(--space-4); font-size:var(--fs-xs); color:var(--color-light-text);">
-              <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Member Since</span><strong style="color:var(--color-dark-text);">${Utils.formatDate(u.memberSince)}</strong></div>
-              <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>User Reference ID</span><code style="color:var(--color-dark-text);">${u.id}</code></div>
-              <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Verif. Status</span><span class="db-badge db-badge--available" style="padding:1px 6px;">Verified Account</span></div>
+              <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Member Since</span><strong style="color:var(--color-dark-text);">${memberSince}</strong></div>
+              <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>User Reference ID</span><code style="color:var(--color-dark-text);">${referenceId}</code></div>
+              <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>KYC Status</span><span class="db-badge db-badge--${kycMeta.badge}" style="padding:1px 6px;">${kycMeta.label}</span></div>
             </div>
           </div>
         </div>
@@ -2533,6 +2249,9 @@ const UserDashboard = (() => {
 
           <form id="profile-edit-form" onsubmit="UserDashboard.saveProfile(event)">
             <div class="db-section-card__body">
+              <div style="margin-bottom: var(--space-5); padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); background: var(--color-surface); border: 1px solid var(--color-border-light); font-size: var(--fs-xs); color: var(--color-light-text);">
+                Only your name and phone number can be edited here. License, address, date of birth, and emergency details are sourced from your latest booking and are read-only.
+              </div>
               
               <!-- TAB 1: PERSONAL -->
               <div class="db-tab-content ${activeTab==='personal'?'active':''}" id="profile-personal" data-tab-group="profile-tabs">
@@ -2546,20 +2265,21 @@ const UserDashboard = (() => {
                     <input type="text" class="db-filter-bar__search-input" style="width:100%; height:40px;" id="p-lastname" value="${Utils.escapeHtml(u.lastName)}" required>
                   </div>
                   <div class="db-rental-detail__item" style="background:none; padding:0;">
-                    <label class="db-rental-detail__label" style="margin-bottom:4px;">Email Address</label>
-                    <input type="email" class="db-filter-bar__search-input" style="width:100%; height:40px;" id="p-email" value="${Utils.escapeHtml(u.email)}" required>
+                    <label class="db-rental-detail__label" style="margin-bottom:4px;">Email Address <span style="font-weight:normal; text-transform:none; color:var(--color-light-text);">(read-only)</span></label>
+                    <input type="email" class="db-filter-bar__search-input" style="width:100%; height:40px; opacity:0.7;" id="p-email" value="${Utils.escapeHtml(u.email)}" disabled title="Email changes require support">
                   </div>
                   <div class="db-rental-detail__item" style="background:none; padding:0;">
                     <label class="db-rental-detail__label" style="margin-bottom:4px;">Phone Number</label>
                     <input type="tel" class="db-filter-bar__search-input" style="width:100%; height:40px;" id="p-phone" value="${Utils.escapeHtml(u.phone)}" required>
                   </div>
                   <div class="db-rental-detail__item" style="background:none; padding:0;">
-                    <label class="db-rental-detail__label" style="margin-bottom:4px;">Date of Birth</label>
-                    <input type="date" class="db-filter-bar__search-input" style="width:100%; height:40px;" id="p-dob" value="${u.dob}">
+                    <label class="db-rental-detail__label" style="margin-bottom:4px;">Date of Birth <span style="font-weight:normal; text-transform:none; color:var(--color-light-text);">(from booking)</span></label>
+                    <input type="date" class="db-filter-bar__search-input" style="width:100%; height:40px; opacity:0.7;" id="p-dob" value="${u.dob || ''}" disabled>
                   </div>
                   <div class="db-rental-detail__item" style="background:none; padding:0;">
                     <label class="db-rental-detail__label" style="margin-bottom:4px;">Gender</label>
-                    <select class="db-filter-bar__select" style="width:100%; height:40px;" id="p-gender">
+                    <select class="db-filter-bar__select" style="width:100%; height:40px; opacity:0.7;" id="p-gender" disabled>
+                      <option value="">Not provided</option>
                       <option value="Male" ${u.gender==='Male'?'selected':''}>Male</option>
                       <option value="Female" ${u.gender==='Female'?'selected':''}>Female</option>
                       <option value="Other" ${u.gender==='Other'?'selected':''}>Other</option>
@@ -2572,22 +2292,23 @@ const UserDashboard = (() => {
               <div class="db-tab-content ${activeTab==='license'?'active':''}" id="profile-license" data-tab-group="profile-tabs">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: var(--space-4);">
                   <h4 style="font-weight:var(--fw-semibold); font-size:var(--fs-small); color:var(--color-dark-text);">Driver Verification License Details</h4>
-                  <span class="db-badge db-badge--available">${Utils.statusLabel(u.licenseStatus)}</span>
+                  <span class="db-badge db-badge--${licenseBadge}">${licenseBadgeLabel}</span>
                 </div>
                 <div class="db-rental-detail__grid" style="grid-template-columns: repeat(2, 1fr); gap:var(--space-4);">
                   <div class="db-rental-detail__item" style="background:none; padding:0;">
                     <label class="db-rental-detail__label" style="margin-bottom:4px;">License Number</label>
-                    <input type="text" class="db-filter-bar__search-input" style="width:100%; height:40px;" id="p-lic-num" value="${Utils.escapeHtml(u.licenseNumber)}" required>
+                    <input type="text" class="db-filter-bar__search-input" style="width:100%; height:40px; opacity:0.7;" id="p-lic-num" value="${Utils.escapeHtml(u.licenseNumber || 'Not provided')}" disabled>
                   </div>
                   <div class="db-rental-detail__item" style="background:none; padding:0;">
                     <label class="db-rental-detail__label" style="margin-bottom:4px;">Expiration Date</label>
-                    <input type="date" class="db-filter-bar__search-input" style="width:100%; height:40px;" id="p-lic-exp" value="${u.licenseExpiry}" required>
+                    <input type="date" class="db-filter-bar__search-input" style="width:100%; height:40px; opacity:0.7;" id="p-lic-exp" value="${u.licenseExpiry || ''}" disabled>
                   </div>
                   <div class="db-rental-detail__item" style="background:none; padding:0; grid-column: span 2;">
-                    <label class="db-rental-detail__label" style="margin-bottom:4px;">Issuing State / Authority</label>
-                    <input type="text" class="db-filter-bar__search-input" style="width:100%; height:40px;" id="p-lic-auth" value="${Utils.escapeHtml(u.licenseAuthority)}" required>
+                    <label class="db-rental-detail__label" style="margin-bottom:4px;">Issuing Country / Authority</label>
+                    <input type="text" class="db-filter-bar__search-input" style="width:100%; height:40px; opacity:0.7;" id="p-lic-auth" value="${Utils.escapeHtml(u.licenseAuthority || 'Not provided')}" disabled>
                   </div>
                 </div>
+                <p style="margin-top:var(--space-3); font-size:var(--fs-xs); color:var(--color-light-text);">License details are captured from your latest booking. Contact support to update them.</p>
               </div>
 
               <!-- TAB 3: ADDRESS -->
@@ -2595,25 +2316,26 @@ const UserDashboard = (() => {
                 <div class="db-rental-detail__grid" style="grid-template-columns: repeat(2, 1fr); gap:var(--space-4);">
                   <div class="db-rental-detail__item" style="background:none; padding:0; grid-column: span 2;">
                     <label class="db-rental-detail__label" style="margin-bottom:4px;">Street Address</label>
-                    <input type="text" class="db-filter-bar__search-input" style="width:100%; height:40px;" id="p-address" value="${Utils.escapeHtml(u.streetAddress)}" required>
+                    <input type="text" class="db-filter-bar__search-input" style="width:100%; height:40px; opacity:0.7;" id="p-address" value="${Utils.escapeHtml(u.streetAddress || 'Not provided')}" disabled>
                   </div>
                   <div class="db-rental-detail__item" style="background:none; padding:0;">
                     <label class="db-rental-detail__label" style="margin-bottom:4px;">City</label>
-                    <input type="text" class="db-filter-bar__search-input" style="width:100%; height:40px;" id="p-city" value="${Utils.escapeHtml(u.city)}" required>
+                    <input type="text" class="db-filter-bar__search-input" style="width:100%; height:40px; opacity:0.7;" id="p-city" value="${Utils.escapeHtml(u.city || 'Not provided')}" disabled>
                   </div>
                   <div class="db-rental-detail__item" style="background:none; padding:0;">
                     <label class="db-rental-detail__label" style="margin-bottom:4px;">State / Province</label>
-                    <input type="text" class="db-filter-bar__search-input" style="width:100%; height:40px;" id="p-state" value="${Utils.escapeHtml(u.state)}" required>
+                    <input type="text" class="db-filter-bar__search-input" style="width:100%; height:40px; opacity:0.7;" id="p-state" value="${Utils.escapeHtml(u.state || 'Not provided')}" disabled>
                   </div>
                   <div class="db-rental-detail__item" style="background:none; padding:0;">
                     <label class="db-rental-detail__label" style="margin-bottom:4px;">Postal Code</label>
-                    <input type="text" class="db-filter-bar__search-input" style="width:100%; height:40px;" id="p-zip" value="${Utils.escapeHtml(u.postalCode)}" required>
+                    <input type="text" class="db-filter-bar__search-input" style="width:100%; height:40px; opacity:0.7;" id="p-zip" value="${Utils.escapeHtml(u.postalCode || 'Not provided')}" disabled>
                   </div>
                   <div class="db-rental-detail__item" style="background:none; padding:0;">
                     <label class="db-rental-detail__label" style="margin-bottom:4px;">Country</label>
-                    <input type="text" class="db-filter-bar__search-input" style="width:100%; height:40px;" id="p-country" value="${Utils.escapeHtml(u.country)}" required>
+                    <input type="text" class="db-filter-bar__search-input" style="width:100%; height:40px; opacity:0.7;" id="p-country" value="${Utils.escapeHtml(u.country || 'Not provided')}" disabled>
                   </div>
                 </div>
+                <p style="margin-top:var(--space-3); font-size:var(--fs-xs); color:var(--color-light-text);">Address details are captured from your latest booking. Contact support to update them.</p>
               </div>
 
               <!-- TAB 4: EMERGENCY -->
@@ -2621,17 +2343,18 @@ const UserDashboard = (() => {
                 <div class="db-rental-detail__grid" style="grid-template-columns: repeat(2, 1fr); gap:var(--space-4);">
                   <div class="db-rental-detail__item" style="background:none; padding:0;">
                     <label class="db-rental-detail__label" style="margin-bottom:4px;">Contact Name</label>
-                    <input type="text" class="db-filter-bar__search-input" style="width:100%; height:40px;" id="p-em-name" value="${Utils.escapeHtml(u.emergencyName)}" required>
+                    <input type="text" class="db-filter-bar__search-input" style="width:100%; height:40px; opacity:0.7;" id="p-em-name" value="${Utils.escapeHtml(u.emergencyName || 'Not provided')}" disabled>
                   </div>
                   <div class="db-rental-detail__item" style="background:none; padding:0;">
                     <label class="db-rental-detail__label" style="margin-bottom:4px;">Relationship</label>
-                    <input type="text" class="db-filter-bar__search-input" style="width:100%; height:40px;" id="p-em-rel" value="${Utils.escapeHtml(u.emergencyRelationship)}" required>
+                    <input type="text" class="db-filter-bar__search-input" style="width:100%; height:40px; opacity:0.7;" id="p-em-rel" value="${Utils.escapeHtml(u.emergencyRelationship || 'Not provided')}" disabled>
                   </div>
                   <div class="db-rental-detail__item" style="background:none; padding:0; grid-column: span 2;">
                     <label class="db-rental-detail__label" style="margin-bottom:4px;">Phone Number</label>
-                    <input type="tel" class="db-filter-bar__search-input" style="width:100%; height:40px;" id="p-em-phone" value="${Utils.escapeHtml(u.emergencyPhone)}" required>
+                    <input type="tel" class="db-filter-bar__search-input" style="width:100%; height:40px; opacity:0.7;" id="p-em-phone" value="${Utils.escapeHtml(u.emergencyPhone || 'Not provided')}" disabled>
                   </div>
                 </div>
+                <p style="margin-top:var(--space-3); font-size:var(--fs-xs); color:var(--color-light-text);">Emergency contact storage is not available yet. Please keep this information in your booking notes.</p>
               </div>
 
               <!-- TAB 5: PREFERENCES / SETTINGS -->
@@ -2686,93 +2409,83 @@ const UserDashboard = (() => {
     TabController.init();
   }
 
-  function saveProfile(e) {
+  async function saveProfile(e) {
     e.preventDefault();
 
     const u = DashboardState.userData;
-
-    // Read form values
     const fn = document.getElementById('p-firstname');
     const ln = document.getElementById('p-lastname');
-    const email = document.getElementById('p-email');
     const phone = document.getElementById('p-phone');
-    
-    if (fn) u.firstName = fn.value;
-    if (ln) u.lastName = ln.value;
-    if (email) u.email = email.value;
-    if (phone) u.phone = phone.value;
+    const firstName = fn ? fn.value.trim() : u.firstName;
+    const lastName = ln ? ln.value.trim() : u.lastName;
+    const phoneValue = phone ? phone.value.trim() : u.phone;
 
-    const dob = document.getElementById('p-dob');
-    const gender = document.getElementById('p-gender');
-    if (dob) u.dob = dob.value;
-    if (gender) u.gender = gender.value;
-
-    const lic = document.getElementById('p-lic-num');
-    const exp = document.getElementById('p-lic-exp');
-    const auth = document.getElementById('p-lic-auth');
-    if (lic) u.licenseNumber = lic.value;
-    if (exp) u.licenseExpiry = exp.value;
-    if (auth) u.licenseAuthority = auth.value;
-
-    const address = document.getElementById('p-address');
-    const city = document.getElementById('p-city');
-    const state = document.getElementById('p-state');
-    const zip = document.getElementById('p-zip');
-    const country = document.getElementById('p-country');
-    if (address) u.streetAddress = address.value;
-    if (city) u.city = city.value;
-    if (state) u.state = state.value;
-    if (zip) u.postalCode = zip.value;
-    if (country) u.country = country.value;
-
-    const emName = document.getElementById('p-em-name');
-    const emRel = document.getElementById('p-em-rel');
-    const emPhone = document.getElementById('p-em-phone');
-    if (emName) u.emergencyName = emName.value;
-    if (emRel) u.emergencyRelationship = emRel.value;
-    if (emPhone) u.emergencyPhone = emPhone.value;
-
-    const lang = document.getElementById('p-lang');
-    const emailAlerts = document.getElementById('p-email-alerts');
-    const pushAlerts = document.getElementById('p-push-alerts');
-    if (lang) u.language = lang.value;
-    if (emailAlerts) u.emailAlerts = emailAlerts.checked;
-    if (pushAlerts) u.pushNotifications = pushAlerts.checked;
-
-    // Persist the supported fields to the backend
-    const token = localStorage.getItem('token');
-    if (token) {
-      const fullName = `${u.firstName} ${u.lastName}`.trim();
-      fetch('http://localhost:5000/api/auth/profile', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify({ fullName, phone: u.phone })
-      })
-        .then(res => res.json())
-        .then(json => {
-          if (!json.success) {
-            ToastController.show({ title: 'Sync Failed', message: json.message || 'Profile updated locally but could not be synced.', type: 'error' });
-          }
-        })
-        .catch(err => console.error('Failed to sync profile:', err));
+    if (!firstName || !lastName) {
+      ToastController.show({ title: 'Missing Name', message: 'First and last name are required.', type: 'error' });
+      return;
+    }
+    if (!phoneValue) {
+      ToastController.show({ title: 'Missing Phone', message: 'A phone number is required.', type: 'error' });
+      return;
     }
 
-    // Toast alert
-    ToastController.show({
-      title: 'Profile Saved',
-      message: 'Your personal information has been updated.',
-      type: 'success'
-    });
+    const token = localStorage.getItem('token');
+    if (!token) {
+      ToastController.show({ title: 'Session Expired', message: 'Please sign in again to update your profile.', type: 'error' });
+      return;
+    }
 
-    // Update Header UI details
-    const gr = document.getElementById('db-header-greeting');
-    if (gr) gr.textContent = `${Utils.getTimeGreeting()}, ${u.firstName}`;
-    
-    document.querySelectorAll('.db-header__profile-name').forEach(el => el.textContent = u.firstName + ' M.');
-    document.querySelectorAll('.db-sidebar__profile-name').forEach(el => el.textContent = u.firstName + ' ' + u.lastName);
+    const fullName = `${firstName} ${lastName}`.trim();
 
-    // Re-render overview stats if needed
-    RenderProfile(DashboardState.uiState.profileActiveTab);
+    try {
+      const res = await fetch('http://localhost:5000/api/auth/profile', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ fullName, phone: phoneValue })
+      });
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        throw new Error(json.message || 'Profile update failed.');
+      }
+
+      u.firstName = firstName;
+      u.lastName = lastName;
+      u.phone = phoneValue;
+      u.initials = ((firstName[0] || '') + (lastName[0] || '')).toUpperCase();
+
+      const lang = document.getElementById('p-lang');
+      const emailAlerts = document.getElementById('p-email-alerts');
+      const pushAlerts = document.getElementById('p-push-alerts');
+      if (lang) u.language = lang.value;
+      if (emailAlerts) u.emailAlerts = emailAlerts.checked;
+      if (pushAlerts) u.pushNotifications = pushAlerts.checked;
+      StorageHelper.set('preferences', {
+        language: u.language,
+        emailAlerts: u.emailAlerts,
+        pushNotifications: u.pushNotifications
+      });
+
+      const gr = document.getElementById('db-header-greeting');
+      if (gr) gr.textContent = `${Utils.getTimeGreeting()}, ${u.firstName}`;
+      document.querySelectorAll('.db-header__profile-name').forEach(el => el.textContent = `${u.firstName}${u.lastName ? ' ' + u.lastName.charAt(0) + '.' : ''}`);
+      document.querySelectorAll('.db-header__dropdown-name').forEach(el => el.textContent = `${u.firstName} ${u.lastName}`);
+      document.querySelectorAll('.db-sidebar__profile-name').forEach(el => el.textContent = `${u.firstName} ${u.lastName}`);
+      document.querySelectorAll('.db-sidebar__profile-avatar, .db-header__profile-avatar').forEach(el => el.textContent = u.initials);
+
+      ToastController.show({
+        title: 'Profile Saved',
+        message: 'Your name and phone number have been updated.',
+        type: 'success'
+      });
+
+      RenderProfile(DashboardState.uiState.profileActiveTab);
+    } catch (err) {
+      ToastController.show({
+        title: 'Profile Update Failed',
+        message: err.message || 'Could not update your profile. Please try again.',
+        type: 'error'
+      });
+    }
   }
 
 
@@ -2781,48 +2494,53 @@ const UserDashboard = (() => {
      ============================================================ */
   function RenderPayments() {
     const p = DashboardState.paymentsData;
+    const transactions = Array.isArray(p.transactions) ? p.transactions : [];
+    const totalPaid = transactions
+      .filter(t => t.status === 'processed')
+      .reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
+    const pendingAmount = transactions
+      .filter(t => t.status === 'pending')
+      .reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
+    const statusMeta = {
+      processed: { label: 'Paid', badge: 'available' },
+      pending: { label: 'Pending', badge: 'pending' },
+      failed: { label: 'Failed', badge: 'cancelled' }
+    };
+
     DashboardRenderer.contentArea.innerHTML = `
       <div class="db-page-header db-animate-in">
         <div class="db-page-header__left">
           <h2 class="db-page-header__title">Payments & Billings</h2>
-          <p class="db-page-header__subtitle">Manage your payment cards, security deposit holds, and view invoice transaction history</p>
+          <p class="db-page-header__subtitle">View real payment orders created during checkout</p>
         </div>
       </div>
 
+      ${_renderErrorBanner()}
+
       <!-- Overview Cards -->
       <div class="db-stats-grid db-animate-stagger" style="grid-template-columns: repeat(3, 1fr); margin-bottom: var(--space-6);">
-        ${_statCard('icon-credit-card', 'primary', 'Wallet Account Balance', Utils.formatCurrency(p.balance), 'Available credits')}
-        ${_statCard('icon-lock', 'warning', 'Security Deposits Held', Utils.formatCurrency(p.heldDeposits), 'Refunded upon return')}
-        ${_statCard('icon-check-circle', 'success', 'Verified Billing Status', 'Active', 'Pre-authorized profile')}
+        ${_statCard('icon-credit-card', 'primary', 'Total Paid', Utils.formatCurrency(totalPaid), 'Successful payment orders')}
+        ${_statCard('icon-clock', 'warning', 'Pending Payments', Utils.formatCurrency(pendingAmount), 'Awaiting confirmation')}
+        ${_statCard('icon-check-circle', 'success', 'Transactions', String(transactions.length), 'All payment orders')}
       </div>
 
       <!-- Payment Methods -->
       <div class="db-section-grid" style="grid-template-columns: 2fr 3fr; gap:var(--space-6); align-items: start;">
         
-        <!-- Left: Payment Cards -->
+        <!-- Left: Payment Methods -->
         <div class="db-section-card db-animate-in">
           <div class="db-section-card__header">
             <div>
               <h3 class="db-section-card__title">Payment Methods</h3>
-              <p class="db-section-card__subtitle">Your saved credit cards</p>
+              <p class="db-section-card__subtitle">Saved cards are not stored by this account</p>
             </div>
-            <button class="btn btn--outline btn--sm" onclick="UserDashboard.toast.show({title:'Cards Option',message:'Adding new card flows are coming soon.',type:'info'})">Add Card</button>
           </div>
-          <div class="db-section-card__body" style="display:flex; flex-direction:column; gap: var(--space-4);">
-            ${p.methods.map(card => `
-              <div style="border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); padding: var(--space-4); display:flex; align-items:center; justify-content:space-between; background:var(--color-surface);">
-                <div style="display:flex; align-items:center; gap:var(--space-3);">
-                  <div style="width: 48px; height: 32px; border-radius:var(--radius-sm); border:1px solid var(--color-border); background:#fff; display:flex; align-items:center; justify-content:center; font-weight:var(--fw-bold); text-transform:uppercase; font-size:10px; color:var(--color-primary);">
-                    ${card.brand}
-                  </div>
-                  <div>
-                    <div style="font-weight:var(--fw-semibold); color:var(--color-dark-text);">${card.number}</div>
-                    <div style="font-size:10px; color:var(--color-light-text);">Expires ${card.expiry}</div>
-                  </div>
-                </div>
-                ${card.isDefault ? `<span class="db-badge db-badge--available">Default</span>` : '<button class="btn btn--ghost btn--sm" style="font-size:10px; padding:4px 8px;" onclick="UserDashboard.toast.show({title:\'Default Updated\',message:\'Mastercard selected as default.\',type:\'success\'})">Set Default</button>'}
-              </div>
-            `).join('')}
+          <div class="db-section-card__body">
+            <div class="db-empty-state" style="padding: var(--space-6) var(--space-3);">
+              <div class="db-empty-state__icon">${Utils.icon('icon-credit-card')}</div>
+              <h3 class="db-empty-state__title">No Saved Cards</h3>
+              <p class="db-empty-state__text">Card details are entered securely at checkout for each booking. No card numbers are stored on your account.</p>
+            </div>
           </div>
         </div>
 
@@ -2830,8 +2548,8 @@ const UserDashboard = (() => {
         <div class="db-section-card db-animate-in">
           <div class="db-section-card__header">
             <div>
-              <h3 class="db-section-card__title">Transaction Logs</h3>
-              <p class="db-section-card__subtitle">Billing charges, refunds, and deposit authorizations</p>
+              <h3 class="db-section-card__title">Payment Orders</h3>
+              <p class="db-section-card__subtitle">Real payment orders from your checkout sessions</p>
             </div>
           </div>
           <div class="db-section-card__body db-section-card__body--flush">
@@ -2839,25 +2557,26 @@ const UserDashboard = (() => {
               <table class="db-table">
                 <thead>
                   <tr>
-                    <th>Txn ID</th>
+                    <th>Order ID</th>
                     <th>Date</th>
-                    <th>Booking</th>
-                    <th>Type</th>
+                    <th>Method</th>
                     <th>Amount</th>
                     <th>Status</th>
                   </tr>
                 </thead>
                 <tbody>
-                  ${p.transactions.map(t => `
-                    <tr>
-                      <td><code style="font-family:var(--font-mono); font-size:var(--fs-xs);">${t.id}</code></td>
+                  ${transactions.length === 0 ? `
+                    <tr><td colspan="5" style="text-align:center; padding:var(--space-6); color:var(--color-light-text); font-size:var(--fs-small);">No payment orders found. Complete a booking checkout to create one.</td></tr>
+                  ` : transactions.map(t => {
+                    const meta = statusMeta[t.status] || { label: Utils.statusLabel(t.status || 'Unknown'), badge: 'pending' };
+                    return `<tr>
+                      <td><code style="font-family:var(--font-mono); font-size:var(--fs-xs);">${Utils.escapeHtml(t.id)}</code></td>
                       <td style="font-size:var(--fs-xs);">${Utils.formatDateShort(t.date)}</td>
-                      <td><code style="font-family:var(--font-mono); font-size:var(--fs-xs);">${t.bookingId}</code></td>
-                      <td style="font-size:var(--fs-xs);">${t.type}</td>
+                      <td style="font-size:var(--fs-xs);">${Utils.escapeHtml(t.method || '—')}</td>
                       <td><strong>${Utils.formatCurrency(t.amount)}</strong></td>
-                      <td><span class="db-badge db-badge--${t.status==='processed'?'available':t.status==='held'?'pending':'completed'}">${t.status}</span></td>
-                    </tr>
-                  `).join('')}
+                      <td><span class="db-badge db-badge--${meta.badge}">${meta.label}</span></td>
+                    </tr>`;
+                  }).join('')}
                 </tbody>
               </table>
             </div>
@@ -3321,6 +3040,34 @@ const UserDashboard = (() => {
       return;
     }
 
+    DashboardState.dataError = '';
+    DashboardState.rentalsData = [];
+    DashboardState.preBookingsData = [];
+    DashboardState.notificationData = [];
+    DashboardState.extensionsData = [];
+    DashboardState.extensionHistory = [];
+    DashboardState.verificationData = null;
+    DashboardState.kycData = null;
+    DashboardState.paymentsData = { methods: [], transactions: [] };
+    DashboardState.statsData = {
+      activeRentals: 0,
+      pendingPreBookings: 0,
+      upcomingReturns: 0,
+      completedRentals: 0,
+      extensionRequests: 0,
+      unreadNotifications: 0,
+      totalRentals: 0
+    };
+
+    const loadingTarget = document.getElementById('dashboard-content');
+    if (loadingTarget) {
+      loadingTarget.innerHTML = `<div class="db-empty-state" style="min-height: 55vh;">
+        <div class="db-empty-state__icon">${Utils.icon('icon-car')}</div>
+        <h3 class="db-empty-state__title">Loading your dashboard</h3>
+        <p class="db-empty-state__text">Fetching your real profile, rentals, KYC, and payment records...</p>
+      </div>`;
+    }
+
     try {
       const res = await fetch('http://localhost:5000/api/auth/profile', {
         headers: { 'Authorization': `Bearer ${token}` }
@@ -3331,17 +3078,30 @@ const UserDashboard = (() => {
         throw new Error(data.message);
       }
 
-      const nameParts = data.data.fullName.split(' ');
-      DashboardState.userData.firstName = nameParts[0];
-      DashboardState.userData.lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
-      DashboardState.userData.email = data.data.email;
-      DashboardState.userData.initials = (nameParts[0][0] + (nameParts.length > 1 ? nameParts[1][0] : '')).toUpperCase();
-      if(data.data.phone) DashboardState.userData.phone = data.data.phone;
+      const nameParts = String(data.data.fullName || '').trim().split(/\s+/);
+      const u = DashboardState.userData;
+      u.id = data.data._id || '';
+      u.firstName = nameParts[0] || '';
+      u.lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
+      u.email = data.data.email || '';
+      u.phone = data.data.phone || '';
+      u.memberSince = data.data.createdAt || '';
+      u.kycStatus = 'NOT_SUBMITTED';
+      u.initials = ((u.firstName[0] || '') + (u.lastName[0] || '')).toUpperCase();
+
+      const prefs = StorageHelper.get('preferences');
+      if (prefs) {
+        u.language = prefs.language || 'en';
+        u.emailAlerts = prefs.emailAlerts !== false;
+        u.pushNotifications = !!prefs.pushNotifications;
+      }
       
       // Update the global UI with dynamic data
-      const u = DashboardState.userData;
       document.querySelectorAll('.db-sidebar__profile-name').forEach(el => el.textContent = u.firstName + ' ' + u.lastName);
       document.querySelectorAll('.db-header__profile-name').forEach(el => el.textContent = u.firstName + ' ' + (u.lastName ? u.lastName.charAt(0) + '.' : ''));
+      document.querySelectorAll('.db-sidebar__profile-role, .db-header__profile-role').forEach(el => {
+        el.textContent = u.membership ? `${Utils.escapeHtml(u.membership)} Member` : 'Customer Account';
+      });
       document.querySelectorAll('.db-header__dropdown-name').forEach(el => el.textContent = u.firstName + ' ' + u.lastName);
       document.querySelectorAll('.db-sidebar__profile-avatar, .db-header__profile-avatar').forEach(el => el.textContent = u.initials);
       
@@ -3373,37 +3133,84 @@ const UserDashboard = (() => {
         DashboardState.extensionHistory = [];
         
         bookingsData.data.forEach(b => {
-          const carBrand = b.car ? b.car.brand : 'Unknown';
-          const carNameRaw = b.car ? b.car.carName : 'Unknown';
+          const car = b.car || {};
+          const details = b.rentalDetails || {};
+          const carBrand = car.brand || 'Unknown';
+          const carNameRaw = car.carName || 'Unknown';
           const carModel = (carNameRaw.startsWith(carBrand) ? carNameRaw.slice(carBrand.length) : carNameRaw).trim();
+          const pickupRaw = details.pickupDateTime;
+          const returnRaw = details.returnDateTime;
+          const pickupDate = pickupRaw ? String(pickupRaw).split('T')[0] : '';
+          const returnDate = returnRaw ? String(returnRaw).split('T')[0] : '';
+          const pickupTime = pickupRaw ? new Date(pickupRaw).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : '';
+          const returnTime = returnRaw ? new Date(returnRaw).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : '';
+          const isHourly = details.rentalType === 'hourly';
+          const pickupDt = pickupRaw ? new Date(pickupRaw) : null;
+          const returnDt = returnRaw ? new Date(returnRaw) : null;
+          const diffHours = pickupDt && returnDt ? Math.max(1, Math.ceil((returnDt - pickupDt) / 3600000)) : 1;
+          const totalDays = isHourly ? diffHours : Math.max(1, Math.ceil(diffHours / 24));
+          const createdDate = b.createdAt ? new Date(b.createdAt) : null;
+          const pickedDate = b.rentalStartTime ? new Date(b.rentalStartTime) : pickupDt;
+          const returnedDate = b.rentalEndTime ? new Date(b.rentalEndTime) : returnDt;
+          const timeline = [];
+          if (createdDate && !Number.isNaN(createdDate.getTime())) {
+            timeline.push({ date: createdDate.toISOString().split('T')[0], time: createdDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}), event: 'Booking Created', type: 'info' });
+          }
+          if (b.bookingStatus === 'Pending Pickup') {
+            timeline.push({ date: pickupDate, time: pickupTime, event: 'Scheduled Pickup', type: 'pending' });
+          } else if (b.bookingStatus === 'Active' || b.bookingStatus === 'Extended') {
+            if (pickedDate && !Number.isNaN(pickedDate.getTime())) {
+              timeline.push({ date: pickedDate.toISOString().split('T')[0], time: pickedDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}), event: 'Vehicle Picked Up', type: 'success' });
+            }
+            timeline.push({ date: returnDate, time: returnTime, event: 'Scheduled Return', type: 'pending' });
+          } else if (b.bookingStatus === 'Completed') {
+            if (pickedDate && !Number.isNaN(pickedDate.getTime())) {
+              timeline.push({ date: pickedDate.toISOString().split('T')[0], time: pickedDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}), event: 'Vehicle Picked Up', type: 'success' });
+            }
+            if (returnedDate && !Number.isNaN(returnedDate.getTime())) {
+              timeline.push({ date: returnedDate.toISOString().split('T')[0], time: returnedDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}), event: 'Vehicle Returned', type: 'success' });
+            }
+            timeline.push({ date: returnDate, time: returnTime, event: 'Rental Completed', type: 'success' });
+          } else if (b.bookingStatus === 'Cancelled') {
+            const cancelledDate = b.updatedAt ? new Date(b.updatedAt) : createdDate;
+            if (cancelledDate && !Number.isNaN(cancelledDate.getTime())) {
+              timeline.push({ date: cancelledDate.toISOString().split('T')[0], time: cancelledDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}), event: 'Booking Cancelled', type: 'danger' });
+            }
+          }
+
           const uiBooking = {
             id: b._id,
-            bookingId: b._id.substring(b._id.length - 8).toUpperCase(), // short ID
+            bookingId: b._id.substring(b._id.length - 8).toUpperCase(),
             brand: carBrand,
             model: carModel,
-            category: b.car ? b.car.category : 'Luxury',
-            image: b.car && b.car.images && b.car.images.length > 0 ? b.car.images[0].url : 'assets/images/cars/luxury.png',
-            rentalType: b.rentalDetails.rentalType === 'hourly' ? 'Hourly' : 'Daily',
-            pickupDate: b.rentalDetails.pickupDateTime.split('T')[0],
-            pickupTime: new Date(b.rentalDetails.pickupDateTime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
-            pickupLocation: b.rentalDetails.pickupLocation,
-            returnDate: b.rentalDetails.returnDateTime.split('T')[0],
-            returnTime: new Date(b.rentalDetails.returnDateTime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
-            returnLocation: b.rentalDetails.returnLocation,
-            status: b.bookingStatus === 'Pending Pickup' ? 'upcoming' : 
-                    b.bookingStatus === 'Active' ? 'active' : 
-                    b.bookingStatus === 'Extended' ? 'active' : 
+            category: car.category || 'Luxury',
+            image: car.images && car.images.length > 0 ? car.images[0].url : 'assets/images/cars/luxury.png',
+            rentalType: isHourly ? 'Hourly' : 'Daily',
+            pickupDate,
+            pickupTime,
+            pickupLocation: details.pickupLocation || '',
+            returnDate,
+            returnTime,
+            returnLocation: details.returnLocation || '',
+            status: b.bookingStatus === 'Pending Pickup' ? 'upcoming' :
+                    b.bookingStatus === 'Active' ? 'active' :
+                    b.bookingStatus === 'Extended' ? 'active' :
                     b.bookingStatus === 'Completed' ? 'completed' : 'cancelled',
-            dailyRate: b.car ? (b.rentalDetails.rentalType === 'hourly' ? b.car.hourlyPrice : b.car.dailyPrice) : 0,
-            totalCost: b.totalAmount || 0,
-            deposit: b.estimatedPricing ? b.estimatedPricing.deposit || 200 : 200,
-            specifications: b.car ? { 
-              engine: b.car.features[0] || 'V8', 
-              transmission: b.car.transmission, 
-              fuel: b.car.fuelType, 
-              seats: b.car.seatingCapacity 
-            } : {},
-            timeline: []
+            dailyRate: isHourly ? (car.hourlyPrice || 0) : (car.dailyPrice || 0),
+            totalCost: Number(b.totalAmount) || 0,
+            totalDays,
+            pricing: b.estimatedPricing || null,
+            paymentStatus: b.paymentStatus || '',
+            pickupPhotoUrl: b.pickupPhoto && b.pickupPhoto.url ? b.pickupPhoto.url : '',
+            returnPhotoUrl: b.returnPhoto && b.returnPhoto.url ? b.returnPhoto.url : '',
+            customerDetails: b.customerDetails || null,
+            createdAt: b.createdAt || '',
+            specifications: {
+              transmission: car.transmission || '',
+              fuel: car.fuelType || '',
+              seats: car.seatingCapacity || ''
+            },
+            timeline
           };
 
           if (b.bookingStatus === 'Pending Pickup' && b.bookingType === 'PRE_BOOKING') {
@@ -3426,8 +3233,9 @@ const UserDashboard = (() => {
               returnDate: uiBooking.returnDate,
               pickupLocation: uiBooking.pickupLocation,
               status: statusKey,
+              requestedOn: b.createdAt ? String(b.createdAt).split('T')[0] : '',
               estimatedCost: uiBooking.totalCost,
-              notes: b.rentalDetails.specialRequests || ''
+              notes: details.specialRequests || ''
             };
 
             if (statusKey === 'alternative' && b.suggestedAlternative) {
@@ -3457,6 +3265,28 @@ const UserDashboard = (() => {
             DashboardState.rentalsData.push(uiBooking);
           }
         });
+
+        // Hydrate profile fields from the latest booking's real customer details.
+        // The User model does not store DOB/address/license yet, so these stay
+        // read-only in the profile UI instead of being fabricated.
+        const latestWithDetails = bookingsData.data
+          .filter(b => b.customerDetails)
+          .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))[0];
+        if (latestWithDetails) {
+          const cd = latestWithDetails.customerDetails;
+          const ud = DashboardState.userData;
+          ud.dob = cd.dob || ud.dob;
+          ud.streetAddress = cd.address || ud.streetAddress;
+          ud.city = cd.city || ud.city;
+          ud.state = cd.state || ud.state;
+          ud.postalCode = cd.postal || ud.postalCode;
+          ud.country = cd.country || ud.country;
+          ud.licenseNumber = cd.license || ud.licenseNumber;
+          ud.licenseExpiry = cd.licenseExpiry || ud.licenseExpiry;
+          ud.licenseCountry = cd.licenseCountry || ud.licenseCountry;
+          ud.licenseAuthority = cd.licenseCountry || ud.licenseAuthority;
+          ud.licenseStatus = cd.license ? 'on file' : 'missing';
+        }
         
         // Generate notifications based on actual bookings
         bookingsData.data.forEach((b, index) => {
@@ -3538,21 +3368,24 @@ const UserDashboard = (() => {
           }
         });
 
-        // Compute stats dynamically
+        // Compute stats from real records only. Upcoming bookings are not
+        // active rentals, and extension requests only count pending ones.
         DashboardState.statsData = {
-          activeRentals: DashboardState.rentalsData.filter(r => r.status === 'active' || r.status === 'upcoming').length,
+          activeRentals: DashboardState.rentalsData.filter(r => r.status === 'active').length,
           pendingPreBookings: DashboardState.preBookingsData.filter(p => p.status === 'pending').length,
-          upcomingReturns: DashboardState.rentalsData.filter(r => r.status === 'active' || r.status === 'upcoming').length,
+          upcomingReturns: DashboardState.rentalsData.filter(r => r.status === 'active').length,
           completedRentals: DashboardState.rentalsData.filter(r => r.status === 'completed').length,
-          extensionRequests: DashboardState.extensionHistory.length,
+          extensionRequests: DashboardState.extensionsData.filter(e => e.status === 'pending').length,
           unreadNotifications: DashboardState.notificationData.filter(n => !n.read).length,
-          walletBalance: 1500, // mock wallet balance
           totalRentals: DashboardState.rentalsData.length + DashboardState.preBookingsData.length,
         };
 
+      } else {
+        DashboardState.dataError = bookingsData.message || 'Could not load your booking records.';
       }
     } catch (err) {
       console.error('Failed to fetch bookings:', err);
+      DashboardState.dataError = 'Could not load your booking records. Please retry.';
     }
 
     // Load support tickets from the backend
@@ -3576,30 +3409,23 @@ const UserDashboard = (() => {
       console.error('Failed to fetch support tickets:', err);
     }
 
-    // Load KYC verification status from the backend
+    // Load real KYC verification details from the backend
     try {
       const kycRes = await fetch('http://localhost:5000/api/kyc/mine', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const kycJson = await kycRes.json();
       if (kycJson.success) {
-        const kycStatus = kycJson.data.status;
-        const v = DashboardState.verificationData;
-        if (kycStatus === 'VERIFIED') {
-          v.progressStep = 3;
-          Object.values(v.photos).forEach(p => { p.status = 'verified'; });
-        } else if (kycStatus === 'REJECTED') {
-          v.progressStep = 2;
-          Object.values(v.photos).forEach(p => { p.status = 'rejected'; });
-        } else if (kycStatus === 'PENDING') {
-          v.progressStep = 1;
-        }
+        DashboardState.kycData = kycJson.data;
+        const kycStatus = kycJson.data.status || 'NOT_SUBMITTED';
+        DashboardState.userData.kycStatus = kycStatus;
+        DashboardState.userData.verified = kycStatus === 'VERIFIED';
       }
     } catch (err) {
       console.error('Failed to fetch KYC status:', err);
     }
 
-    // Load payment orders from the backend
+    // Load real payment orders from the backend
     try {
       const payRes = await fetch('http://localhost:5000/api/payments/orders', {
         headers: { 'Authorization': `Bearer ${token}` }
@@ -3608,12 +3434,10 @@ const UserDashboard = (() => {
       if (payJson.success && Array.isArray(payJson.data)) {
         const p = DashboardState.paymentsData;
         p.transactions = payJson.data.map(order => ({
-          id: order.orderId,
-          date: order.createdAt ? new Date(order.createdAt).toISOString().split('T')[0] : '',
-          bookingId: 'BK-' + order._id.slice(-8).toUpperCase(),
-          type: 'Rental Charge',
-          method: order.method ? order.method.charAt(0).toUpperCase() + order.method.slice(1) : 'Card',
-          amount: order.amount,
+          id: order.orderId || String(order._id || ''),
+          date: order.createdAt || '',
+          method: order.method ? order.method.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : '—',
+          amount: Number(order.amount) || 0,
           status: order.status === 'SUCCESS' ? 'processed' : order.status === 'FAILED' ? 'failed' : 'pending'
         }));
       }
