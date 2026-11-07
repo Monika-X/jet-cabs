@@ -178,10 +178,11 @@
                   <div style="display: flex; flex-wrap: wrap; gap: var(--space-2);" id="direct-category-filters">
                     <button type="button" class="btn btn--sm btn--primary active-filter" data-category="all" style="padding: 6px 12px; font-size: var(--fs-xs);">All Categories</button>
                     <button type="button" class="btn btn--sm btn--outline" data-category="Luxury" style="padding: 6px 12px; font-size: var(--fs-xs);">Luxury</button>
-                    <button type="button" class="btn btn--sm btn--outline" data-category="Sports" style="padding: 6px 12px; font-size: var(--fs-xs);">Sports</button>
-                    <button type="button" class="btn btn--sm btn--outline" data-category="Sedan" style="padding: 6px 12px; font-size: var(--fs-xs);">Sedan</button>
-                    <button type="button" class="btn btn--sm btn--outline" data-category="SUV" style="padding: 6px 12px; font-size: var(--fs-xs);">SUV</button>
                     <button type="button" class="btn btn--sm btn--outline" data-category="Electric" style="padding: 6px 12px; font-size: var(--fs-xs);">Electric</button>
+                    <button type="button" class="btn btn--sm btn--outline" data-category="Hatchbacks" style="padding: 6px 12px; font-size: var(--fs-xs);">Hatchbacks</button>
+                    <button type="button" class="btn btn--sm btn--outline" data-category="SUVs" style="padding: 6px 12px; font-size: var(--fs-xs);">SUVs</button>
+                    <button type="button" class="btn btn--sm btn--outline" data-category="Sedans" style="padding: 6px 12px; font-size: var(--fs-xs);">Sedans</button>
+                    <button type="button" class="btn btn--sm btn--outline" data-category="Convertibles" style="padding: 6px 12px; font-size: var(--fs-xs);">Convertibles</button>
                   </div>
 
                   <!-- Availability Filter -->
@@ -209,7 +210,7 @@
                   </div>
 
                   <div style="font-size: var(--fs-xs); color: var(--color-light-text); font-weight: var(--fw-medium);" id="direct-results-count">
-                    Showing 12 luxury vehicles
+                    Loading vehicles...
                   </div>
                 </div>
               </div>
@@ -2511,7 +2512,7 @@
       // Results text update
       const countEl = document.getElementById('direct-results-count');
       if (countEl) {
-        countEl.textContent = `Showing ${filtered.length} luxury vehicle${filtered.length !== 1 ? 's' : ''}`;
+        countEl.textContent = `Showing ${filtered.length} vehicle${filtered.length !== 1 ? 's' : ''}`;
       }
 
       if (filtered.length === 0) {
@@ -5439,12 +5440,14 @@
     (async function initApp() {
       try {
         if (window.CarAPI) {
-          const res = await window.CarAPI.fetchCars();
+          const res = await window.CarAPI.fetchCars({ limit: 100 });
           if (res && res.success && res.data) {
             window.vehiclesData = res.data.map(car => ({
               id: car._id,
               brand: car.brand,
-              name: car.carName,
+              name: car.carName && car.brand && car.carName.toLowerCase().startsWith(car.brand.toLowerCase())
+                ? car.carName.slice(car.brand.length).trim()
+                : car.carName,
               category: car.category,
               heroImage: car.images && car.images.length > 0 ? car.images[0].url : '',
               availability: car.status === 'Available' ? 'Available' : 'Limited',
