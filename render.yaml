@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: jet-cabs-api
+    env: node
+    rootDir: Car Rental/backend
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        value: mongodb+srv://monimonasoccer003_db_user:6ppxbiOI6leJpPSC@cluster0.r35wmgx.mongodb.net/car-rental-db?retryWrites=true&w=majority
+      - key: JWT_SECRET
+        value: c94ddb310ed7ac1d453103c42630e5b1262b30192040e78d317fc29fecbb24ed
+      - key: CLOUDINARY_CLOUD_NAME
+        value: doij66qnv
+      - key: CLOUDINARY_API_KEY
+        value: 888752473915937
+      - key: CLOUDINARY_API_SECRET
+        value: F59Qt2PEeePp2DskebEnkNCdTq8
