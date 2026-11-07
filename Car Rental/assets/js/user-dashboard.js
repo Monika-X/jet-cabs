@@ -510,35 +510,22 @@ const UserDashboard = (() => {
       return s.charAt(0).toUpperCase() + s.slice(1).replace('-', ' ');
     },
     icon(name, cls = '') {
-      const lucideMap = {
-        'icon-grid': 'layout-grid', 'icon-gauge': 'gauge', 'icon-car': 'car',
-        'icon-clipboard': 'clipboard-list', 'icon-users': 'users', 'icon-dollar': 'dollar-sign',
-        'icon-file-text': 'file-text', 'icon-settings': 'settings', 'icon-shield-check': 'shield-check',
-        'icon-plus': 'plus', 'icon-edit': 'pencil', 'icon-trash': 'trash-2',
-        'icon-close': 'x', 'icon-search': 'search', 'icon-chevron-left': 'chevron-left',
-        'icon-chevron-right': 'chevron-right', 'icon-chevron-down': 'chevron-down',
-        'icon-check': 'check', 'icon-check-circle': 'check-circle', 'icon-alert-triangle': 'alert-triangle',
-        'icon-bell': 'bell', 'icon-user': 'user', 'icon-log-out': 'log-out',
-        'icon-info': 'info', 'icon-menu': 'menu', 'icon-send': 'send',
-        'icon-upload': 'upload', 'icon-download': 'download', 'icon-eye': 'eye',
-        'icon-rotate-ccw': 'rotate-ccw', 'icon-credit-card': 'credit-card',
-        'icon-tag': 'tag', 'icon-steering': 'circle-dot', 'icon-list': 'list',
-        'icon-camera': 'camera', 'icon-calendar': 'calendar', 'icon-clock': 'clock',
-        'icon-map-pin': 'map-pin', 'icon-star': 'star', 'icon-trending-up': 'trending-up',
-        'icon-trending-down': 'trending-down', 'icon-arrow-right': 'arrow-right',
-        'icon-arrow-up': 'arrow-up', 'icon-arrow-down': 'arrow-down',
-        'icon-bar-chart': 'bar-chart-3', 'icon-activity': 'activity',
-        'icon-mail': 'mail', 'icon-phone': 'phone', 'icon-lock': 'lock',
-        'icon-key': 'key', 'icon-external-link': 'external-link',
-        'icon-refresh-cw': 'refresh-cw', 'icon-package': 'package',
-        'icon-layers': 'layers', 'icon-copy': 'copy', 'icon-hash': 'hash',
-        'icon-filter': 'filter', 'icon-printer': 'printer', 'icon-zap': 'zap',
-        'icon-tool': 'wrench', 'icon-globe': 'globe', 'icon-x-circle': 'x-circle',
-        'icon-minus': 'minus', 'icon-maximize': 'maximize-2', 'icon-minimize': 'minimize-2',
-        'icon-warning': 'alert-triangle'
+      // Render directly from the inline SVG sprite in the page. This removes
+      // the Lucide CDN/timing dependency: dynamically rendered content used
+      // to leave empty <i data-lucide> placeholders when createIcons() ran
+      // before the dashboard data finished loading.
+      const aliases = {
+        'icon-sparkles': 'icon-star',
+        'icon-warning': 'icon-alert-triangle',
+        'icon-tool': 'icon-wrench',
+        'icon-refresh-cw': 'icon-rotate-ccw'
       };
-      const lucideName = lucideMap[name] || name.replace('icon-', '');
-      return `<i data-lucide="${lucideName}" class="${cls}"></i>`;
+      const symbol = document.getElementById(name) || document.getElementById(aliases[name] || '');
+      if (symbol) {
+        const viewBox = symbol.getAttribute('viewBox') || '0 0 24 24';
+        return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" class="${cls}" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${symbol.innerHTML}</svg>`;
+      }
+      return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="${cls}" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/></svg>`;
     }
   };
 

@@ -1,6 +1,25 @@
 const Payment = require('../models/Payment');
 
 /**
+ * @desc    Get all payment orders for the logged-in customer
+ * @route   GET /api/payments/orders
+ * @access  Private
+ */
+const getPaymentOrders = async (req, res, next) => {
+  try {
+    const payments = await Payment.find({ customer: req.user._id }).sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      count: payments.length,
+      data: payments
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
  * @desc    Create a payment order
  * @route   POST /api/payments/orders
  * @access  Private
@@ -115,4 +134,4 @@ const verifyPaymentOrder = async (req, res, next) => {
   }
 };
 
-module.exports = { createPaymentOrder, processPaymentOrder, verifyPaymentOrder };
+module.exports = { getPaymentOrders, createPaymentOrder, processPaymentOrder, verifyPaymentOrder };
