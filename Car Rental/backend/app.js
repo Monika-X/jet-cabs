@@ -57,8 +57,8 @@ app.use('/api/kyc', require('./routes/kycRoutes'));
 // Serve Frontend Static Files.
 // Only public assets and HTML pages are served — backend sources (scripts, seeds,
 // .env) must never be reachable over HTTP.
-app.use('/assets', express.static(path.join(__dirname, '../assets')));
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+app.use('/assets', express.static(path.join(__dirname, '../assets'), { maxAge: '7d' }));
+app.use('/uploads', express.static(path.join(__dirname, '../uploads'), { maxAge: '7d' }));
 app.use((req, res, next) => {
   const ext = path.extname(req.path).toLowerCase();
   const publicExts = ['.html', '.txt', '.xml', '.webmanifest', '.ico'];

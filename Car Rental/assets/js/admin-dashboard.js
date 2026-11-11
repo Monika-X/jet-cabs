@@ -170,6 +170,13 @@ const AdminDashboard = (() => {
       div.appendChild(document.createTextNode(str));
       return div.innerHTML;
     },
+    optimizeImg(url, width = 400) {
+      if (!url) return url;
+      if (url.includes('cloudinary.com') && url.includes('/image/upload/')) {
+        return url.replace(/\/image\/upload\//, `/image/upload/q_auto,f_auto,w_${width},c_fill/`);
+      }
+      return url;
+    },
     icon(name, cls = '') {
       const lucideMap = {
         'icon-grid': 'layout-grid', 'icon-gauge': 'gauge', 'icon-car': 'car',
@@ -1704,7 +1711,7 @@ const AdminDashboard = (() => {
               <tr>
                 <td>
                   <div style="display:flex; align-items:center; gap:var(--space-3);">
-                    <img src="${v.images[0] || 'assets/images/cars/luxury.png'}" alt="${v.brand}" style="width:50px; height:35px; object-fit:cover; border-radius:var(--radius-md); background:var(--color-surface);">
+                    <img src="${Utils.optimizeImg(v.images[0] || 'assets/images/cars/luxury.png')}" alt="${v.brand}" style="width:50px; height:35px; object-fit:cover; border-radius:var(--radius-md); background:var(--color-surface);">
                     <div>
                       <div style="font-weight:var(--fw-semibold); color:var(--color-dark-text);">${v.brand} ${v.model}</div>
                       <div style="font-size:10px; color:var(--color-light-text);">${v.year} · VIN: ${v.vin}</div>
@@ -1740,7 +1747,7 @@ const AdminDashboard = (() => {
     return `
       <div class="db-rental-card" style="display:flex; flex-direction:column; justify-content:space-between; height: 100%;">
         <div class="db-rental-card__image-wrap" style="height: 140px;">
-          <img src="${v.images[0] || 'assets/images/cars/luxury.png'}" class="db-rental-card__image" alt="${v.brand}">
+          <img src="${Utils.optimizeImg(v.images[0] || 'assets/images/cars/luxury.png')}" class="db-rental-card__image" alt="${v.brand}">
           <span class="db-badge db-badge--${badges[v.status] || 'inactive'}">${Utils.statusLabel(v.status)}</span>
         </div>
         
@@ -1790,7 +1797,7 @@ const AdminDashboard = (() => {
           <div style="display:flex; flex-direction:column; gap:var(--space-2); height:250px; overflow-y:auto; scrollbar-width:none;">
             ${v.images.map((img, i) => `
               <div style="border:2px solid ${i===0?'var(--color-secondary)':'transparent'}; border-radius:var(--radius-md); overflow:hidden; height:74px; cursor:pointer; background:var(--color-surface);" onclick="AdminDashboard.switchDetailGallery('${img}', this)">
-                <img src="${img}" alt="" style="width:100%; height:100%; object-fit:cover;">
+                <img src="${Utils.optimizeImg(img)}" alt="" style="width:100%; height:100%; object-fit:cover;">
               </div>
             `).join('')}
           </div>
@@ -2053,7 +2060,7 @@ const AdminDashboard = (() => {
               ${v.images.length === 0 ? '<div style="font-size:10px; color:var(--color-light-text);">No images uploaded yet. Standard fallback will be used.</div>' : ''}
               ${v.images.map((img, i) => `
                 <div style="position:relative; width:80px; height:60px; border-radius:var(--radius-md); overflow:hidden; background:#000;" class="wiz-uploaded-photo" data-src="${img}">
-                  <img src="${img}" style="width:100%; height:100%; object-fit:cover;">
+                  <img src="${Utils.optimizeImg(img)}" style="width:100%; height:100%; object-fit:cover;">
                   <button type="button" style="position:absolute; top:2px; right:2px; background:rgba(0,0,0,0.6); color:#FFF; border:none; width:16px; height:16px; border-radius:50%; font-size:10px; line-height:16px; text-align:center; cursor:pointer;" onclick="this.parentNode.parentNode.removeChild(this.parentNode)">&times;</button>
                 </div>
               `).join('')}
@@ -2226,7 +2233,7 @@ const AdminDashboard = (() => {
       preview.className = 'wiz-uploaded-photo';
       preview.setAttribute('data-src', url);
       preview.innerHTML = `
-        <img src="${url}" style="width:100%; height:100%; object-fit:cover;">
+        <img src="${Utils.optimizeImg(url)}" style="width:100%; height:100%; object-fit:cover;">
         <button type="button" style="position:absolute; top:2px; right:2px; background:rgba(0,0,0,0.6); color:#FFF; border:none; width:16px; height:16px; border-radius:50%; font-size:10px; line-height:16px; text-align:center; cursor:pointer;" onclick="this.parentNode.parentNode.removeChild(this.parentNode)">&times;</button>
       `;
       container.appendChild(preview);
@@ -2388,7 +2395,7 @@ const AdminDashboard = (() => {
       title: 'Confirm Fleet Deletion',
       message: `
         <div style="display:flex; gap:var(--space-3); align-items:center; margin-bottom:var(--space-3);">
-          <img src="${v.images[0] || 'assets/images/cars/luxury.png'}" style="width:70px; height:50px; object-fit:cover; border-radius:var(--radius-md); background:var(--color-surface);">
+          <img src="${Utils.optimizeImg(v.images[0] || 'assets/images/cars/luxury.png')}" style="width:70px; height:50px; object-fit:cover; border-radius:var(--radius-md); background:var(--color-surface);">
           <div>
             <div style="font-weight:var(--fw-bold); color:var(--color-dark-text);">${v.brand} ${v.model}</div>
             <div style="font-size:10px; color:var(--color-light-text);">License Plate: ${v.plate}</div>
@@ -2912,7 +2919,7 @@ const AdminDashboard = (() => {
     // Vehicle image from the real booking data
     let carImage = b.image || 'assets/images/cars/luxury.png';
 
-    document.getElementById('bd-modal-car-img').innerHTML = `<img src="${carImage}" alt="${b.vehicle}" style="width:100%; height:auto; border-radius:var(--radius-sm);" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjOUNBM0FGIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHlsZT0iYmFja2dyb3VuZDojRjNGNEY2O3dpZHRoOjEwMCU7aGVpZ2h0OjEwMCU7cGFkZGluZzoyMHB4OyI+PHBhdGggZD0iTTE5IDE3aDJjLjYgMCAxLS40IDEtMXYtM2MwLS45LS43LTEuNy0xLjUtMS45QzE4LjcgMTAuNiAxNiAxMCAxNiAxMHMtMS4zLTEuNC0yLjItMi4zYy0uNS0uNC0xLjEtLjctMS44LS43SDVjLS42IDAtMS4xLjQtMS40LjlsLTEuNCAyLjlBMy43IDMuNyAwIDAgMCAxIDEzdjNjMCAuNi40IDEgMSAxaDIiLz48Y2lyY2xlIGN4PSI3IiBjeT0iMTciIHI9IjIiLz48cGF0aCBkPSJNOSAxN2g2Ii8+PGNpcmNsZSBjeD0iMTciIGN5PSIxNyIgcj0iMiIvPjwvc3ZnPg==';">`;
+    document.getElementById('bd-modal-car-img').innerHTML = `<img src="${Utils.optimizeImg(carImage)}" alt="${b.vehicle}" style="width:100%; height:auto; border-radius:var(--radius-sm);" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjOUNBM0FGIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHlsZT0iYmFja2dyb3VuZDojRjNGNEY2O3dpZHRoOjEwMCU7aGVpZ2h0OjEwMCU7cGFkZGluZzoyMHB4OyI+PHBhdGggZD0iTTE5IDE3aDJjLjYgMCAxLS40IDEtMXYtM2MwLS45LS43LTEuNy0xLjUtMS45QzE4LjcgMTAuNiAxNiAxMCAxNiAxMHMtMS4zLTEuNC0yLjItMi4zYy0uNS0uNC0xLjEtLjctMS44LS43SDVjLS42IDAtMS4xLjQtMS40LjlsLTEuNCAyLjlBMy43IDMuNyAwIDAgMCAxIDEzdjNjMCAuNi40IDEgMSAxaDIiLz48Y2lyY2xlIGN4PSI3IiBjeT0iMTciIHI9IjIiLz48cGF0aCBkPSJNOSAxN2g2Ii8+PGNpcmNsZSBjeD0iMTciIGN5PSIxNyIgcj0iMiIvPjwvc3ZnPg==';">`;
     document.getElementById('bd-modal-car-name').textContent = b.vehicle + (b.carCategory ? ` · ${b.carCategory}` : '');
     document.getElementById('bd-modal-car-price').textContent = Utils.formatCurrency(b.total) + ` (${b.type})`;
 
@@ -2968,10 +2975,10 @@ const AdminDashboard = (() => {
     const pColor = pickupStatus === 'Uploaded' ? 'var(--color-success)' : 'var(--color-light-text)';
     const rColor = returnStatus === 'Uploaded' ? 'var(--color-success)' : 'var(--color-light-text)';
     const pThumb = b.pickupPhotoUrl
-      ? `<img src="${b.pickupPhotoUrl}" alt="Pickup photo" style="width:56px; height:40px; object-fit:cover; border-radius:var(--radius-sm); margin-bottom: var(--space-2); display:block;">`
+      ? `<img src="${Utils.optimizeImg(b.pickupPhotoUrl)}" alt="Pickup photo" style="width:56px; height:40px; object-fit:cover; border-radius:var(--radius-sm); margin-bottom: var(--space-2); display:block;">`
       : `<span class="icon" style="color: ${pColor}; margin-bottom: var(--space-2);"><svg><use href="assets/icons/sprite.svg#${pIcon}"/></svg></span>`;
     const rThumb = b.returnPhotoUrl
-      ? `<img src="${b.returnPhotoUrl}" alt="Return photo" style="width:56px; height:40px; object-fit:cover; border-radius:var(--radius-sm); margin-bottom: var(--space-2); display:block;">`
+      ? `<img src="${Utils.optimizeImg(b.returnPhotoUrl)}" alt="Return photo" style="width:56px; height:40px; object-fit:cover; border-radius:var(--radius-sm); margin-bottom: var(--space-2); display:block;">`
       : `<span class="icon" style="color: ${rColor}; margin-bottom: var(--space-2);"><svg><use href="assets/icons/sprite.svg#${rIcon}"/></svg></span>`;
 
     document.getElementById('bd-modal-pickup-photo-status').parentElement.innerHTML = `
@@ -3487,7 +3494,7 @@ const AdminDashboard = (() => {
   function _renderSuggestionSelectCard(v) {
     return `
       <div class="db-pb-card__alt-vehicle" id="sug-veh-card-${v.id}" style="border:1px solid var(--color-border-light); padding:var(--space-3); border-radius:var(--radius-md); display:flex; gap:var(--space-3); cursor:pointer; background:var(--color-surface);" onclick="AdminDashboard.selectAlternativeVehicle('${v.id}')">
-        <img src="${v.images[0] || 'assets/images/cars/luxury.png'}" style="width:70px; height:50px; object-fit:cover; border-radius:var(--radius-md); background:#000;">
+        <img src="${Utils.optimizeImg(v.images[0] || 'assets/images/cars/luxury.png')}" style="width:70px; height:50px; object-fit:cover; border-radius:var(--radius-md); background:#000;">
         <div>
           <div style="font-size:var(--fs-xs); font-weight:var(--fw-semibold); color:var(--color-dark-text);">${v.brand} ${v.model}</div>
           <div style="font-size:9px; color:var(--color-light-text);">${v.specs.transmission} · ${v.specs.seats} seats</div>
@@ -3602,7 +3609,7 @@ const AdminDashboard = (() => {
 
     previewDiv.innerHTML = `
       <div style="height:160px; background:#000; border-radius:var(--radius-lg); overflow:hidden; display:flex; align-items:center; justify-content:center; margin-bottom:var(--space-4);">
-        <img src="${v.images[0] || 'assets/images/cars/luxury.png'}" style="width:100%; height:100%; object-fit:cover;">
+        <img src="${Utils.optimizeImg(v.images[0] || 'assets/images/cars/luxury.png')}" style="width:100%; height:100%; object-fit:cover;">
       </div>
       
       <h4 style="font-family:var(--font-heading); font-size:var(--fs-h4); color:var(--color-dark-text); margin-bottom:2px;">${v.brand} ${v.model}</h4>
@@ -5554,7 +5561,7 @@ const AdminDashboard = (() => {
             vehicle: vehicleName,
             vehicleId: b.car ? String(b.car._id) : null,
             carCategory: b.car ? b.car.category : '',
-            image: b.car && b.car.images && b.car.images.length > 0 ? b.car.images[0].url : '',
+            image: Utils.optimizeImg(b.car && b.car.images && b.car.images.length > 0 ? b.car.images[0].url : ''),
             pickupPhotoUrl: b.pickupPhoto && b.pickupPhoto.url ? b.pickupPhoto.url : '',
             returnPhotoUrl: b.returnPhoto && b.returnPhoto.url ? b.returnPhoto.url : '',
             pickupDateTimeISO: pickupISO,

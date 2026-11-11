@@ -129,6 +129,13 @@ const UserDashboard = (() => {
       div.appendChild(document.createTextNode(str));
       return div.innerHTML;
     },
+    optimizeImg(url, width = 400) {
+      if (!url) return url;
+      if (url.includes('cloudinary.com') && url.includes('/image/upload/')) {
+        return url.replace(/\/image\/upload\//, `/image/upload/q_auto,f_auto,w_${width},c_fill/`);
+      }
+      return url;
+    },
     getRemainingDays(returnDate) {
       const now = new Date();
       const ret = new Date(returnDate + 'T00:00:00');
@@ -810,7 +817,7 @@ const UserDashboard = (() => {
     const remaining = Utils.getRemainingDays(r.returnDate);
     return `<div class="db-current-rental">
       <div class="db-current-rental__image-wrap">
-        <img src="${r.image}" alt="${r.brand} ${r.model}" class="db-current-rental__image" loading="lazy">
+        <img src="${Utils.optimizeImg(r.image)}" alt="${r.brand} ${r.model}" class="db-current-rental__image" loading="lazy">
         <span class="db-badge db-badge--active">${Utils.statusLabel(r.status)}</span>
       </div>
       <div class="db-current-rental__info">
@@ -975,7 +982,7 @@ const UserDashboard = (() => {
 
     return `<div class="db-rental-card">
       <div class="db-rental-card__image-wrap">
-        <img src="${r.image}" alt="${r.brand} ${r.model}" class="db-rental-card__image" loading="lazy">
+        <img src="${Utils.optimizeImg(r.image)}" alt="${r.brand} ${r.model}" class="db-rental-card__image" loading="lazy">
         <span class="db-badge db-badge--${statusMap[r.status]||r.status}">${Utils.statusLabel(r.status)}</span>
       </div>
       <div class="db-rental-card__body">
@@ -1025,7 +1032,7 @@ const UserDashboard = (() => {
       <div class="db-modal__body db-rental-detail">
         <!-- Vehicle -->
         <div class="db-rental-detail__vehicle">
-          <img src="${r.image}" alt="${Utils.escapeHtml(r.brand)} ${Utils.escapeHtml(r.model)}" class="db-rental-detail__image" loading="lazy">
+          <img src="${Utils.optimizeImg(r.image)}" alt="${Utils.escapeHtml(r.brand)} ${Utils.escapeHtml(r.model)}" class="db-rental-detail__image" loading="lazy">
           <div class="db-rental-detail__vehicle-info">
             <h4 class="db-rental-detail__vehicle-name">${Utils.escapeHtml(r.brand)} ${Utils.escapeHtml(r.model)}</h4>
             <span class="db-badge db-badge--${statusMap[r.status]||r.status}">${Utils.statusLabel(r.status)}</span>
@@ -1201,7 +1208,7 @@ const UserDashboard = (() => {
           <!-- 2. Recommended Vehicle Card (image left, details right) -->
           <div class="db-pb-card__rec-veh">
             <div class="db-pb-card__rec-img-wrap">
-              <img src="${recImg}" alt="${recName}" class="db-pb-card__rec-img">
+              <img src="${Utils.optimizeImg(recImg)}" alt="${recName}" class="db-pb-card__rec-img">
             </div>
             <div class="db-pb-card__rec-details">
               <h6 class="db-pb-card__rec-title">${recName}</h6>
@@ -1283,7 +1290,7 @@ const UserDashboard = (() => {
     return `<div class="db-pb-card ${p.status === 'alternative' ? 'db-pb-card--expanded' : ''}">
       <div class="db-pb-card__main">
         <div class="db-pb-card__image-wrap">
-          <img src="${p.vehicleImage}" alt="${p.vehicleName}" class="db-pb-card__image" loading="lazy">
+          <img src="${Utils.optimizeImg(p.vehicleImage)}" alt="${p.vehicleName}" class="db-pb-card__image" loading="lazy">
           <span class="db-badge db-badge--${statusBadgeMap[p.status]}">${statusLabelMap[p.status]}</span>
         </div>
         <div class="db-pb-card__body">
@@ -1428,7 +1435,7 @@ const UserDashboard = (() => {
               <tr>
                 <td>
                   <div style="display: flex; align-items: center; gap: var(--space-3);">
-                    <img src="${r.image}" alt="${r.brand}" style="width: 60px; height: 40px; object-fit: cover; border-radius: var(--radius-md); background: var(--color-surface);">
+                    <img src="${Utils.optimizeImg(r.image)}" alt="${r.brand}" style="width: 60px; height: 40px; object-fit: cover; border-radius: var(--radius-md); background: var(--color-surface);">
                     <div>
                       <div style="font-weight: var(--fw-semibold); color: var(--color-dark-text);">${r.brand} ${r.model}</div>
                       <div style="font-size: var(--fs-xs); color: var(--color-light-text);">${r.category}</div>
@@ -1461,7 +1468,7 @@ const UserDashboard = (() => {
         ${data.map(r => `
           <div class="db-rental-card">
             <div class="db-rental-card__image-wrap">
-              <img src="${r.image}" class="db-rental-card__image" alt="${r.brand}">
+              <img src="${Utils.optimizeImg(r.image)}" class="db-rental-card__image" alt="${r.brand}">
               <span class="db-badge db-badge--${r.status==='cancelled'?'cancelled':'completed'}">${Utils.statusLabel(r.status)}</span>
             </div>
             <div class="db-rental-card__body">
@@ -1535,7 +1542,7 @@ const UserDashboard = (() => {
                   <tr>
                     <td>
                       <div style="display:flex; align-items:center; gap: var(--space-3);">
-                        <img src="${h.image}" alt="${h.brand}" style="width: 50px; height: 35px; object-fit: cover; border-radius: var(--radius-md); background: var(--color-surface);">
+                        <img src="${Utils.optimizeImg(h.image)}" alt="${h.brand}" style="width: 50px; height: 35px; object-fit: cover; border-radius: var(--radius-md); background: var(--color-surface);">
                         <span style="font-weight: var(--fw-semibold);">${h.brand} ${h.model}</span>
                       </div>
                     </td>
@@ -1581,7 +1588,7 @@ const UserDashboard = (() => {
         <div class="db-pb-card">
           <div class="db-pb-card__main">
             <div class="db-pb-card__image-wrap">
-              <img src="${ext.image}" alt="${ext.brand}" class="db-pb-card__image">
+              <img src="${Utils.optimizeImg(ext.image)}" alt="${ext.brand}" class="db-pb-card__image">
               <span class="db-badge ${badgeCls}">${badgeLabel}</span>
             </div>
             <div class="db-pb-card__body">
@@ -1633,7 +1640,7 @@ const UserDashboard = (() => {
       <form id="extension-request-form" onsubmit="UserDashboard.submitExtensionRequest(event, '${rentalId}')">
         <div class="db-modal__body db-rental-detail">
           <div style="display:flex; gap:var(--space-4); margin-bottom:var(--space-5); align-items:center;">
-            <img src="${ext.image}" alt="${ext.brand}" style="width: 100px; height: 65px; object-fit:cover; border-radius:var(--radius-md); background:var(--color-surface);">
+            <img src="${Utils.optimizeImg(ext.image)}" alt="${ext.brand}" style="width: 100px; height: 65px; object-fit:cover; border-radius:var(--radius-md); background:var(--color-surface);">
             <div>
               <h4 style="font-weight:var(--fw-semibold); color:var(--color-dark-text); font-family:var(--font-heading);">${ext.brand} ${ext.model}</h4>
               <p style="font-size:var(--fs-xs); color:var(--color-light-text);">Current Scheduled Return: ${Utils.formatDate(ext.currentReturnDate)}</p>
@@ -1939,7 +1946,7 @@ const UserDashboard = (() => {
               <div style="display:grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
                 ${conditionPhotos.map(photo => `
                   <div style="border:1px solid var(--color-border-light); border-radius:var(--radius-md); overflow:hidden; background:var(--color-surface);">
-                    <img src="${photo.url}" alt="${photo.label}" style="width:100%; height:150px; object-fit:cover; display:block;">
+                    <img src="${Utils.optimizeImg(photo.url)}" alt="${photo.label}" style="width:100%; height:150px; object-fit:cover; display:block;">
                     <div style="padding: var(--space-2) var(--space-3); font-size: var(--fs-xs); font-weight: var(--fw-semibold); color: var(--color-dark-text);">${photo.label}</div>
                   </div>
                 `).join('')}
@@ -2949,7 +2956,7 @@ const UserDashboard = (() => {
       <form onsubmit="UserDashboard.submitFeedback(event, '${rentalId}')">
         <div class="db-modal__body" style="padding-top:0;">
           <div style="display:flex; gap:var(--space-4); margin-bottom:var(--space-4); align-items:center;">
-            <img src="${r.image}" alt="${r.brand}" style="width: 80px; height: 50px; object-fit:cover; border-radius:var(--radius-md); background:var(--color-surface);">
+            <img src="${Utils.optimizeImg(r.image)}" alt="${r.brand}" style="width: 80px; height: 50px; object-fit:cover; border-radius:var(--radius-md); background:var(--color-surface);">
             <div>
               <h4 style="font-weight:var(--fw-semibold); color:var(--color-dark-text); font-family:var(--font-heading);">${r.brand} ${r.model}</h4>
               <p style="font-size:var(--fs-xs); color:var(--color-light-text);">Booking Reference: ${r.bookingId}</p>
@@ -3184,7 +3191,7 @@ const UserDashboard = (() => {
             brand: carBrand,
             model: carModel,
             category: car.category || 'Luxury',
-            image: car.images && car.images.length > 0 ? car.images[0].url : 'assets/images/cars/luxury.png',
+            image: Utils.optimizeImg(car.images && car.images.length > 0 ? car.images[0].url : 'assets/images/cars/luxury.png'),
             rentalType: isHourly ? 'Hourly' : 'Daily',
             pickupDate,
             pickupTime,
@@ -3241,7 +3248,7 @@ const UserDashboard = (() => {
             if (statusKey === 'alternative' && b.suggestedAlternative) {
               const altCar = b.suggestedAlternative.car;
               const altName = altCar ? `${altCar.brand || ''} ${altCar.carName || 'Vehicle'}`.trim() : 'Recommended Vehicle';
-              const altImage = altCar && altCar.images && altCar.images.length > 0 ? altCar.images[0].url : 'assets/images/cars/luxury.png';
+              const altImage = Utils.optimizeImg(altCar && altCar.images && altCar.images.length > 0 ? altCar.images[0].url : 'assets/images/cars/luxury.png');
               const dailyRate = altCar ? altCar.dailyPrice : 0;
               const specs = altCar
                 ? `${altCar.seatingCapacity || '?'} Seats · ${altCar.fuelType || '?'} · ${altCar.transmission || '?'}`
@@ -3328,7 +3335,7 @@ const UserDashboard = (() => {
               rentalId: b._id,
               brand: b.car ? b.car.brand : 'Unknown',
               model: b.car ? b.car.carName : 'Unknown',
-              image: b.car && b.car.images && b.car.images.length > 0 ? b.car.images[0].url : 'assets/images/cars/luxury.png',
+              image: Utils.optimizeImg(b.car && b.car.images && b.car.images.length > 0 ? b.car.images[0].url : 'assets/images/cars/luxury.png'),
               currentReturnDate: returnDate.toISOString().split('T')[0],
               remainingDays: remainingDays > 0 ? remainingDays : 0,
               dailyRate: b.car ? (b.rentalDetails.rentalType === 'hourly' ? b.car.hourlyPrice : b.car.dailyPrice) : 0,
@@ -3355,7 +3362,7 @@ const UserDashboard = (() => {
                 bookingId: b._id.substring(b._id.length - 8).toUpperCase(),
                 brand: b.car ? b.car.brand : 'Unknown',
                 model: b.car ? b.car.carName : 'Unknown',
-                image: b.car && b.car.images && b.car.images.length > 0 ? b.car.images[0].url : 'assets/images/cars/luxury.png',
+                image: Utils.optimizeImg(b.car && b.car.images && b.car.images.length > 0 ? b.car.images[0].url : 'assets/images/cars/luxury.png'),
                 type: b.rentalDetails.rentalType === 'hourly' ? 'Hourly' : 'Daily',
                 duration: extDuration,
                 originalReturn: Utils.formatDateShort(b.rentalDetails.returnDateTime), 
