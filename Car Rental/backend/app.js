@@ -57,16 +57,33 @@ app.use('/api/kyc', require('./routes/kycRoutes'));
 // Serve Frontend Static Files.
 // Only public assets and HTML pages are served — backend sources (scripts, seeds,
 // .env) must never be reachable over HTTP.
-app.use('/assets', express.static(path.join(__dirname, '../assets'), { maxAge: '7d' }));
+app.use('/assets', express.static(path.join(__dirname, '../assets'), {
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith('.js') || filePath.endsWith('.css') || filePath.endsWith('.html')) {
+      res.setHeader('Cache-Control', 'no-cache, must-revalidate');
+    }
+  }
+}));
 app.use('/uploads', express.static(path.join(__dirname, '../uploads'), { maxAge: '7d' }));
 app.use('/seed-images', express.static(path.join(__dirname, 'seed-images'), { maxAge: '7d' }));
 app.use((req, res, next) => {
   const ext = path.extname(req.path).toLowerCase();
   const publicExts = ['.html', '.txt', '.xml', '.webmanifest', '.ico', '.jpg', '.jpeg', '.png', '.webp', '.svg', '.gif'];
-  if (req.path === '/' || publicExts.includes(ext)) return next();
+  if (req.path === '/' || publicExts.includes(ext)) {
+    if (ext === '.html' || req.path === '/') {
+      res.setHeader('Cache-Control', 'no-cache, must-revalidate');
+    }
+    return next();
+  }
   return res.status(404).json({ success: false, message: 'Not Found' });
 });
-app.use(express.static(path.join(__dirname, '../')));
+app.use(express.static(path.join(__dirname, '../'), {
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith('.html')) {
+      res.setHeader('Cache-Control', 'no-cache, must-revalidate');
+    }
+  }
+}));
 
 // 404 Handler
 app.use(notFound);

@@ -24,6 +24,10 @@ Thumbs.db
 *.swp
 *.swo
 
+# Test & Debug
+Car Rental/screenshots/
+*.png
+
 # Backend specific
 Car Rental/backend/.env
 Car Rental/backend/node_modules/

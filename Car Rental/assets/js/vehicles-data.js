@@ -15,12 +15,15 @@ window.CarAPI = {
    */
   async fetchCars(params = {}) {
     try {
-      const url = new URL(this.baseUrl);
+      const url = new URL(this.baseUrl, window.location.origin);
       Object.keys(params).forEach(key => {
         if (params[key] !== undefined && params[key] !== null && params[key] !== '') {
           url.searchParams.append(key, params[key]);
         }
       });
+      if (!url.searchParams.has('limit')) {
+        url.searchParams.append('limit', '100');
+      }
       
       const res = await fetch(url.toString());
       const data = await res.json();
