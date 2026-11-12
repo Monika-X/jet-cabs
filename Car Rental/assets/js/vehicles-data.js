@@ -6,7 +6,7 @@
 window.vehiclesData = []; // Fallback empty array just in case legacy code checks it
 
 window.CarAPI = {
-  baseUrl: 'http://localhost:5000/api/cars',
+  baseUrl: '/api/cars',
 
   /**
    * Fetch cars from the backend API with query parameters.

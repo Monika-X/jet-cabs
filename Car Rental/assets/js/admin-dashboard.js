@@ -677,7 +677,7 @@ const AdminDashboard = (() => {
         e.preventDefault(); 
         this.closeAll(); 
         
-        fetch('http://localhost:5000/api/auth/logout', {
+        fetch('/api/auth/logout', {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
         })
@@ -2325,8 +2325,8 @@ const AdminDashboard = (() => {
       }
 
       fetch(isEdit
-          ? `http://localhost:5000/api/cars/${editingVehicleId}`
-          : 'http://localhost:5000/api/cars', {
+          ? `/api/cars/${editingVehicleId}`
+          : '/api/cars', {
         method: isEdit ? 'PUT' : 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
@@ -2420,7 +2420,7 @@ const AdminDashboard = (() => {
         };
 
         if (isApiCar) {
-          fetch(`http://localhost:5000/api/cars/${id}`, {
+          fetch(`/api/cars/${id}`, {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${token}` }
           })
@@ -3126,7 +3126,7 @@ const AdminDashboard = (() => {
     const notes = document.getElementById('rej-notes').value;
 
     const token = localStorage.getItem('token');
-    fetch(`http://localhost:5000/api/admin/bookings/${id}/cancel`, {
+    fetch(`/api/admin/bookings/${id}/cancel`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify({ reason: `${reason}. ${notes}`.trim() })
@@ -3201,7 +3201,7 @@ const AdminDashboard = (() => {
     if (!v) return;
 
     const token = localStorage.getItem('token');
-    fetch(`http://localhost:5000/api/admin/bookings/${id}/assign-vehicle`, {
+    fetch(`/api/admin/bookings/${id}/assign-vehicle`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify({ carId: v.carId || vehId })
@@ -3285,7 +3285,7 @@ const AdminDashboard = (() => {
       confirmText: 'Approve Request',
       onConfirm: () => {
         const token = localStorage.getItem('token');
-        fetch(`http://localhost:5000/api/admin/bookings/${id}/approve-pre-booking`, {
+        fetch(`/api/admin/bookings/${id}/approve-pre-booking`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
         })
@@ -3340,7 +3340,7 @@ const AdminDashboard = (() => {
 
     const notes = document.getElementById('pb-rej-notes').value;
     const token = localStorage.getItem('token');
-    fetch(`http://localhost:5000/api/admin/bookings/${id}/reject-pre-booking`, {
+    fetch(`/api/admin/bookings/${id}/reject-pre-booking`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify({ reason: notes })
@@ -3638,7 +3638,7 @@ const AdminDashboard = (() => {
     if (!p || !v) return;
 
     const token = localStorage.getItem('token');
-    fetch(`http://localhost:5000/api/admin/bookings/${p.id}/suggest-alternative`, {
+    fetch(`/api/admin/bookings/${p.id}/suggest-alternative`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify({ carId: v.carId || v.id, message: reason })
@@ -3877,7 +3877,7 @@ const AdminDashboard = (() => {
     if (!ext) return;
 
     const token = localStorage.getItem('token');
-    fetch(`http://localhost:5000/api/admin/bookings/${ext.bookingId}/extensions/${ext.extensionId}/approve`, {
+    fetch(`/api/admin/bookings/${ext.bookingId}/extensions/${ext.extensionId}/approve`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
     })
@@ -3935,7 +3935,7 @@ const AdminDashboard = (() => {
     const reason = selectReason === 'Other' ? textReason : selectReason;
 
     const token = localStorage.getItem('token');
-    fetch(`http://localhost:5000/api/admin/bookings/${ext.bookingId}/extensions/${ext.extensionId}/reject`, {
+    fetch(`/api/admin/bookings/${ext.bookingId}/extensions/${ext.extensionId}/reject`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify({ reason: reason })
@@ -4203,7 +4203,7 @@ const AdminDashboard = (() => {
     if (!u) return;
 
     const token = localStorage.getItem('token');
-    fetch(`http://localhost:5000/api/admin/users/${userId}/suspend`, {
+    fetch(`/api/admin/users/${userId}/suspend`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
     })
@@ -4224,7 +4224,7 @@ const AdminDashboard = (() => {
     if (!u) return;
 
     const token = localStorage.getItem('token');
-    fetch(`http://localhost:5000/api/admin/users/${userId}/activate`, {
+    fetch(`/api/admin/users/${userId}/activate`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
     })
@@ -4401,7 +4401,7 @@ const AdminDashboard = (() => {
 
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/users/${userId}`, {
+      const res = await fetch(`/api/admin/users/${userId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ fullName: name, email, phone })
@@ -5296,7 +5296,7 @@ const AdminDashboard = (() => {
       return Promise.resolve(false);
     }
 
-    return fetch('http://localhost:5000/api/admin/profile', {
+    return fetch('/api/admin/profile', {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -5338,10 +5338,10 @@ const AdminDashboard = (() => {
     if (!token) return Promise.resolve(false);
 
     return Promise.all([
-      fetch('http://localhost:5000/api/admin/dashboard', {
+      fetch('/api/admin/dashboard', {
         headers: { 'Authorization': `Bearer ${token}` }
       }).then(res => res.json()),
-      fetch('http://localhost:5000/api/admin/kyc?limit=100', {
+      fetch('/api/admin/kyc?limit=100', {
         headers: { 'Authorization': `Bearer ${token}` }
       }).then(res => res.json()).catch(() => ({ success: false, data: [] }))
     ])
@@ -5669,11 +5669,11 @@ const AdminDashboard = (() => {
 
         const token2 = localStorage.getItem('token');
         return Promise.all([
-          fetch('http://localhost:5000/api/admin/analytics/summary', { headers: { 'Authorization': `Bearer ${token2}` } })
+          fetch('/api/admin/analytics/summary', { headers: { 'Authorization': `Bearer ${token2}` } })
             .then(res => res.json())
             .then(d => d.success ? d.data : null)
             .catch(() => null),
-          fetch('http://localhost:5000/api/admin/analytics/bookings?days=30', { headers: { 'Authorization': `Bearer ${token2}` } })
+          fetch('/api/admin/analytics/bookings?days=30', { headers: { 'Authorization': `Bearer ${token2}` } })
             .then(res => res.json())
             .then(d => d.success ? d.data : null)
             .catch(() => null)

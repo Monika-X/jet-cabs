@@ -50,7 +50,7 @@
 
   async function fetchAndUpdateFilterCounts() {
     try {
-      const response = await fetch('http://localhost:5000/api/cars/filters');
+      const response = await fetch('/api/cars/filters');
       const res = await response.json();
       if (!res.success) return;
 
@@ -129,7 +129,7 @@
       else if (state.sortBy === 'Price High → Low') queryParams.append('sort', 'priceHighToLow');
       else if (state.sortBy === 'Alphabetical') queryParams.append('sort', 'alphabetical');
 
-      const response = await fetch(`http://localhost:5000/api/cars?${queryParams.toString()}`);
+      const response = await fetch(`/api/cars?${queryParams.toString()}`);
       const res = await response.json();
 
       if (!res.success) throw new Error(res.message || 'Failed to fetch');

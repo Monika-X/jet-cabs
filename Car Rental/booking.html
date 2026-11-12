@@ -2958,7 +2958,7 @@
       let bestAlt = null;
       let minDiff = Infinity;
       try {
-        const res = await fetch(`http://localhost:5000/api/cars/${encodeURIComponent(requestedCar.id)}/alternatives?limit=1`);
+        const res = await fetch(`/api/cars/${encodeURIComponent(requestedCar.id)}/alternatives?limit=1`);
         const json = await res.json();
         if (json.success && json.data && json.data.length > 0) {
           const rec = json.data[0];
@@ -5302,7 +5302,7 @@
       if (!token) {
         throw new Error('Please log in to submit a booking.');
       }
-      const response = await fetch('http://localhost:5000/api/bookings', {
+      const response = await fetch('/api/bookings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -5318,7 +5318,7 @@
       return { status: mapServerPreBookingStatus(data.data && data.data.preBookingStatus), refId: refId, data: data.data };
     }
 
-    const API_BASE = 'http://localhost:5000';
+    const API_BASE = '';
 
     async function boundaryFetch(path, method, body) {
       const token = localStorage.getItem('token');
@@ -5421,7 +5421,7 @@
       if (!token) {
         throw new Error('Please log in to complete your booking.');
       }
-      const response = await fetch('http://localhost:5000/api/bookings', {
+      const response = await fetch('/api/bookings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -430,7 +430,7 @@ const UserDashboard = (() => {
         e.preventDefault(); 
         this.closeAll(); 
         
-        fetch('http://localhost:5000/api/auth/logout', {
+        fetch('/api/auth/logout', {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
         })
@@ -1764,7 +1764,7 @@ const UserDashboard = (() => {
 
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:5000/api/bookings/${rentalId}/extend`, {
+      const res = await fetch(`/api/bookings/${rentalId}/extend`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -2022,7 +2022,7 @@ const UserDashboard = (() => {
 
   async function fetchNotifications(token) {
     try {
-      const res = await fetch('http://localhost:5000/api/notifications', {
+      const res = await fetch('/api/notifications', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const json = await res.json();
@@ -2122,7 +2122,7 @@ const UserDashboard = (() => {
       // Persist read state to the backend
       const token = localStorage.getItem('token');
       if (token) {
-        fetch(`http://localhost:5000/api/notifications/${id}/read`, {
+        fetch(`/api/notifications/${id}/read`, {
           method: 'PATCH',
           headers: { 'Authorization': `Bearer ${token}` }
         }).catch(err => console.error('Failed to mark notification read:', err));
@@ -2143,7 +2143,7 @@ const UserDashboard = (() => {
     // Persist to the backend
     const token = localStorage.getItem('token');
     if (token) {
-      fetch('http://localhost:5000/api/notifications/read-all', {
+      fetch('/api/notifications/read-all', {
         method: 'PATCH',
         headers: { 'Authorization': `Bearer ${token}` }
       }).catch(err => console.error('Failed to mark all notifications read:', err));
@@ -2172,7 +2172,7 @@ const UserDashboard = (() => {
       // Persist deletion to the backend
       const token = localStorage.getItem('token');
       if (token) {
-        fetch(`http://localhost:5000/api/notifications/${id}`, {
+        fetch(`/api/notifications/${id}`, {
           method: 'DELETE',
           headers: { 'Authorization': `Bearer ${token}` }
         }).catch(err => console.error('Failed to delete notification:', err));
@@ -2445,7 +2445,7 @@ const UserDashboard = (() => {
     const fullName = `${firstName} ${lastName}`.trim();
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/profile', {
+      const res = await fetch('/api/auth/profile', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ fullName, phone: phoneValue })
@@ -2812,7 +2812,7 @@ const UserDashboard = (() => {
       return;
     }
 
-    fetch('http://localhost:5000/api/support/tickets', {
+    fetch('/api/support/tickets', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify({
@@ -2872,7 +2872,7 @@ const UserDashboard = (() => {
     const token = localStorage.getItem('token');
     if (!token) return;
 
-    fetch(`http://localhost:5000/api/bookings/${pb.id}/cancel`, {
+    fetch(`/api/bookings/${pb.id}/cancel`, {
       method: 'PUT',
       headers: { 'Authorization': `Bearer ${token}` }
     })
@@ -2906,7 +2906,7 @@ const UserDashboard = (() => {
 
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:5000/api/bookings/${pb.id}/accept-alternative`, {
+      const res = await fetch(`/api/bookings/${pb.id}/accept-alternative`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -3011,7 +3011,7 @@ const UserDashboard = (() => {
       return;
     }
 
-    fetch('http://localhost:5000/api/support/tickets', {
+    fetch('/api/support/tickets', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify({
@@ -3076,7 +3076,7 @@ const UserDashboard = (() => {
     }
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/profile', {
+      const res = await fetch('/api/auth/profile', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
@@ -3128,7 +3128,7 @@ const UserDashboard = (() => {
 
     // Fetch User Bookings
     try {
-      const bookingsRes = await fetch('http://localhost:5000/api/bookings/my-bookings', {
+      const bookingsRes = await fetch('/api/bookings/my-bookings', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const bookingsData = await bookingsRes.json();
@@ -3397,7 +3397,7 @@ const UserDashboard = (() => {
 
     // Load support tickets from the backend
     try {
-      const ticketsRes = await fetch('http://localhost:5000/api/support/tickets', {
+      const ticketsRes = await fetch('/api/support/tickets', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const ticketsJson = await ticketsRes.json();
@@ -3418,7 +3418,7 @@ const UserDashboard = (() => {
 
     // Load real KYC verification details from the backend
     try {
-      const kycRes = await fetch('http://localhost:5000/api/kyc/mine', {
+      const kycRes = await fetch('/api/kyc/mine', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const kycJson = await kycRes.json();
@@ -3434,7 +3434,7 @@ const UserDashboard = (() => {
 
     // Load real payment orders from the backend
     try {
-      const payRes = await fetch('http://localhost:5000/api/payments/orders', {
+      const payRes = await fetch('/api/payments/orders', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const payJson = await payRes.json();
@@ -3519,7 +3519,7 @@ const UserDashboard = (() => {
       }
 
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:5000/api/bookings/${rentalId}/pickup-photo`, {
+      const res = await fetch(`/api/bookings/${rentalId}/pickup-photo`, {
         method: 'PUT',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
@@ -3577,7 +3577,7 @@ const UserDashboard = (() => {
       }
 
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:5000/api/bookings/${rentalId}/return-photo`, {
+      const res = await fetch(`/api/bookings/${rentalId}/return-photo`, {
         method: 'PUT',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
