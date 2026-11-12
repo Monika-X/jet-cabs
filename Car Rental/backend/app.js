@@ -59,9 +59,10 @@ app.use('/api/kyc', require('./routes/kycRoutes'));
 // .env) must never be reachable over HTTP.
 app.use('/assets', express.static(path.join(__dirname, '../assets'), { maxAge: '7d' }));
 app.use('/uploads', express.static(path.join(__dirname, '../uploads'), { maxAge: '7d' }));
+app.use('/seed-images', express.static(path.join(__dirname, 'seed-images'), { maxAge: '7d' }));
 app.use((req, res, next) => {
   const ext = path.extname(req.path).toLowerCase();
-  const publicExts = ['.html', '.txt', '.xml', '.webmanifest', '.ico'];
+  const publicExts = ['.html', '.txt', '.xml', '.webmanifest', '.ico', '.jpg', '.jpeg', '.png', '.webp', '.svg', '.gif'];
   if (req.path === '/' || publicExts.includes(ext)) return next();
   return res.status(404).json({ success: false, message: 'Not Found' });
 });
